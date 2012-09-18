@@ -1,0 +1,111 @@
+<!-- BEGIN: SQL -->
+<tr>
+ <td width="15%" class="tabDetailViewDL">{PARAM_FRIENDLY_NAME}</td>
+ <td width="85%" class="tabDetailViewDF" colspan="3"><select name="{PARAM_NAME}">{PARAM_SELECTION}</select></td>
+</tr>
+<!-- END: SQL -->
+
+<!-- BEGIN: LIST -->
+<tr>
+ <td width="15%" class="tabDetailViewDL">{PARAM_FRIENDLY_NAME}</td>
+ <td width="85%" class="tabDetailViewDF" colspan="3"><select name="{PARAM_NAME}">{PARAM_SELECTION}</select></td>
+</tr>
+<!-- END: LIST -->
+
+<!-- BEGIN: LIST_2 -->
+<tr>
+ <td width="15%" class="tabDetailViewDL">{PARAM_FRIENDLY_NAME}</td>
+ <td width="85%" class="tabDetailViewDF" colspan="3"><select name="{PARAM_NAME}" multiple="multiple">{PARAM_SELECTION}</select></td>
+</tr>
+<!-- END: LIST_2 -->
+
+<!-- BEGIN: LIST_3 -->
+<tr>
+ <td width="15%" class="tabDetailViewDL">{PARAM_FRIENDLY_NAME}</td>
+ <td width="85%" class="tabDetailViewDF" colspan="3"><select name="{PARAM_NAME}" multiple="multiple" disabled="disabled">{PARAM_SELECTION}</select></td>
+</tr>
+<!-- END: LIST_3 -->
+
+<!-- BEGIN: SIMPLE -->
+<tr>
+ <td width="15%" class="tabDetailViewDL">{PARAM_FRIENDLY_NAME}</td>
+ <td width="85%" class="tabDetailViewDF" colspan="3"><input name="{PARAM_NAME}" type="text" size="40" value="{PARAM_VALUE}"></td>
+</tr>
+<!-- END: SIMPLE -->
+
+<!-- BEGIN: DATE -->
+<tr>
+ <td width="15%" class="tabDetailViewDL">{PARAM_FRIENDLY_NAME}</td>
+ <td width="85%" class="tabDetailViewDF" colspan="3"><input name='{PARAM_NAME}' onblur="parseDate(this, '{CALENDAR_DATEFORMAT}');" id='{PARAM_NAME}_jscal_field' type="text" tabindex='2' size='11' maxlength='10' value="{PARAM_VALUE}"> <img src="themes/default/images/jscalendar.gif" alt="{APP.LBL_ENTER_DATE}"  id="{PARAM_NAME}_jscal_trigger" align="absmiddle"> <span class="dateFormat">{USER_DATEFORMAT}</span></td>
+</tr>
+
+	<script type="text/javascript">
+	Calendar.setup ({
+		inputField : "{PARAM_NAME}_jscal_field", ifFormat : "{CALENDAR_DATEFORMAT}", showsTime : false, button : "{PARAM_NAME}_jscal_trigger", singleClick : true, step : 1
+	});
+	</script>
+
+
+<!-- END: DATE -->
+
+<!-- BEGIN: DATE_2 -->
+<tr>
+ <td width="15%"T class="tabDetailViewDL">{PARAM_FRIENDLY_NAME_FROM}</td>
+ <td width="85%" class="tabDetailViewDF" colspan="3"><input name='{PARAM_NAME_FROM}' onblur="parseDate(this, '{CALENDAR_DATEFORMAT_FROM}');" id='{PARAM_NAME_FROM}_jscal_field' type="text" tabindex='2' size='11' maxlength='10' value="{PARAM_VALUE_FROM}"> <img src="themes/default/images/jscalendar.gif" alt="{APP.LBL_ENTER_DATE_FROM}"  id="{PARAM_NAME_FROM}_jscal_trigger" align="absmiddle"> <span class="dateFormat">{USER_DATEFORMAT_FROM}</span></td>
+</tr>
+
+    <script type="text/javascript">
+    Calendar.setup ({
+        inputField : "{PARAM_NAME_FROM}_jscal_field", ifFormat : "{CALENDAR_DATEFORMAT_FROM}", showsTime : false, button : "{PARAM_NAME_FROM}_jscal_trigger", singleClick : true, step : 1
+    });
+    </script>
+
+<tr>
+ <td width="15%" class="tabDetailViewDL">{PARAM_FRIENDLY_NAME_TO}</td>
+ <td width="85%" class="tabDetailViewDF" colspan="3"><input name='{PARAM_NAME_TO}' onblur="parseDate(this, '{CALENDAR_DATEFORMAT_TO}');" id='{PARAM_NAME_TO}_jscal_field' type="text" tabindex='2' size='11' maxlength='10' value="{PARAM_VALUE_TO}"> <img src="themes/default/images/jscalendar.gif" alt="{APP.LBL_ENTER_DATE_TO}"  id="{PARAM_NAME_TO}_jscal_trigger" align="absmiddle"> <span class="dateFormat">{USER_DATEFORMAT_TO}</span></td>
+</tr>
+
+    <script type="text/javascript">
+    Calendar.setup ({
+        inputField : "{PARAM_NAME_TO}_jscal_field", ifFormat : "{CALENDAR_DATEFORMAT_TO}", showsTime : false, button : "{PARAM_NAME_TO}_jscal_trigger", singleClick : true, step : 1
+    });
+    </script>
+<!-- END: DATE_2 -->
+
+
+<!-- BEGIN: DATE_3 -->
+<tr>
+ <td width="15%"T class="tabDetailViewDL">{PARAM_FRIENDLY_NAME_FROM}</td>
+ <td width="85%" class="tabDetailViewDF" colspan="3"><input disabled="disabled" name='{PARAM_NAME_FROM}' onblur="parseDate(this, '{CALENDAR_DATEFORMAT_FROM}');" id='{PARAM_NAME_FROM}_jscal_field' type="text" tabindex='2' size='11' maxlength='10' value="{PARAM_VALUE_FROM}"> <img src="themes/default/images/jscalendar.gif" alt="{APP.LBL_ENTER_DATE_FROM}"  id="{PARAM_NAME_FROM}_jscal_trigger" align="absmiddle"> <span class="dateFormat">{USER_DATEFORMAT_FROM}</span></td>
+</tr>
+
+<tr>
+ <td width="15%" class="tabDetailViewDL">{PARAM_FRIENDLY_NAME_TO}</td>
+ <td width="85%" class="tabDetailViewDF" colspan="3"><input disabled="disabled" name='{PARAM_NAME_TO}' onblur="parseDate(this, '{CALENDAR_DATEFORMAT_TO}');" id='{PARAM_NAME_TO}_jscal_field' type="text" tabindex='2' size='11' maxlength='10' value="{PARAM_VALUE_TO}"> <img src="themes/default/images/jscalendar.gif" alt="{APP.LBL_ENTER_DATE_TO}"  id="{PARAM_NAME_TO}_jscal_trigger" align="absmiddle"> <span class="dateFormat">{USER_DATEFORMAT_TO}</span></td>
+</tr>
+
+<!-- END: DATE_3 -->
+
+
+<!-- BEGIN: DATE_CALC -->
+<tr>
+ <td width="15%" class="tabDetailViewDL">{PARAM_FRIENDLY_NAME}</td>
+ <td width="85%" class="tabDetailViewDF" colspan="3">
+	<input name="{PARAM_NAME}_COUNT" type="text" size="5" value="{PARAM_VALUE_COUNT}" onBlur="javascript:{PARAM_NAME}Changed(this.form);">
+	<select name="{PARAM_NAME}_TYPE" onChange="javascript:{PARAM_NAME}Changed(this.form);">{PARAM_SELECTION}</select>
+    <input name="{PARAM_NAME}" type="hidden" value="{PARAM_VALUE}">
+ </td>
+</tr>
+<script type='text/javascript' language='JavaScript'>
+function {PARAM_NAME}Changed(form) {
+	form.{PARAM_NAME}.value = form.{PARAM_NAME}_COUNT.value + "::" + form.{PARAM_NAME}_TYPE.value;
+}
+</script>
+<!-- END: DATE_CALC -->
+
+
+
+
+<!-- BEGIN: HIDDEN -->
+<input name="{PARAM_NAME}" type="hidden" value="{PARAM_VALUE}">
+<!-- END: HIDDEN -->

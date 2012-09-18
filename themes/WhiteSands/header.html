@@ -1,0 +1,321 @@
+<!--
+/*********************************************************************************
+ * SugarCRM is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004 - 2009 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+/*********************************************************************************
+ * {LBL_CURRENCY_SYM}Header: /cvsroot/sugarcrm/sugarcrm/themes/Amazon/header.html,v 1.14 2004/07/04 04:00:48 sugarclint Exp {LBL_CURRENCY_SYM}
+ ********************************************************************************/
+-->
+<!-- BEGIN: main -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD html 4.01 Transitional//EN">
+<link REL="SHORTCUT ICON" HREF="include/images/sugar_icon.ico">
+<meta http-equiv="Content-Type" content="text/html; charset={LBL_CHARSET}">
+<title>{APP.LBL_BROWSER_TITLE}</title>
+<style type="text/css">@import url("{IMAGE_SERVER}themes/{THEME}/style.css?s={SUGAR_VERSION}&c={JS_CUSTOM_VERSION}"); </style>
+<link href="{IMAGE_SERVER}themes/{THEME}/navigation.css?s"={SUGAR_VERSION}&c={JS_CUSTOM_VERSION}" rel="stylesheet" type="text/css" />
+<script language="javascript" src="{IMAGE_SERVER}themes/default/SiteMapJS.js?s"={SUGAR_VERSION}&c={JS_CUSTOM_VERSION}"></script>
+<script language="javascript" src="{IMAGE_SERVER}themes/menu.js?s"={SUGAR_VERSION}&c={JS_CUSTOM_VERSION}"></script>
+<script language="javascript" src="{IMAGE_SERVER}themes/cookie.js?s"={SUGAR_VERSION}&c={JS_CUSTOM_VERSION}"></script>
+<script language="javascript">
+
+function hideLeftCol(id){
+
+	if(this.document.getElementById( id).style.display=='none'){
+		this.document.getElementById( id).style.display='inline';
+
+		Set_Cookie('showLeftCol','true',30,'/','','');
+		var show = Get_Cookie('showLeftCol');
+		document['HideHandle'].src = '{IMAGE_PATH}hide.gif';		
+	}else{
+		this.document.getElementById(  id).style.display='none';
+
+		Set_Cookie('showLeftCol','false',30,'/','','');
+		var show = Get_Cookie('showLeftCol');
+		document['HideHandle'].src = '{IMAGE_PATH}show.gif';	
+
+	}
+}
+
+function hideSubMenus(id,imageId,cookieId){
+
+	if(this.document.getElementById( id).style.display=='none'){
+		this.document.getElementById( id).style.display='inline';
+
+		Set_Cookie(cookieId,'true',30,'/','','');
+		var show = Get_Cookie(cookieId);
+		document[imageId].src = '{IMAGE_PATH}hide_submenu_'+imageId+'.gif';		
+	}else{
+		this.document.getElementById(  id).style.display='none';
+
+		Set_Cookie(cookieId,'false',30,'/','','');
+		var show = Get_Cookie(cookieId);
+		document[imageId].src = '{IMAGE_PATH}show_submenu_'+imageId+'.gif';	
+
+	}
+}
+
+function showSubMenu(id){
+	if(this.document.getElementById( id).style.display=='none'){
+		tbButtonMouseOver('HideHandle',122,'',11);
+	}
+}
+
+function printPage() {
+	var url = location.href;
+	var is_print = 'print=true';
+	if(url.indexOf(is_print)>-1) {
+		window.print();
+	} else {
+		return;
+	}
+}
+
+</script>
+</head>
+
+<body {ONLOAD} onMouseOut="closeMenus();" onload="javascript:printPage();">
+	<!-- BEGIN: gcl_submenu -->
+	<div id="{GCL_SUBMENU_KEY}Menu" class="menu">
+	<!-- BEGIN: gcl_submenu_items -->
+	<a href="{GCL_SUBMENU_LINK_URL}" class="menuItem" id="{GCL_SUBMENU_LINK_KEY}Handle" parentid="{GCL_SUBMENU_KEY}Menu" onMouseOver="hiliteItem(this,'yes'); closeSubMenus(this);" onMouseOut="unhiliteItem(this);">{GCL_SUBMENU_LINK_LABEL}</a>
+	<!-- END: gcl_submenu_items -->
+	</div>
+	<!-- END: gcl_submenu -->
+	<div id="MoreMenu" class="menu">
+	<!-- BEGIN: more -->
+	<a href="index.php?module={MODULE_KEY}&action=index{MODULE_QUERY}" class="menuItem" id="{MODULE_KEY}Handle" parentid="MoreMenu" onMouseOver="hiliteItem(this,'yes'); closeSubMenus(this);" onMouseOut="unhiliteItem(this);">{MODULE_NAME}</a>
+	<!-- END: more -->
+	</div>
+	<div id="HideMenu" class="subDmenu">
+	
+	<table cellpadding="0" cellspacing="0" border="0" width="160" class="leftColumnModuleHead" onMouseOver="hiliteItem(this,'no');" style="background-color: #ffffff; border-right: 1px solid #7f9db9; border-bottom: 1px solid #7f9db9;">
+    <tr>
+		<th>{SHORTCUTS}</th></tr>
+	<tr>
+				<td valign="top" width="160" nowrap>
+					<ul id="subMenu">
+						<!-- BEGIN: hide -->
+						<li id="{SC_MODULE_NAME}_sh" onClick="location.href='{URL}'"><a href="{URL}">{SC_IMAGE}</A>&nbsp;<a href="{URL}">{LABEL}</A></li>					
+						<!-- END: hide -->
+					</ul>	
+				</td></tr>
+	<!-- BEGIN: hide_recent_view -->
+		<tr>
+		<th>{TITLE_LAST_VIEW}</th>
+		</tr>	
+	
+		<tr>
+		<td><ul id="subMenu">
+					<!-- BEGIN: hide_recent_view_row -->
+						 	<li><a title="{RECENT_LABEL_FULL} [{APP.LBL_ALT_HOT_KEY}{ROW_NUMBER}]" accessKey="{ROW_NUMBER}" href="{RECENT_URL}">{RL_IMAGE}</A>&nbsp;<a title="{RECENT_LABEL_FULL} [{APP.LBL_ALT_HOT_KEY}{ROW_NUMBER}]" accessKey="{ROW_NUMBER}" href="{RECENT_URL}">{RECENT_LABEL}</A></li>
+					<!-- END: hide_recent_view_row -->
+			</ul>	
+					<!-- BEGIN: hide_recent_view_empty -->
+						{APP.NTC_NO_ITEMS_DISPLAY}			
+					<!-- END: hide_recent_view_empty -->
+					
+				</td>
+			</tr>
+<!-- END: hide_recent_view -->
+	
+	</table>
+	</div>
+
+
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+	<tr>
+		<td colspan="3" id="header">
+			<table cellspacing="0" cellpadding="0" border="0" width="100%" class="header">
+				<tr height="50">
+					<td width="220" valign="middle">
+						<img src="{COMPANY_LOGO}" width="212" height="40" alt="Company Logo" border="0" style="margin-left: 10px;">
+					</td>
+					<td width="80%" align="right" valign="top" nowrap class="myArea" style="padding-right: 10px;padding-top: 7px;">
+<!-- BEGIN: global_control_links -->
+						<a href="{GCL_URL}" class="myAreaLink" {GCL_MENU}>
+							{GCL_LABEL}</a>{MENU_ARROW}{SEPARATOR} 
+<!-- END: global_control_links -->
+									&nbsp;|&nbsp;<span style="cursor:pointer; color: #666; font-size: 12px; text-decoration: underline;" onClick="getSiteMap(7,24);">{SITEMAP}<img src="{IMAGE_PATH}MoreDetail.png" style="margin-left: 2px;"  style="cursor:pointer;"></span>&nbsp;&nbsp;|<span id='sm_holder'></span>	
+					</td>
+					<td align="right" valign="top" nowrap style="padding-right: 10px; padding-top: 7px;">
+						<form name='UnifiedSearch' onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
+							<input type="hidden" name="action" value="UnifiedSearch">
+							<input type="hidden" name="module" value="Home">
+							<input type="hidden" name="search_form" value="false">
+							<input type="hidden" name="advanced" value="false">
+<!-- BEGIN: left_form_search -->
+										<div style="vertical-align: top;">	
+											<img id="unified_search_advanced_img" src="{IMAGE_SERVER}themes/default/images/searchMore.gif" width="16" height="16" border="0" alt="Search">
+											&nbsp; 
+											<input type="text" class="searchField" name="query_string" id="query_string" size="24" value="{SEARCH}" style="margin-bottom: 3px;">
+											&nbsp;<input type="submit" value="{APP.LBL_SEARCH_BUTTON_LABEL}" class="button">
+										</div>
+									</form>
+									<div id="unified_search_advanced_div" style="display: none; height: 1px; position: absolute; overflow: hidden; width: 300px; padding-top: 5px">
+									</div>					
+<!-- END: left_form_search -->
+					
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<ul id="tabRow">
+<!-- BEGIN: tab -->
+							<li class="{TAB_CLASS}">
+								{LINK}
+							</li>
+<!-- END: tab -->
+							<li>
+								{MORE}
+							</li>
+						</ul>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+
+	<tr>
+		<td valign="top" width="10" class="hideShow">{LEFT_FORM_OTD}<!-- BEGIN: left_form --></td>
+
+
+
+<td id="left" valign="top" style="width: 160px;" class="leftColumn"><div align="right" id="leftCol" style="display: none;"><table width="100%" border="0" cellspacing="0" cellpadding="0" align="right">
+			<tr>
+				<td colspan="2" id="welcome" class="welcome" valign="top">	
+			    	{APP.NTC_WELCOME}, <strong>{CURRENT_USER}</strong> <a href='{LOGOUT_LINK}' >[{LOGOUT_LABEL}]</a>
+				</td>
+			</tr>	<tr><td class="leftSideNavigation"><table width="100%" border="0" cellspacing="0" cellpadding="0" align="right" class="leftColumnModuleHead" style="width: 160px;">		
+			<tr><th style="margin-top: 0px;" id="header">{SHORTCUTS}</th><th id="header" style="text-align: right;margin-top: 0px;"><img style="cursor: hand;" id="shortcuts" align="absmiddle" name="shortcuts"  src="{IMAGE_PATH}hide_submenu_shortcuts.gif" alt="Toggle Shortcuts" onclick='hideSubMenus("div_shortcuts","shortcuts","ck_shortcuts");'></th></tr>
+			<tr>
+				<td valign="top" nowrap colspan="2">
+				<div id="div_shortcuts">
+			<!-- BEGIN: sub_menu -->
+					<ul id="subMenu">
+						<!-- BEGIN: sub_menu_item -->
+						<li id="{SC_MODULE_NAME}_sh" onClick="location.href='{URL}'"><a href="{URL}">{SC_IMAGE}</A>&nbsp;<a href="{URL}">{LABEL}</A></li>								
+						<!-- END: sub_menu_item -->							
+					</ul>	
+			<!-- END: sub_menu -->	
+				</div>
+				</td></tr>
+
+				<!-- END: left_form -->
+				<!-- BEGIN: left_form_recent_view -->
+			<tr>
+				<th id="header">{TITLE_LAST_VIEW}</th>
+				<th id="header" style="text-align: right;"><img style="cursor: hand;" id="lastview" align="absmiddle" name="lastview"  src="{IMAGE_PATH}hide_submenu_lastview.gif" alt="Toggle {TITLE_LAST_VIEW}" onclick='hideSubMenus("div_lastview","lastview","ck_lastview");'></th>
+			</tr>	
+			<tr>
+				<td nowrap colspan="2">
+				<div id="div_lastview">
+				<ul id="subMenu">
+					<!-- BEGIN: left_form_recent_view_row -->
+						 	<li><a title="{RECENT_LABEL_FULL} [{APP.LBL_ALT_HOT_KEY}{ROW_NUMBER}]" accessKey="{ROW_NUMBER}" href="{RECENT_URL}">{RL_IMAGE}</A>&nbsp;<a title="{RECENT_LABEL_FULL} [{APP.LBL_ALT_HOT_KEY}{ROW_NUMBER}]" accessKey="{ROW_NUMBER}" href="{RECENT_URL}">{RECENT_LABEL}</A></li>
+					<!-- END: left_form_recent_view_row -->
+					<!-- BEGIN: left_form_recent_view_empty -->
+			
+						{APP.NTC_NO_ITEMS_DISPLAY}
+			
+					<!-- END: left_form_recent_view_empty -->
+				</div>
+					
+				</td>
+			</tr>
+				<!-- END: left_form_recent_view -->
+				<!-- BEGIN: left_form_new_record -->
+				{NEW_RECORD}
+				<script language="Javascript">
+				if (!Get_Cookie('ck_record')) {
+					Set_Cookie('ck_record','true',30,'/','','');
+				}
+				var show = Get_Cookie('ck_record');
+			
+				if (show == 'true') {
+					this.document.getElementById('div_record').style.display='inline';
+					document['record'].src = '{IMAGE_PATH}hide_submenu_record.gif';
+				} else {
+					this.document.getElementById('div_record').style.display='none';
+					document['record'].src = '{IMAGE_PATH}show_submenu_record.gif';	
+					
+				}
+				</script>
+				{TEST}
+				<!-- END: left_form_new_record -->
+			
+				{LEFT_FORM_CTD}
+				<script language="Javascript">
+				if (!Get_Cookie('showLeftCol')) {
+					Set_Cookie('showLeftCol','true',30,'/','','');
+				}
+				var show = Get_Cookie('showLeftCol');
+			
+				if (show == 'true') {
+					this.document.getElementById('leftCol').style.display='inline';
+					document['HideHandle'].src = '{IMAGE_PATH}hide.gif';
+				} else {
+					this.document.getElementById('leftCol').style.display='none';
+					document['HideHandle'].src = '{IMAGE_PATH}show.gif';	
+					
+				}
+				if (!Get_Cookie('ck_shortcuts')) {
+					Set_Cookie('ck_shortcuts','true',30,'/','','');
+				}
+				var show = Get_Cookie('ck_shortcuts');
+			
+				if (show == 'true') {
+					this.document.getElementById('div_shortcuts').style.display='inline';
+					document['shortcuts'].src = '{IMAGE_PATH}hide_submenu_shortcuts.gif';
+				} else {
+					this.document.getElementById('div_shortcuts').style.display='none';
+					document['shortcuts'].src = '{IMAGE_PATH}show_submenu_shortcuts.gif';	
+					
+				}
+				if (!Get_Cookie('ck_lastview')) {
+					Set_Cookie('ck_lastview','true',30,'/','','');
+				}
+				var show = Get_Cookie('ck_lastview');
+			
+				if (show == 'true') {
+					this.document.getElementById('div_lastview').style.display='inline';
+					document['lastview'].src = '{IMAGE_PATH}hide_submenu_lastview.gif';
+				} else {
+					this.document.getElementById('div_lastview').style.display='none';
+					document['lastview'].src = '{IMAGE_PATH}show_submenu_lastview.gif';	
+					
+				}
+				</script>
+				</table></td><td style="padding-right: 3px;"></td></tr></table></td>
+			    <td class="{HOME_SPACER}" style="vertical-align: top;">
+			<!-- END: main -->

@@ -1,0 +1,585 @@
+<?php
+$viewdefs ['Accounts'] = 
+array (
+  'DetailView' => 
+  array (
+    'templateMeta' => 
+    array (
+      'form' => 
+      array (
+        'buttons' => 
+        array (
+          0 => 
+          array (
+            'customCode' => '{literal}<style>#back_to_bottom:hover{color: #ffffff !important;}</style>{/literal}<a href="#All_sp_tab" id="back_to_bottom" class="button" style="color:#000000; display:block; height:18px; line-height:21px; padding-left:7px; padding-right:7px; text-decoration:none;">Jump to bottom</a>',
+          ),
+          1 => 'EDIT',
+          2 => 'DUPLICATE',
+          3 => 'DELETE',
+          4 => 'FIND_DUPLICATES',
+        ),
+      ),
+      'maxColumns' => '2',
+      'widths' => 
+      array (
+        0 => 
+        array (
+          'label' => '10',
+          'field' => '30',
+        ),
+        1 => 
+        array (
+          'label' => '10',
+          'field' => '30',
+        ),
+      ),
+      'includes' => 
+      array (
+        0 => 
+        array (
+          'file' => 'modules/Accounts/Account.js',
+        ),
+      ),
+    ),
+    'panels' => 
+    array (
+      'default' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            'name' => 'custno_c',
+            'label' => 'LBL_CUSTNO',
+          ),
+          1 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            'name' => 'name',
+            'label' => 'LBL_NAME',
+          ),
+        ),
+        2 => 
+        array (
+          0 => 
+          array (
+            'name' => 'narrative_c',
+            'label' => 'LBL_NARRATIVE',
+          ),
+          1 => NULL,
+        ),
+        3 => 
+        array (
+          0 => 
+          array (
+            'name' => 'billing_address_street',
+            'label' => 'LBL_BILLING_ADDRESS',
+            'type' => 'address',
+            'displayParams' => 
+            array (
+              'key' => 'billing',
+            ),
+          ),
+          1 => 
+          array (
+            'name' => 'shipping_address_street',
+            'label' => 'LBL_SHIPPING_ADDRESS',
+            'type' => 'address',
+            'displayParams' => 
+            array (
+              'key' => 'shipping',
+            ),
+          ),
+        ),
+        4 => 
+        array (
+          0 => 
+          array (
+            'name' => 'phone_office',
+            'label' => 'LBL_PHONE_OFFICE',
+          ),
+          1 => 
+          array (
+            'name' => 'fulldealertype_c',
+            'label' => 'LBL_FULLDEALERTYPE',
+          ),
+        ),
+        5 => 
+        array (
+          0 => 
+          array (
+            'name' => 'phone_fax',
+            'label' => 'LBL_FAX',
+          ),
+          1 => 
+          array (
+            'name' => 'dealertype_c',
+            'label' => 'LBL_DEALERTYPE',
+          ),
+        ),
+        6 => 
+        array (
+          0 => 
+          array (
+            'name' => 'region_c',
+            'label' => 'LBL_REGION',
+          ),
+          1 => 
+          array (
+            'name' => 'date_modified',
+            'label' => 'LBL_DATE_MODIFIED',
+          ),
+        ),
+        7 => 
+        array (
+          0 => 
+          array (
+            'name' => 'location_c',
+            'label' => 'LBL_LOCATION',
+          ),
+          1 => 
+          array (
+            'name' => 'stocklocation_c',
+            'label' => 'LBL_STOCKLOCATION',
+          ),
+        ),
+        8 => 
+        array (
+          0 => 
+          array (
+            'name' => 'slsm_c',
+            'label' => 'LBL_SLSM',
+          ),
+          1 => 
+          array (
+            'name' => 'assigned_user_name',
+            'label' => 'LBL_ASSIGNED_TO',
+          ),
+        ),
+      ),
+      'lbl_panel3' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            'name' => 'mtd_projected_c',
+            'label' => 'LBL_MTD_PROJECTED',
+          ),
+          1 => 
+          array (
+            'name' => 'ytd_projected_c',
+            'label' => 'LBL_YTD_PROJECTED',
+          ),
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            'name' => 'mtd_sales_c',
+            'label' => 'LBL_MTD_SALES',
+          ),
+          1 => 
+          array (
+            'name' => 'ytd_sales_c',
+            'label' => 'LBL_YTD_SALES',
+          ),
+        ),
+        2 => 
+        array (
+          0 => 
+          array (
+            'name' => 'mtd_gppct_c',
+            'label' => 'LBL_MTD_GPPCT',
+          ),
+          1 => 
+          array (
+            'name' => 'ytd_gppct_c',
+            'label' => 'LBL_YTD_GPPCT',
+          ),
+        ),
+        3 => 
+        array (
+          0 => 
+          array (
+            'name' => 'mtd_gp_c',
+            'label' => 'LBL_MTD_GP',
+          ),
+          1 => 
+          array (
+            'name' => 'ytd_gp_c',
+            'label' => 'LBL_YTD_GP',
+          ),
+        ),
+        4 => 
+        array (
+          0 => 
+          array (
+            'name' => 'mtd_budget_sales_c',
+            'label' => 'LBL_MTD_BUDGET_SALES',
+          ),
+          1 => 
+          array (
+            'name' => 'ytd_budget_sales_c',
+            'label' => 'LBL_YTD_BUDGET_SALES',
+          ),
+        ),
+        5 => 
+        array (
+          0 => 
+          array (
+            'name' => 'mtd_budget_gp_c',
+            'label' => 'LBL_MTD_BUDGET_GP',
+          ),
+          1 => 
+          array (
+            'name' => 'ytd_budget_gp_c',
+            'label' => 'LBL_YTD_BUDGET_GP',
+          ),
+        ),
+        6 => 
+        array (
+          0 => 
+          array (
+            'name' => 'mtd_budget_gppct_c',
+            'label' => 'LBL_MTD_BUDGET_GPPCT',
+          ),
+          1 => 
+          array (
+            'name' => 'ytd_budget_gppct_c',
+            'label' => 'LBL_YTD_BUDGET_GPPCT',
+          ),
+        ),
+        7 => 
+        array (
+          0 => 
+          array (
+            'name' => 'mly_sales_c',
+            'label' => 'LBL_MLY_SALES',
+          ),
+          1 => 
+          array (
+            'name' => 'ly_sales_c',
+            'label' => 'LBL_LY_SALES',
+          ),
+        ),
+        8 => 
+        array (
+          0 => 
+          array (
+            'name' => 'ly_gppct_c',
+            'label' => 'LBL_LY_GPPCT',
+          ),
+          1 => 
+          array (
+            'name' => 'ly_gp_c',
+            'label' => 'LBL_LY_GP',
+          ),
+        ),
+      ),
+      'lbl_panel2' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            'name' => 'termscode_c',
+            'label' => 'LBL_TERMSCODE',
+          ),
+          1 => 
+          array (
+            'name' => 'creditcode_c',
+            'label' => 'LBL_CREDITCODE',
+          ),
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            'name' => 'aarbal_c',
+            'label' => 'LBL_AARBAL',
+          ),
+          1 => 
+          array (
+            'name' => 'arcurrent_c',
+            'label' => 'LBL_ARCURRENT',
+          ),
+        ),
+        2 => 
+        array (
+          0 => 
+          array (
+            'name' => 'arfuture_c',
+            'label' => 'LBL_ARFUTURE',
+          ),
+          1 => 
+          array (
+            'name' => 'ar30_60_c',
+            'label' => 'LBL_AR30_60',
+          ),
+        ),
+        3 => 
+        array (
+          0 => 
+          array (
+            'name' => 'ar60_90_c',
+            'label' => 'LBL_AR60_90',
+          ),
+          1 => 
+          array (
+            'name' => 'over_90_c',
+            'label' => 'LBL_OVER_90',
+          ),
+        ),
+        4 => 
+        array (
+          0 => 
+          array (
+            'name' => 'creditlimit_c',
+            'label' => 'LBL_CREDITLIMIT',
+          ),
+        ),
+      ),
+      'lbl_panel4' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            'name' => 'shop_mgmt_sys_c',
+            'label' => 'LBL_SHOP_MGMT_SYS',
+          ),
+          1 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            'name' => 'technicians_c',
+            'label' => 'LBL_TECHNICIANS',
+          ),
+          1 => 
+          array (
+            'name' => 'tech_total_opp_c',
+            'label' => 'LBL_TECH_TOTAL_OPP',
+          ),
+        ),
+        2 => 
+        array (
+          0 => 
+          array (
+            'name' => 'affiliated_banner_c',
+            'label' => 'LBL_AFFILIATED_BANNER',
+          ),
+          1 => NULL,
+        ),
+        3 => 
+        array (
+          0 => 
+          array (
+            'name' => 'banner_c',
+            'label' => 'LBL_BANNER',
+          ),
+          1 => 
+          array (
+            'name' => 'other_banner_c',
+            'label' => 'LBL_OTHER',
+          ),
+        ),
+      ),
+      'lbl_panel5' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            'name' => 'fleet_num_vehicles_c',
+            'label' => 'LBL_FLEET_NUM_VEHICLES',
+          ),
+          1 => 
+          array (
+            'name' => 'fleet_tot_opp_c',
+            'label' => 'LBL_FLEET_TOT_OPP',
+          ),
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            'name' => 'fleet_model_name_c',
+            'label' => 'LBL_FLEET_MODEL_NAME',
+          ),
+          1 => 
+          array (
+            'name' => 'fleet_model_number_c',
+            'label' => 'LBL_FLEET_MODEL_NUMBER',
+          ),
+        ),
+        2 => 
+        array (
+          0 => 
+          array (
+            'name' => 'fleet_model_name2_c',
+            'label' => 'LBL_FLEET_MODEL_NAME2',
+          ),
+          1 => 
+          array (
+            'name' => 'fleet_model_number2_c',
+            'label' => 'LBL_FLEET_MODEL_NUMBER2',
+          ),
+        ),
+        3 => 
+        array (
+          0 => NULL,
+          1 => NULL,
+        ),
+        4 => 
+        array (
+          0 => NULL,
+          1 => NULL,
+        ),
+        5 => 
+        array (
+          0 => NULL,
+          1 => NULL,
+        ),
+        6 => 
+        array (
+          0 => NULL,
+          1 => NULL,
+        ),
+        7 => 
+        array (
+          0 => NULL,
+          1 => NULL,
+        ),
+        8 => 
+        array (
+          0 => NULL,
+          1 => NULL,
+        ),
+        9 => 
+        array (
+          0 => NULL,
+          1 => NULL,
+        ),
+        10 => 
+        array (
+          0 => NULL,
+          1 => NULL,
+        ),
+        11 => 
+        array (
+          0 => NULL,
+          1 => NULL,
+        ),
+        12 => 
+        array (
+          0 => NULL,
+          1 => NULL,
+        ),
+        13 => 
+        array (
+          0 => NULL,
+          1 => NULL,
+        ),
+        14 => 
+        array (
+          0 => 
+          array (
+            'name' => 'fleetmaintenanceoptions_c',
+            'label' => 'LBL_FLEET_MAINT_OPT',
+          ),
+          1 => NULL,
+        ),
+        15 => 
+        array (
+          0 => 
+          array (
+            'name' => 'addl_fleet_info_c',
+            'label' => 'LBL_ADDL_FLEET_INFO',
+          ),
+        ),
+      ),
+      'lbl_panel1' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            'name' => 'dealer_mgmt_sys_c',
+            'label' => 'LBL_DEALER_MGMT_SYS',
+          ),
+          1 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            'name' => 'ford_vehicle_count_c',
+            'label' => 'LBL_FORD_VEHICLE_COUNT',
+          ),
+          1 => 
+          array (
+            'name' => 'gm_vehicle_count_c',
+            'label' => 'LBL_GM_VEHICLE_COUNT',
+          ),
+        ),
+        2 => 
+        array (
+          0 => 
+          array (
+            'name' => 'chrysler_vehicle_count_c',
+            'label' => 'LBL_CHRYSLER_VEHICLE_COUNT',
+          ),
+          1 => 
+          array (
+            'name' => 'other_vehicle_count_c',
+            'label' => 'LBL_OTHER_VEHICLE_COUNT',
+          ),
+        ),
+        3 => 
+        array (
+          0 => 
+          array (
+            'name' => 'dealer_prev_maint_c',
+            'label' => 'LBL_DEALER_PREV_MAINT',
+          ),
+        ),
+      ),
+      'lbl_panel8' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            'name' => 'jobber_num_stores_c',
+            'label' => 'LBL_JOBBER_NUM_STORES',
+          ),
+          1 => 
+          array (
+            'name' => 'jobber_num_trucks_c',
+            'label' => 'LBL_JOBBER_NUM_TRUCKS',
+          ),
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            'name' => 'jobber_retailorwholesale_c',
+            'label' => 'LBL_JOBBER_RETAILORWHOLESALE',
+          ),
+          1 => 
+          array (
+            'name' => 'jobber_affilliation_c',
+            'label' => 'LBL_JOBBER_AFFILLIATION',
+          ),
+        ),
+      ),
+    ),
+  ),
+);
+?>

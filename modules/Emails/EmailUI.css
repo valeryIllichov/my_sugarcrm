@@ -1,0 +1,285 @@
+/*********************************************************************************
+ * SugarCRM is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004 - 2009 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+/**************
+ Autocomplete
+**************/
+
+.ac_mod {
+	position:relative;
+	
+}
+.ac_autocomplete {
+	position:relative;
+}/* set width of widget here*/
+.ac_autocomplete {
+	z-index:9000
+	width: 500px;
+} /* for IE z-index of absolute divs inside relative divs issue */
+.ac_input {
+	_position:absolute;
+	width: 500px;
+	height:1.4em;
+	z-index:0;
+	
+} /* abs for ie quirks */
+.ac_container {
+	position:absolute;
+	top:1.7em;
+	width: 500px;
+}
+.ac_container .yui-ac-content {
+	position:absolute;
+	width:100%;
+	border:1px solid #404040;
+	background:#fff;
+	overflow:hidden;
+	z-index:9050;
+	
+}
+.ac_container .yui-ac-shadow {
+	position:absolute;
+	margin:.3em;
+	width:100%;
+	background:#a0a0a0;
+	z-index:9049;
+	
+}
+.ac_container ul {
+	padding:5px 0;
+	width:100%;
+	
+}
+.ac_container li {
+	padding:0 5px;
+	cursor:default;
+	white-space:nowrap;
+	
+}
+.ac_container li.yui-ac-highlight {
+	background:#ff0;
+	
+}
+.ac_container li.yui-ac-prehighlight {
+	background:#FFFFCC;
+}
+
+
+
+/**************
+ TreeView Icons
+**************/
+.remoteAccount, a.remoteAccount,
+.remoteFolderGroup, a.remoteFolderGroup,
+.remoteFolderGroupUnseen, a.remoteFolderGroupUnseen,
+.sugarFolder, a.sugarFolder,
+.sugarFolderUnseen, a.sugarFolderUnseen, 
+.sugarFolderGroup, a.sugarFolderGroup,
+.sugarFolderGroupUnseen, a.sugarFolderGroupUnseen,
+.sugarFolderDynamic, a.sugarFolderDynamic,
+.sugarFolderDynamicUnseen, a.sugarFolderDynamicUnseen
+{
+	text-decoration : none;
+}
+.remoteAccount {
+	background: transparent url(images/email.gif) no-repeat;
+}
+.remoteAccountGroup {
+	background: transparent url(images/emailGroup.gif) no-repeat;
+	color: #070;
+	font-style: italic;
+}
+
+.remoteFolder, a.remoteFolder,
+.remoteFolderUnseen, a.remoteFolderUnseen,
+.remoteFolderGroupUnseen, a.remoteFolderGroupUnseen {
+	padding-left: 0px;
+	text-decoration : none;
+}
+.remoteFolderUnseen, .remoteFolderGroupUnseen, .sugarFolderUnseen, .sugarFolderGroupUnseen, .sugarFolderDynamicUnseen {
+	font-weight: bold;
+}
+
+.sugarFolderGroup, .sugarFolderGroupUnseen {
+	background: transparent url(../../themes/default/images/icon_email_folder.gif) no-repeat;
+	font-style: italic;
+}
+
+.sugarFolderDynamic, .sugarFolderDynamicUnseen {
+	background: transparent url(../../themes/default/images/icon_email_folder.gif) no-repeat;
+}
+
+/**************
+ Hack for Sugar's pop-over menus
+**************/
+.menu{
+	z-index:100;
+}
+   
+.subDmenu{
+	z-index:100;
+}
+
+
+/**************
+ UI Elements
+**************/
+.sectionTitle {
+	background-color: #eee;
+	padding: 5px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.selectedDiv {
+	color: #00a;
+	background-color: #ccc;
+}
+
+
+.folderSelected {
+	background-color: #f00;
+}
+
+.emailUILabel {
+	width: 1%;
+	vertical-align: top;
+	font-weight: bold;
+	text-align: right;
+	padding-bottom: 1em;
+}
+.emailUILabel button{
+	width: 50;
+	text-align: right;
+}
+
+.emailUIField {
+	text-align: left;
+	padding-bottom: 1em;
+}
+.emailUITextField {
+	border: 1px solid #333;
+}
+.emailUILink {
+	font-family: arial;
+	text-decoration: none;
+}
+
+.groupFolder {
+	color: #007700;
+	font-style: italic;
+}
+
+.sugarFolder {
+	color: #000077;
+}
+
+
+.displayEmailLabel {
+	color: #999;
+	font-weight: bold;
+	text-align: right;
+}
+.displayEmailValue {
+	color: #000;
+}
+.displayEmailLabel, .displayEmailValue {
+	padding: 2px;
+	background-color: #eee;
+}
+.displayEmailValueWhite {
+	padding: 2px;
+	background-color: #fff;
+}
+
+.ieFolder.x-tree-node-collapsed  .x-tree-node-icon {
+    background: transparent url(../../themes/default/images/icon_email_folder.gif) no-repeat;
+}
+
+.ieFolder.x-tree-node-expanded  .x-tree-node-icon {
+    background: transparent url(../../themes/default/images/icon_email_folder_exp.gif) no-repeat;
+}
+
+.x-tree-node-collapsed.sugarFolder  .x-tree-node-icon {
+    background: transparent url(../../themes/default/images/icon_email_sugfolder.gif) no-repeat;
+}
+
+.x-tree-node-expanded.sugarFolder  .x-tree-node-icon {
+    background: transparent url(../../themes/default/images/icon_email_sugfolder_exp.gif) no-repeat;
+}
+
+.groupFolder  .x-tree-node-icon {
+    background: transparent url(../../themes/default/images/icon_email_folder_grp.gif) no-repeat;
+}
+.x-view-selected, .x-view-selected td  {
+    background-color:#316ac5;
+    color:white;
+}
+.address-primary {
+    font-weight: bold;
+}
+
+.sqsFloater, #smartInputFloaterContent {
+    z-index: 11000;	
+}
+
+.input-error {
+    border: 1px solid #f00	
+}
+
+.x-grid-header input {
+	padding: 0px;
+	margin:  0px;
+	border: none;
+	background-color: #EBEBEB;
+	float: left;
+	width: 20px;
+	height 14px;
+	position: relative;
+}
+.maybe {
+    display: inline;
+    white-space: nowrap;
+}
+
+div #rollover {
+    white-space: normal;
+}
+
+.x-dd-drag-ghost {
+	opacity : 1;
+}
+

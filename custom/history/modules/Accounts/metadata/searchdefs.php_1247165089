@@ -1,0 +1,110 @@
+<?php
+$searchdefs ['Accounts'] = 
+array (
+  'layout' => 
+  array (
+    'basic_search' => 
+    array (
+      'custno_c' => 
+      array (
+        'width' => '10%',
+        'label' => 'LBL_CUSTNO',
+        'default' => true,
+        'name' => 'custno_c',
+      ),
+      'name' => 
+      array (
+        'name' => 'name',
+        'label' => 'LBL_NAME',
+        'default' => true,
+      ),
+      'slsm_c' => 
+      array (
+        'width' => '10%',
+        'label' => 'LBL_SLSM',
+        'default' => true,
+        'name' => 'slsm_c',
+      ),
+    ),
+    'advanced_search' => 
+    array (
+      0 => 'name',
+      1 => 
+      array (
+        'name' => 'address_street',
+        'label' => 'LBL_ANY_ADDRESS',
+        'type' => 'name',
+      ),
+      2 => 
+      array (
+        'name' => 'phone',
+        'label' => 'LBL_ANY_PHONE',
+        'type' => 'name',
+      ),
+      3 => 'website',
+      4 => 
+      array (
+        'name' => 'address_city',
+        'label' => 'LBL_CITY',
+        'type' => 'name',
+      ),
+      5 => 
+      array (
+        'name' => 'email',
+        'label' => 'LBL_ANY_EMAIL',
+        'type' => 'name',
+      ),
+      6 => 'annual_revenue',
+      7 => 
+      array (
+        'name' => 'address_state',
+        'label' => 'LBL_STATE',
+        'type' => 'name',
+      ),
+      8 => 'employees',
+      9 => 
+      array (
+        'name' => 'address_postalcode',
+        'label' => 'LBL_POSTAL_CODE',
+        'type' => 'name',
+      ),
+      10 => 
+      array (
+        'name' => 'billing_address_country',
+        'label' => 'LBL_COUNTRY',
+        'type' => 'name',
+        'options' => 'countries_dom',
+      ),
+      11 => 'ticker_symbol',
+      12 => 'sic_code',
+      13 => 'rating',
+      14 => 'ownership',
+      15 => 
+      array (
+        'name' => 'assigned_user_id',
+        'type' => 'enum',
+        'label' => 'LBL_ASSIGNED_TO',
+        'function' => 
+        array (
+          'name' => 'get_user_array',
+          'params' => 
+          array (
+            0 => false,
+          ),
+        ),
+      ),
+      16 => 'account_type',
+      17 => 'industry',
+    ),
+  ),
+  'templateMeta' => 
+  array (
+    'maxColumns' => '3',
+    'widths' => 
+    array (
+      'label' => '10',
+      'field' => '30',
+    ),
+  ),
+);
+?>

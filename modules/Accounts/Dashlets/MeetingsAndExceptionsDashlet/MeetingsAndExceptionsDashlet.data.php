@@ -1,0 +1,85 @@
+<?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
+global $current_user;
+
+$dashletData['MeetingsAndExceptionsDashlet']['searchFields'] = array('date_entered'     => array('default' => ''),
+        'date_modified'    => array('default' => ''),
+        'assigned_user_id' => array('type'    => 'assigned_user_name',
+                'default' => $current_user->name)
+    );
+
+$dashletData['MeetingsAndExceptionsDashlet']['columns'] = array('name' => array('width'   => '30',
+                'label'   => 'LBL_NAME',
+                'link'    => true,
+                'default' => true,
+        ),
+        'custno_c'=> array('width'  => '10',
+                'label'   => 'LBL_CUSTNO',
+                'default' => true,
+                'link' => false
+        ),
+        'Exception'=> array('width'  => '10',
+                'label'   => 'Exception',
+                'default' => true,
+                'sortable' => false
+        ),
+        'MPlanned' => array('width'  => '5',
+                'label'   => 'Num M-Planned',
+                'default' => false,
+                'custom_orderBy' => 'meetings.planned.mplanned',
+        ),
+        'MHeld' => array('width'  => '5',
+                'label'   => 'Num M-Held',
+                'default' => false,
+                'custom_orderBy' => 'meetings.held.mheld',
+        ),
+        'MNotHeld' => array('width'  => '5',
+                'label'   => 'Num M-Not Held',
+                'default' => false,
+                'custom_orderBy' => 'meetings.not held.mnotheld',
+        ),
+        'CPlanned' => array('width'  => '5',
+                'label'   => 'Num C-Planned',
+                'default' => false,
+                'custom_orderBy' => 'calls.planned.cplanned',
+        ),
+        'CHeld' => array('width'  => '5',
+                'label'   => 'Num C-Held',
+                'default' => false,
+                'custom_orderBy' => 'calls.held.cheld',
+        ),
+        'CNotHeld' => array('width'  => '5',
+                'label'   => 'Num C-Not Held',
+                'default' => false,
+                'custom_orderBy' => 'calls.not held.cnotheld',
+        ),
+        'TotalPlanned' => array('width'  => '5',
+                'label'   => 'Total Planned',
+                'default' => true,
+                'custom_orderBy' => 'total|totalplanned|meetings.planned.mplanned|calls.planned.cplanned',
+        ),
+        'TotalHeld' => array('width'  => '5',
+                'label'   => 'Total Held',
+                'default' => true,
+                'custom_orderBy' => 'total|totalheld|meetings.held.mheld|calls.held.cheld',
+        ),
+        'TotalNotHeld' => array('width'  => '5',
+                'label'   => 'Total Not Held',
+                'default' => true,
+                'custom_orderBy' => 'total|totalnotheld|meetings.not held.mnotheld|calls.not held.cnotheld',
+        ),
+        'mtd_sales_c'=> array('width'  => '5',
+                'label'   => 'LBL_MTD_SALES',
+                'default' => true
+        ),
+        'ytd_sales_c' => array('width'  => '5',
+                'label'   => 'LBL_YTD_SALES',
+                'default' => true
+        ),
+        'slsm_c' => array('width'  => '15',
+                'label'   => 'LBL_SLSM',
+                'default' => true
+        )
+);
+?>

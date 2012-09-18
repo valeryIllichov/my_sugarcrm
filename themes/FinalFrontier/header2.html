@@ -1,0 +1,404 @@
+<!--
+/*********************************************************************************
+ * SugarCRM is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004 - 2009 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+/*********************************************************************************
+ * {LBL_CURRENCY_SYM}Header: /cvsroot/sugarcrm/sugarcrm/themes/Amazon/header.html,v 1.14 2004/07/04 04:00:48 sugarclint Exp {LBL_CURRENCY_SYM}
+ ********************************************************************************/
+-->
+<!-- BEGIN: main -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD html 4.01 Transitional//EN">
+<html {DIR}>
+<head >
+<link REL="SHORTCUT ICON" HREF="include/images/sugar_icon.ico">
+<meta http-equiv="Content-Type" content="text/html; charset={LBL_CHARSET}">
+<title>{APP.LBL_BROWSER_TITLE}</title>
+<style type="text/css">@import url("{IMAGE_SERVER}themes/{THEME}/style.css?s={SUGAR_VERSION}&c={JS_CUSTOM_VERSION}"); </style>
+<link href="{IMAGE_SERVER}themes/{THEME}/navigation.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="{IMAGE_SERVER}themes/{THEME}/menu.js"></script>
+<script language="javascript" src="{IMAGE_SERVER}themes/{THEME}/cookie.js"></script>
+<script language="javascript">
+
+function hideLeftCol(id){
+
+	if(this.document.getElementById( id).style.display=='none'){
+		this.document.getElementById( id).style.display='inline';
+
+		Set_Cookie('showLeftCol','true',30,'/','','');
+		var show = Get_Cookie('showLeftCol');
+		document['HideHandle'].src = '{IMAGE_PATH}hide.gif';		
+	}else{
+		this.document.getElementById(  id).style.display='none';
+
+		Set_Cookie('showLeftCol','false',30,'/','','');
+		var show = Get_Cookie('showLeftCol');
+		document['HideHandle'].src = '{IMAGE_PATH}show.gif';	
+
+	}
+}
+
+function showSubMenu(id){
+	if(this.document.getElementById( id).style.display=='none'){
+		tbButtonMouseOver('HideHandle',122,'',10);
+	}
+}
+
+function printPage() {
+	var url = location.href;
+	var is_print = 'print=true';
+	if(url.indexOf(is_print)>-1) {
+		window.print();
+	} else {
+		return;
+	}
+}
+
+</script>
+</head>
+<body {ONLOAD} onMouseOut="closeMenus();" onload="javascript:printPage();">
+
+<SCRIPT LANGUAGE="JavaScript1.2">
+//Snow screen saver by SugarCRM Inc.
+//Modified by SugarCRM Inc.
+//Original:  Altan (snow@altan.hr)
+//Web Site:  http://www.altan.hr/snow
+
+//This script and many more are available free online at
+//The JavaScript Source!! http://javascript.internet.com
+
+
+var no = 50; // snow number
+var speed = 20; // smaller number moves the snow faster
+
+var snowflake = "<img src='{IMAGE_PATH}creature.gif'>";
+var ns4up = (document.layers) ? 1 : 0;  // browser sniffer
+var ie4up = (document.all) ? 1 : 0;
+var ns6 = (document.getElementById&&!document.all)?1:0;
+var dx, xp, yp;    // coordinate and position variables
+var am, stx, sty;  // amplitude and step variables
+var i, doc_width = 800, doc_height = 600;
+doc_height=(ns4up||ns6)?window.innerHeight:window.document.body.clientHeight;
+doc_width=(ns4up||ns6)?window.innerWidth:window.document.body.clientWidth;
+
+dx = new Array();
+xp = new Array();
+yp = new Array();
+am = new Array();
+stx = new Array();
+sty = new Array();
+for (i = 0; xp[i] < doc_width; ++ i) {
+dx[i] = 0;                        // set coordinate variables
+xp[i] = xp[i-1] + 30;  // set position variables
+yp[i] = Math.random()*doc_height;
+am[i] = Math.random()*20;         // set amplitude variables
+stx[i] = 0; // set step variables
+sty[i] = 1;     // set step variables
+	if (ns4up) {                      // set layers
+		if (i == 0) {
+			document.write("<layer name=\"dot"+ i +"\" left=\"-16\" ");
+			document.write("top=\"-16\" visibility=\"show\"><font size=3 color=#ffffff><b>");
+			document.write(snowflake + "</b></font></layer>");
+		} else {
+			document.write("<layer name=\"dot"+ i +"\" left=\"-16\" ");
+			document.write("top=\"-16\" visibility=\"show\"><font size=3 color=#ffffff><b>");
+			document.write(snowflake + "</b></font></layer>");
+		}
+	} else {
+		if (i == 0) {
+			document.write("<div id=\"dot"+ i +"\" style=\"POSITION: ");
+			document.write("absolute; Z-INDEX: "+ i +"; VISIBILITY: ");
+			document.write("visible; TOP: -16px; LEFT: -16px;\"><font size=3 color=#ffffff><b>");
+			document.write(snowflake + "</b></font></div>");
+		} else {
+			document.write("<div id=\"dot"+ i +"\" style=\"POSITION: ");
+			document.write("absolute; Z-INDEX: "+ i +"; VISIBILITY: ");
+			document.write("visible; TOP: -16px; LEFT: -16px;\"><font size=3 color=#ffffff><b>");
+			document.write(snowflake + "</b></font></div>");
+		}
+	}
+}
+
+function snow() {  // animation function
+document.onmousemove = stopSnowStartTimer;
+document.onkeypress = stopSnowStartTimer;
+doc_height=(ns4up||ns6)?window.innerHeight:window.document.body.clientHeight;
+doc_width=(ns4up||ns6)?window.innerWidth:window.document.body.clientWidth;
+
+	for (i = 0; i < no; ++ i) {  // iterate for every dot
+		yp[i] += sty[i];
+		if (yp[i] > doc_height+50) {
+			xp[i] = Math.random()*(doc_width-am[i]-30);
+			yp[i] = 0;
+			stx[i] = 0;
+			sty[i] = 1;
+		}
+		dx[i] += stx[i];
+
+		if (ie4up) {
+			document.all["dot"+i].style.pixelTop = yp[i];
+			document.all["dot"+i].style.pixelLeft = xp[i] + am[i]*Math.sin(dx[i]);
+		} else if (ns4up) {
+			document.layers["dot"+i].top = yp[i];
+			document.layers["dot"+i].left = xp[i] + am[i]*Math.sin(dx[i]);
+		} else if (ns6) {
+			document.getElementById("dot"+i).style.top=yp[i];
+			document.getElementById("dot"+i).style.left=xp[i] + am[i]*Math.sin(dx[i]);
+		}
+
+	}
+snowID = setTimeout("snow()", speed);
+}
+
+
+function stopSnowStartTimer() {
+	seconds=0;
+	timer();
+	clearTimeout(snowID);
+	for (i = 0; i < no; ++ i) {
+		if (ie4up) {
+			document.all["dot"+i].style.pixelTop = -16;
+			document.all["dot"+i].style.pixelLeft = -16;
+		} else if (ns4up) {
+			document.layers["dot"+i].top = -16;
+			document.layers["dot"+i].left = -16;
+		} else if (ns6) {
+			document.getElementById("dot"+i).style.top=-16;
+			document.getElementById("dot"+i).style.left=-16;
+		}
+	}
+
+}
+
+var seconds=0;
+
+function timer() {
+	seconds=seconds+1;
+	//document.ContactSave.first_name.value=seconds;
+	timerID = setTimeout("timer()", 1000);
+		if (seconds>5) {// if no mouse movement or button presses for 5 mins, start animation
+			clearTimeout(timerID);
+			if (ns4up || ie4up || ns6) {
+			snow();
+			}
+	}
+	document.onmousemove = resetTimer;
+	document.onkeypress = resetTimer;
+}
+
+function resetTimer() {
+	seconds=0;
+}
+
+
+
+
+window.onload=timer;
+
+</script>
+	<!-- BEGIN: gcl_submenu -->
+	<div id="{GCL_SUBMENU_KEY}Menu" class="menu">
+	<!-- BEGIN: gcl_submenu_items -->
+	<a href="{GCL_SUBMENU_LINK_URL}" class="menuItem" id="{GCL_SUBMENU_LINK_KEY}Handle" parentid="{GCL_SUBMENU_KEY}Menu" onMouseOver="hiliteItem(this,'yes'); closeSubMenus(this);" onMouseOut="unhiliteItem(this);">{GCL_SUBMENU_LINK_LABEL}</a>
+	<!-- END: gcl_submenu_items -->
+	</div>
+	<!-- END: gcl_submenu -->
+	
+	
+	<div id="MoreMenu" class="menu">
+	<!-- BEGIN: more -->
+	<a href="index.php?module={MODULE_KEY}&action=index{MODULE_QUERY}" class="menuItem" id="{MODULE_KEY}Handle" parentid="MoreMenu" onMouseOver="hiliteItem(this,'yes'); closeSubMenus(this);" onMouseOut="unhiliteItem(this);">{MODULE_NAME}</a>
+	<!-- END: more -->
+	</div>
+	<div id="HideMenu" class="subDmenu">
+	<p>
+	<table cellpadding="0" cellspacing="0" border="0" width="180" class="leftColumnModuleHead" onMouseOver="hiliteItem(this,'no');">
+    <tr>
+		<th width="9"><img src="{IMAGE_PATH}moduleTab_left.gif" alt="{SHORTCUTS}" width="9" height="21" border="0"></th>
+		<th style="background-image : url({IMAGE_PATH}moduleTab_middle.gif);" width="100%">{SHORTCUTS}</th>
+		<th width="9"><img src="{IMAGE_PATH}moduleTab_right.gif" alt="{SHORTCUTS}" width="9" height="21" border="0"></th></tr>
+	</table>
+	
+	<table cellpadding="0" cellspacing="0" border="0" class="subMenu" width="180" onMouseOver="hiliteItem(this,'no');">
+	<!-- BEGIN: hide -->
+			<tr>
+			<td class="subMenuTDIcon" width="16"><a onMouseOver="document.getElementById('{SC_MODULE_NAME}_sh').style.background='#006666';" onMouseOut="document.getElementById('{SC_MODULE_NAME}_sh').style.background='#35A6A6';" class="subMenuLink" href="{URL}">{SC_IMAGE}</a></td>
+			<td nowrap id="{SC_MODULE_NAME}_sh" class="subMenuTD" onMouseOver="this.style.background='#006666';this.style.cursor='hand';" onMouseOut="this.style.background='#222222';this.style.cursor='auto';" onClick="location.href='{URL}'">&nbsp;<a class="subMenuLink" href="{URL}">{LABEL}</A></td>
+			</tr>
+			<tr>
+			<td height="2" style="background-color: #006666;"><img src="{IMAGE_SERVER}include/images/blank.gif" width="1" height="2" border="0" alt="{MODULE_NAME}"></td>
+<td height="2" style="background-image : url({IMAGE_PATH}subMenuBg.gif); background-color: #000000;"><img src="{IMAGE_SERVER}include/images/blank.gif" width="1" height="2" border="0" alt="{MODULE_NAME}"></td>
+			</tr>
+	<!-- END: hide -->
+	</table>
+	</p>
+	</div>
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr>
+    <td colspan="3">
+		<table cellspacing="0" cellpadding="0" border="0" width="100%">
+		<tr height="50">
+		    <td><img src="{COMPANY_LOGO}" width="212" height="40" alt="Company Logo" border="0" style="margin-left: 10px;"></td>
+		    <td align="right" nowrap class="myArea" style="padding-right: 10px;">
+		    <!-- BEGIN: global_control_links -->
+		    <a href="{GCL_URL}" class="myAreaLink" {GCL_MENU}>{GCL_LABEL}</a>{MENU_ARROW}{SEPARATOR}
+		    <!-- END: global_control_links -->
+
+	</td>
+		</tr>
+		 <tr>
+		    <td colspan="2">
+			<table cellspacing="0" cellpadding="0" border="0" width="100%">
+			<tr height="21">
+			    <td style="padding-left:7px;"><img src="{IMAGE_SERVER}include/images/blank.gif" width="2" height="1" border="0"></td>
+				<!-- BEGIN: tab -->
+				<td>
+				<table cellspacing="0" cellpadding="0" border="0" width="100%">
+			<tr height="21">
+				<td valign="bottom" style="background-image : url({IMAGE_PATH}{TAB_CLASS}_left.gif);"><img src="{IMAGE_SERVER}include/images/blank.gif" width="6" height="1" border="0" alt="{MODULE_NAME}"></td>
+			    <td valign="bottom" style="background-image : url({IMAGE_PATH}{TAB_CLASS}_middle.gif);" class="{TAB_CLASS}" nowrap>{LINK}</td>
+				<td valign="bottom"  style="background-image : url({IMAGE_PATH}{TAB_CLASS}_right.gif);"><img src="{IMAGE_SERVER}include/images/blank.gif" width="6" height="1" border="0" alt="{MODULE_NAME}"></td>
+				<td style="background-image : url({IMAGE_PATH}emptyTabSpace.gif);"><img src="{IMAGE_SERVER}include/images/blank.gif" width="1" height="1" border="0" alt=""></td>
+				<td valign="bottom" style="background-image : url({IMAGE_PATH}emptyTabSpace.gif);">{MORE}</td>
+</tr>
+
+			</table>
+			</td>
+				<!-- END: tab -->
+				<td width="100%" style="background-image : url({IMAGE_PATH}emptyTabSpace.gif);"><img src="{IMAGE_SERVER}include/images/blank.gif" width="1" height="1" border="0" alt=""></td>
+			    <td style="padding-right:7px;"><img src="{IMAGE_SERVER}include/images/blank.gif" width="2" height="1" border="0"></td>
+			</tr>
+
+			</table>
+     </td>
+  </tr>
+		<tr height="22"><form name='UnifiedSearch' onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
+				  <input type="hidden" name="action" value="UnifiedSearch">
+				  <input type="hidden" name="module" value="Home">
+				  <input type="hidden" name="search_form" value="false">
+				  <input type="hidden" name="advanced" value="false">
+		    <td class="subTabBar" colspan="2">
+			<table width="100%" cellspacing="0" cellpadding="0" border="0" height="22">
+			<tr>
+			    <td height="22" valign="top"><img src="{IMAGE_PATH}welcomeBar_left.gif" width="8" height="22" border="0"></td>
+				<td id="welcome" class="welcome" width="100%" height="22">{APP.NTC_WELCOME} {CURRENT_USER}</td>
+				<!-- BEGIN: left_form_search -->
+				<td class="search" nowrap style="padding: 0px" align="right"><img id="unified_search_advanced_img" src="{IMAGE_PATH}MoreDetail.png" width="8" height="7" border="0" alt="Search">&nbsp;<b>{TITLE}</b></td>
+				<td valign="middle" nowrap class="search">&nbsp;<input type="text" class="searchField" name="query_string" id="query_string" size="20" value="{SEARCH}">&nbsp;<input type="image" class="searchButton" width="26" height="22" src="{IMAGE_PATH}searchButton.gif" value="{APP.LBL_SEARCH_BUTTON_LABEL}" align="top" alt="{SEARCH}"></td>
+			    <td height="22" valign="top"><img src="{IMAGE_PATH}welcomeBar_right.gif" width="8" height="22" border="0"></td>
+		<!-- END: left_form_search -->
+			</tr>
+			</table>
+			</form>
+			<div id="unified_search_advanced_div" style="display: none; height: 1px; position: absolute; overflow: hidden; width: 300px; padding-top: 5px"></div>
+			</td>
+			
+
+</div>
+		</tr>
+		</table>
+	</td>
+</tr>
+<tr height="20">
+	<td class="lastView" nowrap colspan="2">	<!-- BEGIN: left_form_recent_view -->
+		<b>{TITLE_LAST_VIEW}:&nbsp;&nbsp;</b>
+		<!-- BEGIN: left_form_recent_view_row -->
+			 	<a class="lastViewLink" title="[{APP.LBL_ALT_HOT_KEY}{ROW_NUMBER}]" accessKey="{ROW_NUMBER}" href="{RECENT_URL}">{RL_IMAGE}</a>&nbsp;<a class="lastViewLink" title="[{APP.LBL_ALT_HOT_KEY}{ROW_NUMBER}]" accessKey="{ROW_NUMBER}" href="{RECENT_URL}">{RECENT_LABEL}</A>&nbsp;
+		<!-- END: left_form_recent_view_row -->
+		<!-- BEGIN: left_form_recent_view_empty -->
+
+			{APP.NTC_NO_ITEMS_DISPLAY}
+
+		<!-- END: left_form_recent_view_empty -->
+
+		<!-- END: left_form_recent_view --></td>
+</tr>
+<tr height="11">
+	<td colspan="3" style="padding-left: 10px;"></td>
+</tr>
+<tr>
+	<td colspan="3">
+	<table cellpadding="0" cellspacing="0" border="0" width="100%">
+	<tr>
+    {LEFT_FORM_OTD}
+    
+
+	<!-- BEGIN: left_form -->
+	<p>
+	      	<table cellpadding="0" cellspacing="0" border="0" width="100%" class="leftColumnModuleHead">
+  <tr>
+		<th width="9"><img src="{IMAGE_PATH}moduleTab_left.gif" alt="{SHORTCUTS}" width="9" height="21" border="0"></th>
+		<th style="background-image : url({IMAGE_PATH}moduleTab_middle.gif);" width="100%">{SHORTCUTS}</th>
+		<th width="9"><img src="{IMAGE_PATH}moduleTab_right.gif" alt="{SHORTCUTS}" width="9" height="21" border="0"></th></tr>
+		</table>
+<!-- BEGIN: sub_menu -->
+		<table cellpadding="0" cellspacing="0" border="0" class="subMenu" width="100%">
+
+			<!-- BEGIN: sub_menu_item -->
+			<tr>
+			<td class="subMenuTDIcon" width="16"><a onMouseOver="document.getElementById('{SC_MODULE_NAME}_sh').style.background='#35A6A6';" onMouseOut="document.getElementById('{SC_MODULE_NAME}_sh').style.background='#35A6A6';" class="subMenuLink" href="{URL}">{SC_IMAGE}</a></td>
+			<td nowrap id="{SC_MODULE_NAME}_sh" class="subMenuTD" onMouseOver="this.style.background='#006666';this.style.cursor='hand';" onMouseOut="this.style.background='#222222';this.style.cursor='auto';" onClick="location.href='{URL}'">&nbsp;<a class="subMenuLink" href="{URL}">{LABEL}</A></td>
+					</tr>
+			<tr>
+			<td height="2" style="background-image : url({IMAGE_PATH}subMenuIconBg.gif); background-color: #006666;"><img src="{IMAGE_SERVER}include/images/blank.gif" width="1" height="2" border="0" alt="{MODULE_NAME}"></td>
+<td height="2" style="background-image : url({IMAGE_PATH}subMenuBg.gif); background-color: #000000;"><img src="{IMAGE_SERVER}include/images/blank.gif" width="1" height="2" border="0" alt="{MODULE_NAME}"></td>
+					</tr>
+<!-- END: sub_menu_item -->
+
+		    	</table>
+			<!-- END: sub_menu -->
+		</p>
+	<script language="Javascript">
+	if (!Get_Cookie('showLeftCol')) {
+		Set_Cookie('showLeftCol','true',30,'/','','');
+	}
+	var show = Get_Cookie('showLeftCol');
+
+	if (show == 'true') {
+		this.document.getElementById('leftCol').style.display='inline';
+		document['HideHandle'].src = '{IMAGE_PATH}hide.gif';
+	} else {
+		this.document.getElementById('leftCol').style.display='none';
+		document['HideHandle'].src = '{IMAGE_PATH}show.gif';	
+		
+	}
+	</script>
+	<!-- END: left_form -->
+	<!-- BEGIN: left_form_new_record -->
+	{NEW_RECORD}
+	<!-- END: left_form_new_record -->
+	
+	{LEFT_FORM_CTD}
+
+    <td style="padding-right: 10px; vertical-align: top; width: 100%;">
+<!-- END: main -->

@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/sugar/!svn/ver/7/Sugar%20Modules/SecuritySuite%205.20f/install_dir/modules/SecurityGroups
+END
+vardefs.php
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/sugar/!svn/ver/7/Sugar%20Modules/SecuritySuite%205.20f/install_dir/modules/SecurityGroups/vardefs.php
+END
+SecurityGroupUserRelationshipEdit.php
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/sugar/!svn/ver/7/Sugar%20Modules/SecuritySuite%205.20f/install_dir/modules/SecurityGroups/SecurityGroupUserRelationshipEdit.php
+END
+config.html
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/sugar/!svn/ver/7/Sugar%20Modules/SecuritySuite%205.20f/install_dir/modules/SecurityGroups/config.html
+END
+AssignGroups.php
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/sugar/!svn/ver/7/Sugar%20Modules/SecuritySuite%205.20f/install_dir/modules/SecurityGroups/AssignGroups.php
+END
+Menu.php
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/sugar/!svn/ver/7/Sugar%20Modules/SecuritySuite%205.20f/install_dir/modules/SecurityGroups/Menu.php
+END
+SaveConfig.php
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/sugar/!svn/ver/7/Sugar%20Modules/SecuritySuite%205.20f/install_dir/modules/SecurityGroups/SaveConfig.php
+END
+SaveSecurityGroupUserRelationship.php
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/sugar/!svn/ver/7/Sugar%20Modules/SecuritySuite%205.20f/install_dir/modules/SecurityGroups/SaveSecurityGroupUserRelationship.php
+END
+SecurityGroup.php
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/sugar/!svn/ver/8/Sugar%20Modules/SecuritySuite%205.20f/install_dir/modules/SecurityGroups/SecurityGroup.php
+END
+SecurityGroupUserRelationship.php
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/sugar/!svn/ver/7/Sugar%20Modules/SecuritySuite%205.20f/install_dir/modules/SecurityGroups/SecurityGroupUserRelationship.php
+END
+SecurityGroup_sugar.php
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/sugar/!svn/ver/7/Sugar%20Modules/SecuritySuite%205.20f/install_dir/modules/SecurityGroups/SecurityGroup_sugar.php
+END
+config.php
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/sugar/!svn/ver/7/Sugar%20Modules/SecuritySuite%205.20f/install_dir/modules/SecurityGroups/config.php
+END
+Forms.php
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/sugar/!svn/ver/7/Sugar%20Modules/SecuritySuite%205.20f/install_dir/modules/SecurityGroups/Forms.php
+END
+MassAssign.php
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/sugar/!svn/ver/7/Sugar%20Modules/SecuritySuite%205.20f/install_dir/modules/SecurityGroups/MassAssign.php
+END
+SecurityGroupUserRelationshipEdit.html
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/sugar/!svn/ver/7/Sugar%20Modules/SecuritySuite%205.20f/install_dir/modules/SecurityGroups/SecurityGroupUserRelationshipEdit.html
+END

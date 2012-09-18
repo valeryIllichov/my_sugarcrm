@@ -1,0 +1,211 @@
+.overlay {
+	position:absolute;
+	display:block;
+}
+
+.tt {
+	visibility:hidden;
+	position:absolute;
+	color:#333;
+	background-color:#FDFFB4;
+	font-family:arial,helvetica,verdana,sans-serif;
+	padding:2px;
+	border:1px solid #FCC90D;
+	font:100% sans-serif;
+	width:auto;
+}
+
+* html body.masked select {
+	visibility:hidden;
+}
+
+* html div.panel-container select {
+	visibility:inherit;
+}
+
+* html div.drag select {
+	visibility:hidden;
+}
+
+* html div.hide-select select {
+	visibility:hidden;
+}
+
+.mask {
+    z-index:0;   
+    display:none;
+    position:absolute;
+    top:0;
+    left:0;
+    background-color:#CCC;
+    -moz-opacity: 0.5;
+    opacity:.50;
+    filter: alpha(opacity=50);
+    }
+.mask[id]{ /* IE6 and below Can't See This */
+    position:fixed;
+}
+
+.hide-scrollbars * {
+	overflow:hidden;
+}
+
+.hide-scrollbars textarea, .hide-scrollbars select {
+	overflow:hidden;
+	display:none;
+}
+
+.show-scrollbars textarea, .show-scrollbars select {
+	overflow:visible;
+}
+
+.panel-container {
+	position:absolute;
+	background-color:transparent;
+	z-index:6;
+	visibility:hidden;
+	overflow:visible;
+	width:auto;
+}
+
+.panel-container.matte {
+	padding:3px;
+	background-color:#FFF;
+}
+
+.panel-container.matte .underlay {
+	display:none;
+}
+
+.panel-container.shadow {
+	padding:0px;
+	background-color:transparent;
+}
+
+.panel-container.shadow .underlay {
+	visibility:inherit;
+	position:absolute;
+	background-color:#CCC;
+	top:3px;left:3px;
+	z-index:0;
+	width:100%;
+	height:100%;
+    -moz-opacity: 0.7;
+    opacity:.70;
+    filter:alpha(opacity=70);
+}
+
+.panel {
+	visibility:hidden;
+	border-collapse:separate;
+	position:relative;
+	left:0px;top:0px;
+	font:12px Arial;
+	background-color:#FFF;
+	border:1px solid #000;
+	z-index:1;
+	overflow:auto;
+color: #000;
+}
+ul#dashletCategories li a:link, ul#dashletCategories li a:visited
+{
+	color: #444;
+	background: #eee;
+}
+ul#dashletCategories li a.current, ul#dashletCategories li a.current:hover
+{
+	color: #444;
+	background: transparent;
+}
+.panel .hd {
+	background-color:#ddd;
+	color:#444;
+	font-size:13px;
+	border-top:1px solid #FFF;
+	border-bottom:1px solid #999;
+	font-weight:bold;
+	overflow:hidden;
+	padding:4px 4px 4px 8px;
+}
+
+.panel .bd {
+	overflow:hidden;
+	padding:6px 8px 10px 8px;
+	background-color:#fff;
+	color:#444;
+}
+.panel .bd b, .panel td, .panel tabFormtable. td {
+background: #fff;
+color: #000;
+}
+.panel .tabForm {
+margin: 0;
+}
+.panel .bd p {
+	margin:0;
+}
+
+.panel .close {
+	position:absolute;
+	top:5px;
+	right:4px;
+	z-index:6;
+	height:12px;
+	width:12px;
+	margin:0px;
+	padding:0px;
+	background-repeat:no-repeat;
+	background-position: center right;
+	cursor:pointer;
+	visibility:inherit;
+}
+
+.panel .close.nonsecure {
+	background-image:url(close12_1.gif);
+}
+
+.panel .close.secure {
+	background-image:url(close12_1.gif);
+}
+
+.panel .ft {
+	padding:4px;
+	overflow:hidden;
+}
+
+.simple-dialog .bd .icon {
+	background-repeat:no-repeat;
+	width:16px;
+	height:16px;
+	margin-right:10px;
+	float:left;
+}
+
+.dialog .ft, .simple-dialog .ft {
+	padding-bottom:5px;
+	padding-right:5px;
+	text-align:right;
+}
+
+.dialog form, .simple-dialog form {
+	margin:0;
+}
+
+.button-group button {
+}
+
+.button-group button.default {
+font-weight: bold;
+color: #444;
+}
+
+.button-group button:hover, .button-group button.hover { 
+}
+
+.button-group button:active { 
+}
+
+.panel input  {
+background: #fff;
+color: #000;
+}

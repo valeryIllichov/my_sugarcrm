@@ -1,0 +1,85 @@
+<?php
+$searchdefs ['Opportunities'] = 
+array (
+  'layout' => 
+  array (
+    'basic_search' => 
+    array (
+      'name' => 
+      array (
+        'name' => 'name',
+        'label' => 'LBL_OPPORTUNITY_NAME',
+        'default' => true,
+      ),
+      'account_name' => 
+      array (
+        'name' => 'account_name',
+        'label' => 'LBL_ACCOUNT_NAME',
+        'default' => true,
+      ),
+      'current_user_only' => 
+      array (
+        'name' => 'current_user_only',
+        'label' => 'LBL_CURRENT_USER_FILTER',
+        'type' => 'bool',
+        'default' => true,
+      ),
+      'sales_stage' => 
+      array (
+        'width' => '10%',
+        'label' => 'LBL_SALES_STAGE',
+        'default' => true,
+        'name' => 'sales_stage',
+      ),
+      'opportunity_type' => 
+      array (
+        'width' => '10%',
+        'label' => 'LBL_TYPE',
+        'default' => true,
+        'name' => 'opportunity_type',
+      ),
+      'date_closed' => 
+      array (
+        'width' => '10%',
+        'label' => 'LBL_DATE_CLOSED',
+        'default' => true,
+        'name' => 'date_closed',
+      ),
+    ),
+    'advanced_search' => 
+    array (
+      0 => 'name',
+      1 => 'amount',
+      2 => 'date_closed',
+      3 => 'probability',
+      4 => 'next_step',
+      5 => 'lead_source',
+      6 => 'sales_stage',
+      7 => 
+      array (
+        'name' => 'assigned_user_id',
+        'type' => 'enum',
+        'label' => 'LBL_ASSIGNED_TO',
+        'function' => 
+        array (
+          'name' => 'get_user_array',
+          'params' => 
+          array (
+            0 => false,
+          ),
+        ),
+      ),
+      8 => 'account_name',
+    ),
+  ),
+  'templateMeta' => 
+  array (
+    'maxColumns' => '3',
+    'widths' => 
+    array (
+      'label' => '10',
+      'field' => '30',
+    ),
+  ),
+);
+?>

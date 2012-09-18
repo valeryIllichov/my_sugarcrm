@@ -1,0 +1,521 @@
+<?php
+$viewdefs ['Accounts'] = 
+array (
+  'EditView' => 
+  array (
+    'templateMeta' => 
+    array (
+      'form' => 
+      array (
+        'buttons' => 
+        array (
+          0 => 'SAVE',
+          1 => 'CANCEL',
+        ),
+      ),
+      'maxColumns' => '2',
+      'widths' => 
+      array (
+        0 => 
+        array (
+          'label' => '10',
+          'field' => '30',
+        ),
+        1 => 
+        array (
+          'label' => '10',
+          'field' => '30',
+        ),
+      ),
+      'includes' => 
+      array (
+        0 => 
+        array (
+          'file' => 'modules/Accounts/Account.js',
+        ),
+      ),
+    ),
+    'panels' => 
+    array (
+      'lbl_account_information' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            'name' => 'custno_c',
+            'label' => 'LBL_CUSTNO',
+          ),
+          1 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            'name' => 'name',
+            'label' => 'LBL_NAME',
+            'displayParams' => 
+            array (
+              'required' => true,
+            ),
+          ),
+        ),
+        2 => 
+        array (
+          0 => 
+          array (
+            'name' => 'narrative_c',
+            'label' => 'LBL_NARRATIVE',
+          ),
+          1 => NULL,
+        ),
+        3 => 
+        array (
+          0 => 
+          array (
+            'name' => 'assigned_user_name',
+            'label' => 'LBL_ASSIGNED_TO',
+          ),
+        ),
+      ),
+      'lbl_panel3' => 
+      array (
+        0 => 
+        array (
+          0 => NULL,
+          1 => NULL,
+        ),
+      ),
+      'lbl_panel2' => 
+      array (
+        0 => 
+        array (
+          0 => NULL,
+          1 => NULL,
+        ),
+      ),
+      'lbl_panel6' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            'name' => 'hotbuttons_c',
+            'label' => 'LBL_HOTBUTTONS',
+          ),
+          1 => 
+          array (
+            'name' => 'internet_c',
+            'label' => 'LBL_INTERNET',
+          ),
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            'name' => 'employees',
+            'label' => 'LBL_EMPLOYEES',
+          ),
+          1 => 
+          array (
+            'name' => 'bays_c',
+            'label' => 'LBL_BAYS',
+          ),
+        ),
+        2 => 
+        array (
+          0 => 
+          array (
+            'name' => 'primary_suppliers_c',
+            'label' => 'LBL_PRIMARY_SUPPLIER',
+          ),
+          1 => 
+          array (
+            'name' => 'fmp_visa_c',
+            'label' => 'LBL_FMP_VISA',
+          ),
+        ),
+        3 => 
+        array (
+          0 => 
+          array (
+            'name' => 'primary_suppliers1_c',
+            'label' => 'LBL_PRIMARY_SUPPLIER1',
+          ),
+          1 => 
+          array (
+            'name' => 'motorcraft_rewards_c',
+            'label' => 'LBL_MOTOR_REWARDS',
+          ),
+        ),
+        4 => 
+        array (
+          0 => 
+          array (
+            'name' => 'primary_suppliers2_c',
+            'label' => 'LBL_PRIMARY_SUPPLIER2',
+          ),
+          1 => 
+          array (
+            'name' => 'acdelco_rewards_c',
+            'label' => 'LBL_ACDELCO_REWARDS',
+          ),
+        ),
+        5 => 
+        array (
+          0 => 
+          array (
+            'name' => 'primary_suppliers3_c',
+            'label' => 'LBL_PRIMARY_SUPPLIER3',
+          ),
+          1 => 
+          array (
+            'name' => 'nexpart_c',
+            'label' => 'LBL_NEXPART',
+          ),
+        ),
+        6 => 
+        array (
+          0 => 
+          array (
+            'name' => 'larger_group_c',
+            'label' => 'LBL_LARGER_GROUP',
+          ),
+          1 => 
+          array (
+            'name' => 'fmpconnect_c',
+            'label' => 'LBL_FMPCONNECT',
+          ),
+        ),
+        7 => 
+        array (
+          0 => 
+          array (
+            'name' => 'larger_group_name_c',
+            'label' => 'LBL_LARGER_GROUP_NAME',
+          ),
+          1 => NULL,
+        ),
+        8 => 
+        array (
+          0 => 
+          array (
+            'name' => 'additional_notes_c',
+            'label' => 'LBL_ADDITIONAL_NOTES',
+          ),
+        ),
+      ),
+      'lbl_panel1' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            'name' => 'dealer_mgmt_sys_c',
+            'label' => 'LBL_DEALER_MGMT_SYS',
+          ),
+          1 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            'name' => 'ford_vehicle_count_c',
+            'label' => 'LBL_FORD_VEHICLE_COUNT',
+          ),
+        ),
+        2 => 
+        array (
+          0 => 
+          array (
+            'name' => 'chrysler_vehicle_count_c',
+            'label' => 'LBL_CHRYSLER_VEHICLE_COUNT',
+          ),
+        ),
+        3 => 
+        array (
+          0 => 
+          array (
+            'name' => 'gm_vehicle_count_c',
+            'label' => 'LBL_GM_VEHICLE_COUNT',
+          ),
+        ),
+        4 => 
+        array (
+          0 => 
+          array (
+            'name' => 'other_vehicle_count_c',
+            'label' => 'LBL_OTHER_VEHICLE_COUNT',
+          ),
+        ),
+        5 => 
+        array (
+          0 => 
+          array (
+            'name' => 'dealer_prev_maint_c',
+            'label' => 'LBL_DEALER_PREV_MAINT',
+          ),
+        ),
+      ),
+      'lbl_panel4' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            'name' => 'shop_mgmt_sys_c',
+            'label' => 'LBL_SHOP_MGMT_SYS',
+          ),
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            'name' => 'technicians_c',
+            'label' => 'LBL_TECHNICIANS',
+          ),
+          1 => 
+          array (
+            'name' => 'tech_total_opp_c',
+            'label' => 'LBL_TECH_TOTAL_OPP',
+          ),
+        ),
+        2 => 
+        array (
+          0 => 
+          array (
+            'name' => 'affiliated_banner_c',
+            'label' => 'LBL_AFFILIATED_BANNER',
+          ),
+          1 => NULL,
+        ),
+        3 => 
+        array (
+          0 => 
+          array (
+            'name' => 'banner_c',
+            'label' => 'LBL_BANNER',
+          ),
+          1 => 
+          array (
+            'name' => 'other_banner_c',
+            'label' => 'LBL_OTHER',
+          ),
+        ),
+      ),
+      'lbl_panel5' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            'name' => 'fleet_num_vehicles_c',
+            'label' => 'LBL_FLEET_NUM_VEHICLES',
+          ),
+          1 => 
+          array (
+            'name' => 'fleet_tot_opp_c',
+            'label' => 'LBL_FLEET_TOT_OPP',
+          ),
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            'name' => 'percent_okv_c',
+            'label' => 'LBL_PERCENT_OKV',
+          ),
+          1 => 
+          array (
+            'name' => 'fleet_parts_spent_c',
+            'label' => 'LBL_FLEET_PARTS_SPENT',
+          ),
+        ),
+        2 => 
+        array (
+          0 => 
+          array (
+            'name' => 'own_lease_c',
+            'label' => 'LBL_OWN_LEASE',
+          ),
+          1 => 
+          array (
+            'name' => 'vehicle_age_c',
+            'label' => 'LBL_VEHICLE_AGE',
+          ),
+        ),
+        3 => 
+        array (
+          0 => 
+          array (
+            'name' => 'fleetmaintenanceoptions_c',
+            'label' => 'LBL_FLEET_MAINT_OPT',
+          ),
+          1 => 
+          array (
+            'name' => 'rfp_c',
+            'label' => 'LBL_RFP',
+          ),
+        ),
+      ),
+      'lbl_panel7' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            'name' => 'model_ford_c',
+            'label' => 'LBL_MODEL_FORD',
+          ),
+          1 => 
+          array (
+            'name' => 'ford_pct_fleet_c',
+            'label' => 'LBL_FORD_PCT_FLEET',
+          ),
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            'name' => 'model_gm_c',
+            'label' => 'LBL_MODEL_GM',
+          ),
+          1 => 
+          array (
+            'name' => 'gm_pct_fleet_c',
+            'label' => 'LBL_GM_PCT_FLEET',
+          ),
+        ),
+        2 => 
+        array (
+          0 => 
+          array (
+            'name' => 'model_mopar_c',
+            'label' => 'LBL_MODEL_MOPAR',
+          ),
+          1 => 
+          array (
+            'name' => 'mopar_pct_fleet_c',
+            'label' => 'LBL_MOPAR_PCT_FLEET',
+          ),
+        ),
+        3 => 
+        array (
+          0 => 
+          array (
+            'name' => 'model_other_c',
+            'label' => 'LBL_MODEL_OTHER',
+          ),
+          1 => 
+          array (
+            'name' => 'other_fleet_c',
+            'label' => 'LBL_OTHER_PCT_FLEET',
+          ),
+        ),
+      ),
+      'lbl_panel8' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            'name' => 'cat_purch_filters_c',
+            'label' => 'LBL_CAT_PURCH_FILTERS',
+          ),
+          1 => 
+          array (
+            'name' => 'cat_purch_batt_c',
+            'label' => 'LBL_CAT_PURCH_BATT',
+          ),
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            'name' => 'cat_purch_brake_c',
+            'label' => 'LBL_CAT_PURCH_BRAKE',
+          ),
+          1 => 
+          array (
+            'name' => 'cat_purch_elec_c',
+            'label' => 'LBL_CAT_PURCH_ELEC',
+          ),
+        ),
+        2 => 
+        array (
+          0 => 
+          array (
+            'name' => 'cat_purch_fuel_c',
+            'label' => 'LBL_CAT_PURCH_FUEL',
+          ),
+          1 => 
+          array (
+            'name' => 'cat_purch_heat_c',
+            'label' => 'LBL_CAT_PURCH_HEAT',
+          ),
+        ),
+        3 => 
+        array (
+          0 => 
+          array (
+            'name' => 'cat_purch_chassis_c',
+            'label' => 'LBL_CAT_PURCH_CHASSIS',
+          ),
+          1 => 
+          array (
+            'name' => 'cat_purch_steer_c',
+            'label' => 'LBL_CAT_PURCH_STEER',
+          ),
+        ),
+        4 => 
+        array (
+          0 => 
+          array (
+            'name' => 'cat_purch_ride_c',
+            'label' => 'LBL_CAT_PURCH_RIDE',
+          ),
+          1 => 
+          array (
+            'name' => 'cat_purch_emis_c',
+            'label' => 'LBL_CAT_PURCH_EMIS',
+          ),
+        ),
+        5 => 
+        array (
+          0 => 
+          array (
+            'name' => 'cat_purch_supp_c',
+            'label' => 'LBL_CAT_PURCH_SUPP',
+          ),
+          1 => NULL,
+        ),
+      ),
+      'lbl_panel9' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            'name' => 'jobber_num_stores_c',
+            'label' => 'LBL_JOBBER_NUM_STORES',
+          ),
+          1 => 
+          array (
+            'name' => 'jobber_num_trucks_c',
+            'label' => 'LBL_JOBBER_NUM_TRUCKS',
+          ),
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            'name' => 'jobber_retailorwholesale_c',
+            'label' => 'LBL_JOBBER_RETAILORWHOLESALE',
+          ),
+          1 => NULL,
+        ),
+      ),
+    ),
+  ),
+);
+?>

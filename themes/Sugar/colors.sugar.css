@@ -1,0 +1,746 @@
+/*********************************************************************************
+ * SugarCRM is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004 - 2009 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+/*********************************************************************************
+
+ * Description:  Contains a variety of utility functions used to display UI
+ * components such as form headers and footers.  Intended to be modified on a per
+ * theme basis.
+ ********************************************************************************/
+
+/* Default Styles */
+body, .body{
+	color: #444444;
+	background-color: #ffffff;
+	}
+
+table,td {
+	color: #444444;
+	}
+
+h1, h2, h3{
+
+	color: #000000;
+
+
+	}
+
+h4, h5, h5.listViewSubHeadS1, a.yearCalBodyMonthLink:link, a.yearCalBodyMonthLink:visited {
+	color: #444;
+	}
+
+.h3Row {
+	color: #444;
+	background-image: url(images/bg.gif);
+}
+
+
+
+.monthHeader {
+color: #444;
+background-color: #fff;
+border-color: #abc3d7;
+background-image: url(images/bg.gif);
+
+	}
+
+
+
+a:link, a:visited, a.body:link, a.body:visited {
+		color: #0b578f;
+		}
+a:hover, a.body:hover {
+		color: #000000;
+		}
+
+/* Form Styles */
+
+.button {
+
+	border-color: #abc3d7;
+	background-color: #ecf1f4;
+	color: #000;
+	background-image: url(images/bgBtn.gif);
+	vertical-align: middle;
+	}
+
+.buttonOn, .button:hover, .button:focus, .buttonOn:focus {
+	background-color: #4e8ccf;
+	border-color: #4e8ccf;
+	}
+.button[disabled] {
+	border-color: #c1c1c1;
+	background-color: #f0f0f0;
+	color: #000;
+	background-image: url(images/bgBtnGray.gif);
+	}
+
+input,select {
+	border-color: #94c1e8;
+	background-color: #ffffff;
+	}
+
+input:focus,textarea:focus, select:focus {
+	background-color: #fff;
+	border-color: #abc3d7;
+	 }
+textarea {
+	border-color: #abc3d7;
+	background-color: #fff;
+	}
+.checkbox,.radio {
+	}
+
+
+/* Content Specific Styles */
+	/* body text */
+
+	.teamNoticeBox {
+		border-color: #abc3d7;
+		color: #444444;
+	}
+
+
+	/*for the main screen navigation tabs*/
+
+
+	.tabRow {
+		background-image : url(images/tabRowBg.gif);
+
+		border-bottom-color: #0046ad;
+	}
+	.currentTabLeft, .currentTabRight, .currentTab {
+
+	background-image : url(images/currentTab.gif);
+		background-repeat: no-repeat;
+		border-bottom-color: #4e8ccf;
+
+	}
+
+	a.currentTabLink:link, a.currentTabLink:visited, a.currentTabLink:hover {
+
+		color: #ffffff;
+		}
+
+	.otherTabLeft, .otherTabRight, .otherTab {
+		background-image : url(images/otherTab.gif);
+		background-repeat: no-repeat;
+		border-bottom-color: #0046ad;
+		}
+	a.otherTabLink:link, a.otherTabLink:visited {
+		color: #444444;
+		}
+	a.otherTabLink:hover {
+		color: #000000;
+		}
+
+
+	.subpanelTabSpace  * {
+		display: none;
+		}
+
+	a.currentSubpanelTabLink:link, a.currentSubpanelTabLink:visited {
+		color: #000000;
+		}
+	a.currentSubpanelTabLink:hover {
+		color: #000000;
+		}
+
+	a.otherSubpanelTabLink:link, a.otherSubpanelTabLink:visited {
+		color: #444444;
+
+		}
+	a.otherSubpanelTabLink:hover {
+		color: #000000;
+		}
+
+	.moreHandle {
+		background: url('images/more.gif') no-repeat bottom left;
+		}
+	.subMenu {
+		border-color: #abc3d7;
+	}
+	.subMenu, ul.subMenu li, .leftColumnModuleS3 {
+		color: #444444;
+		background-color: #fff;
+		border-color: #cbdae6;
+	}
+
+	ul.subMenu li a:hover, ul.subMenu li span:hover  {
+		color: #000000;
+		background-color: #ecf1f4;
+		}
+
+	.leftColumn {
+		border-color: #dddddd;
+		}
+
+	table.leftColumnModuleHead th, table.listView th, .schedulerTopRow {
+	/*left column styles*/
+		color: #666666;
+		background-color: #fff;
+		border-color: #abc3d7;
+		border-bottom:2px #abc3d7 solid;
+
+	}
+
+
+
+	/* myArea is for my account, admin, logout, an about links*/
+
+
+	/*welcome user and date bar and last view*/
+	.moduleTitle {
+	border-color: #abc3d7;
+	}
+	.welcome {
+		color: #444444;
+		background-color: #ffffff;
+		border-right-color: #ddd;
+	}
+		a.myAreaLink:link, a.myAreaLink:visited {
+		color: #444;
+	}
+	a.myAreaLink:hover {
+		color: #0b578f;
+	}
+	#subtabs {
+	background-color:#4e8ccf;
+
+
+	}
+ul.subTabs
+{
+
+}
+
+ul.subTabs li
+{
+}
+
+
+ul.subTabs li a
+{
+
+	border-right-color:#abc3d7;
+
+
+
+
+
+}
+
+ul.subTabs li a:link, ul.subTabs li a:visited { color: #ffffff;}
+
+ul.subTabs li a:hover
+{
+
+background-color:#0046ad;
+
+}
+
+.activeSubTab
+{
+
+}
+ul.tablist li a.activeSubTab:hover
+{
+border-bottom-color: #ddd;
+color: #000000;
+}
+ul.subpanelTablist li a.activeSubTab:hover
+{
+
+color: #000000;
+}
+
+	.searchField {
+	border-color: #6fb0e4;
+	background-color: #f6fafd;
+	}
+	.search {
+		color: #444444;
+		}
+	.searchButton {
+		background-color: #fafafa;
+		}
+		.searchButton:focus{
+		background-color: #fafafa;}
+	.date {
+		color: #444444;
+		background-color: #dddddd;
+		border-bottom-color: #bbbbbb;
+		}
+
+	.lastView {
+		color: #444;
+		border-top-color:#0046ad;
+		border-bottom-color: #abc3d7;
+		background-color: #f4f9fc;
+		}
+
+	a.lastViewLink:link, a.lastViewLink:visited, .lastViewLink {
+		color: #444444;
+
+		}
+	a.lastViewLink:hover {
+
+		color: #000000;
+		}
+
+
+	.leftColumnModuleS3 input, .leftColumnModuleS3 select {
+	}
+	td.leftColumnModuleS3 .button {
+	}
+	td.leftColumnModuleS3 .dataLabel {
+	}
+
+	td.leftColumnModuleS3 .dataField {
+	}
+	.leftColumnModuleS3 #jscal_trigger {
+	}
+	a.leftColumnModuleS3Link:link, a.leftColumnModuleS3Link:visited {
+		color: #666666;
+		}
+	a.leftColumnModuleS3Link:hover {
+		color: #444444;
+		}
+
+	/*right main content (suffix S1 stands for Style 1) */
+	.listView {
+	border-color: #abc3d7;
+	}
+
+
+
+
+	table.listview th a:link, table.listview th a:visited, a.listViewThLinkS1:link, a.listViewThLinkS1:visited {
+		/* this definition should be exactly the same
+			as a.listViewThLinkS1:link, a.listViewThLinkS1:visited */
+		color: #444;
+	}
+
+	table.listview th a:hover, a.listViewThLinkS1:hover {
+		/* this definition should be exactly the same
+			as a.listViewThLinkS1:hover */
+		color: #000000;
+	}
+
+	a.listViewTdLinkS1:link, a.listViewTdLinkS1:visited {
+	color: #0b578f;
+
+		}
+	a.listViewTdLinkS1:hover {
+		}
+	a.listViewTdToolsS1:link, a.listViewTdToolsS1:visited {
+		}
+	a.listViewTdToolsS1:hover {
+		}
+	.evenListRowS1, .oddListRowS1 {
+		color: #000000;
+	}
+	.listViewHRS1 {
+		background-color: #cbdae6;
+	}
+	.pageNumbers {
+		color: #444444;
+	}
+
+	a.listViewPaginationLinkS1:link, a.listViewPaginationLinkS1:visited {
+		color: #444444;
+		}
+	a.listViewPaginationLinkS1:hover {
+		color: #000000;
+		}
+	a.listViewCheckLink:link, a.listViewCheckLink:visited {
+		}
+	a.listViewCheckLink:hover {
+		}
+
+	a.utilsLink:link, a.utilsLink:visited, a.NextPrevLink:link, a.NextPrevLink:visited {
+		color: #0b578f;
+		}
+	a.utilsLink:hover {
+		}
+	/* charting styles */
+	.chartBox {
+		background-color: #ffffff;
+		border-color: #abc3d7;
+	}
+
+	a.chartToolsLink:link, a.chartToolsLink:visited {
+		color: #444444;
+		}
+	a.chartToolsLink:hover {
+		color: #000000;
+		}
+
+	table.chartForm {
+		background-color: #efefef;
+		border-color: #abc3d7;
+	}
+
+	table.chartForm td {
+		background-color: #efefef;
+	}
+
+	/* main tab forms */
+
+	.tabForm {
+		border-bottom-color: #abc3d7;
+		border-top-color: #4e8ccf;
+		color: #000000;
+		background-color: #f6f6f6;
+
+	}
+	.subpanelTabForm {
+		border-color: #abc3d7;
+		color: #000000;
+		background-color: #ffffff;
+
+	}
+	.subpanelTabForm .listView {
+}
+	h4.dataLabel {
+		color: #444444;
+	}
+	table.tabForm td {
+
+	}
+	h5.dataLabel {
+		color: #444444;
+	}
+	td.dataLabel{
+	}
+	.dataLabel {
+	}
+	.dataField {
+	}
+
+	.tabFormAddDel {
+	}
+
+	a.tabFormAdvLink:link, a.tabFormAdvLink:visited {
+		color: #444444;
+		}
+	a.tabFormAdvLink:hover {
+		color: #000000;
+		}
+
+	/* main tab panel views */
+	.tabDetailView {
+		border-top-color: #4e8ccf;
+		border-bottom-color: #abc3d7;
+		background-color: #cbdae6;
+	}
+
+
+	.tabDetailViewDL {
+		color: #000000;
+		background-color: #f6f6f6;
+		border-color: #cbdae6;
+	}
+
+	h4.tabDetailViewDL {
+		color: #444444;
+	}
+
+	table.tabDetailView th.tabDetailViewDL {
+		border-color: #cbdae6;}
+	.tabDetailViewDF {
+		color: #444444;
+		border-color: #cbdae6;
+		background-color: #fff;
+	}
+
+	a.tabDetailViewDFLink:link, a.tabDetailViewDFLink:visited {
+		color: #0b578f;
+		}
+	a.tabDetailViewDFLink:hover {
+		color: #0b578f;
+		}
+
+	.tabDetailView2 {
+		border-color: #abc3d7;
+		background-color: #cbdae6;
+	}
+	.tabDetailViewDL2 {
+		color: #000000;
+		background-color: #fafafa;
+	}
+	.tabDetailViewDF2 {
+		color: #444444;
+		background-color: #ffffff;
+		border-left-color: #dfdfdf;
+	}
+	a.tabDetailViewDL2Link:link, a.tabDetailViewDL2Link:visited {
+		color: #444444;
+		}
+	a.tabDetailViewDL2Link:hover {
+		color: #000000;
+		}
+	/* calendar styles */
+	.monthBox {
+	}
+	.monthCalBody {
+	background-color: #abc3d7;
+	}
+	.monthFooterPrev, .monthFooterNext {
+	border-top-color: #abc3d7;
+	border-bottom-color: #abc3d7;
+	background-color: #ffffff;
+	}
+
+	a.monthCalBodyWeekLink:link, a.monthCalBodyWeekLink:visited, a.monthCalBodyWeekDayDateLink:link, a.monthCalBodyWeekDayDateLink:visited  {
+	color: #0b578f;
+	}
+	a.NextPrevLink:hover, a.monthCalBodyWeekLink:hover, a.monthCalBodyWeekDayDateLink:hover, a.monthCalBodyWeekEndDateLink:hover,
+.monthCalBodyTodayWeekDay a.monthCalBodyWeekDayDateLink:link, .monthCalBodyTodayWeekDay a.monthCalBodyWeekDayDateLink:visited,
+.monthCalBodyTodayWeekEnd a.monthCalBodyWeekDayDateLink:link, .monthCalBodyTodayWeekEnd a.monthCalBodyWeekDayDateLink:visited {
+	color: #0b578f;
+
+	}
+	.monthCalBodyTHWeek, .monthCalBodyWeek {
+	background-color: #ebebeb;
+	color: #444444;
+	border-color: #abc3d7;
+	}
+	.monthCalBodyTHDay {
+	background-color: #fafafa;
+	color: #444444;
+	border-color: #abc3d7;
+	}
+	.monthCalBodyTodayWeekDay, .monthCalBodyTodayWeekEnd {
+	border-color: #abc3d7;
+	background-color: #ffffff;
+	color: #444444;
+	}
+	.monthCalBodyWeekDay {
+	background-color: #fff;
+	color: #444444;
+	}
+	.monthCalBodyWeekEnd {
+	background-color: #f6f6f6;
+	color: #444444;
+	}
+	a.monthCalBodyDayItemLink:link, a.monthCalBodyDayItemLink:visited {
+	}
+	a.monthCalBodyDayItemLink:hover {
+	}
+	.monthCalBodyDayItem {
+	background-color: #ffffff;
+	border-top-color: #abc3d7;
+	border-bottom-color: #ddd;
+	}
+	.monthCalBodyDayIconTd {
+	}
+	.monthCalBodyDayItemTd {
+	}
+	.monthViewDayHeight {
+	}
+	.yearViewDayHeight {
+	}
+
+
+	.dailyCalBodyItems {
+	background-color: #fff;
+	color: #444444;
+	}
+
+	a.weekCalBodyDayLink:link, a.weekCalBodyDayLink:visited {
+	color: #000000;
+	}
+	a.weekCalBodyDayLink:hover {
+	}
+	.yearCalBody {
+	border-top: 2px solid #fff;
+	background-color: #fff;
+	}
+	.yearCalBodyMonth {
+	background-color: #abc3d7;
+	border-top: 2px solid #4e8ccf;
+	border-bottom: 2px solid #fff;
+	}
+.yearCalBody .monthHeader {border: none;}
+	.yearCalBodyMonth th {
+
+	}
+	.yearCalBodyMonth #daily_cal_table {
+	border-top: #abc3d7;
+	}
+	.yearCalBodyMonth #daily_cal_table .monthCalBodyTHDay {
+	border-color: #abc3d7;
+	}
+
+	a.yearCalBodyMonthLink:link, a.yearCalBodyMonthLink:visited {
+	color: #000000;
+	}
+	h5.calSharedUser {
+	color: #444444;
+	}
+
+	/* misc font displays */
+
+
+	.copyRight {
+	}
+	a.copyRightLink:link, a.copyRightLink:visited {
+	}
+	a.copyRightLink:hover {
+	}
+
+	.tm {
+	}
+
+	.footer, .underFooter {
+
+	}
+	a.footerLink:link, a.footerLink:visited {
+
+	}
+	a.footerLink:hover {
+	color: #000000;
+	}
+
+	.footerHR {
+	}
+	.aboveFooter {
+	}
+/* Scheduler Styles */
+
+
+
+
+/* dynamic tab styles */
+ul.tablist, ul.subpanelTablist
+{
+border-bottom-color: #abc3d7;
+}
+
+ul.tablist li
+{
+}
+
+ul.tablist li a:hover, ul.subpanelTablist li a:hover
+{
+color: #000000;
+background: #fafafa;
+border-color: #abc3d7;
+}
+ul.tablist li a, ul.subpanelTablist li a
+{
+background-color: #fff;
+border-color: #dddddd;
+}
+
+ul.tablist li a:link, ul.tablist li a:visited, ul.subpanelTablist li a:link, ul.subpanelTablist li a:visited { color: #444444;}
+
+ul.tablist li a:hover, ul.subpanelTablist li a:hover
+{
+color: #000000;
+background: #fafafa;
+}
+
+ul.tablist li a.current
+{
+background: #f6f6f6;
+border-bottom-color: #f6f6f6;
+border-right-color: #abc3d7;
+border-top-color: #abc3d7;
+}
+ul.tablist li a.current:hover
+{
+border-bottom-color: #f6f6f6;
+color: #000000;
+border-bottom-color: #f6f6f6;
+border-right-color: #abc3d7;
+border-top-color: #abc3d7;
+}
+
+
+ul.subpanelTablist li a.current, ul.subpanelTablist li a.current:hover
+{
+color: #4f4f4f;
+border-right-color: #abc3d7;
+border-top-color: #abc3d7;
+border-bottom-color: #ffffff;
+}
+
+/**Reveted this class  for gantt chart**/
+.sqsSelectedSmartInputItem {
+background-color:#DEEFFF;
+}
+/**End**/
+
+.olFontClass { }
+.olFontClass A { }
+.olCapFontClass {
+}
+.olCapFontClass A {
+}
+.olFgClass td {
+}
+.olCgClass td {
+	border-bottom-color: #abc3d7;
+}
+.olCgClass {
+}
+.olBgClass {
+	background-color: #abc3d7;
+}
+.olCloseFontClass {
+}
+
+/* acl role colors */
+
+
+/* help styles */
+
+/* sitemap */
+#sitemap .tabForm {
+border-color: #4e8ccf;
+}
+/*
+ * Ext JS Library 2.0
+ * Copyright(c) 2006-2007, Ext JS, LLC.
+ * licensing@extjs.com
+ * 
+ * http://extjs.com/license
+ */
+.x-sqs-list{border:1px solid #94C1E8;background:#fdfdfd;}
+.x-sqs-list .x-sqs-selected{border:1px dotted #F4F9FC!important;background:#94C1E8;}
+/*
+* END Ext JS Library 2.0
+*/

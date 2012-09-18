@@ -1,0 +1,68 @@
+<!--
+/*********************************************************************************
+ * SugarCRM is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004 - 2009 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+-->
+
+<!-- BEGIN: history -->
+<table cellpadding="0" cellspacing="0" width="100%" border="0" class="listView">
+	<tr height="20" class="listViewThS1">
+	<td width="2%" class="listViewThS1"><img src="include/images/blank.gif" width="1" height="1" alt=""></td>
+	<td width="28%" class="listViewThS1">{MOD.LBL_LIST_SUBJECT}</td>
+	<td width="10%" class="listViewThS1">{MOD.LBL_LIST_STATUS}</td>
+	<td width="20%" class="listViewThS1">{MOD.LBL_LIST_CONTACT}</td>
+	<td width="10%" class="listViewThS1" nowrap>{MOD.LBL_LIST_DATE}</td>
+	
+	</tr>
+
+<!-- BEGIN: row -->
+<tr height="20"  onmouseover="setPointer(this, '{ACTIVITY.ID}', 'over', '{BG_COLOR}', '{BG_HILITE}', '{BG_CLICK}');" onmouseout="setPointer(this, '{ACTIVITY.ID}', 'out', '{BG_COLOR}', '{BG_HILITE}', '{BG_CLICK}');" onmousedown="setPointer(this, '{ACTIVITY.ID}', 'click', '{BG_COLOR}', '{BG_HILITE}', '{BG_CLICK}');">
+		<td nowrap valign=TOP bgcolor="{BG_COLOR}" class="{ROW_COLOR}S1">{ACTIVITY_MODULE_PNG}</td>
+    	<td valign=TOP bgcolor="{BG_COLOR}" class="{ROW_COLOR}S1">{ACTIVITY.NAME}  {ACTIVITY.ATTACHMENT}</td>
+		<td nowrap valign=TOP bgcolor="{BG_COLOR}" class="{ROW_COLOR}S1">{ACTIVITY.TYPE} {ACTIVITY.STATUS}</td>
+		<td valign=TOP bgcolor="{BG_COLOR}" class="{ROW_COLOR}S1">{ACTIVITY.CONTACT_NAME}</td>
+    	<td nowrap valign=TOP bgcolor="{BG_COLOR}" class="{ROW_COLOR}S1">{ACTIVITY.DATE_TYPE}<img src="include/images/blank.gif" width="3" height="1" alt="">{ACTIVITY.DATE}</td>
+
+</tr>
+<tr>
+	<td colspan="1" valign=TOP bgcolor="{BG_COLOR}" class="{ROW_COLOR}S1"></td>
+	<td colspan="4" valign=TOP bgcolor="{BG_COLOR}" class="{ROW_COLOR}S1">
+		<table><tr><td valign=TOP bgcolor="{BG_COLOR}" class="{ROW_COLOR}S1"><img src="include/images/blank.gif" width="3" height="1" alt=""></td><td valign=TOP bgcolor="{BG_COLOR}" class="{ROW_COLOR}S1">{ACTIVITY.DESCRIPTION}
+		</td></tr></table>
+	</td>
+</tr>
+<tr><td colspan="20" class="listViewHRS1"></td></tr>
+<!-- END: row -->
+</table>
+<!-- END: history -->

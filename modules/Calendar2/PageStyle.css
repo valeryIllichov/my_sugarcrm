@@ -1,0 +1,153 @@
+		#week_div{
+			border: 1px solid gray; 
+			width: 100%; 
+			overflow:hidden;
+		}
+		
+		.day_col{
+			width: 13%; 
+			float: left; 
+			border-bottom: 0px solid silver;
+		}		
+		.left_time_col{
+			width: 8.4%; 
+			float: left; 
+			border-bottom: 0px solid silver;
+		}		
+		#day_div .day_col{
+			width: 85%;
+		}
+		#day_div .left_time_col{
+			width: 10%;
+		}		
+		
+		.t_cell, .t_icell{
+			background-color: #e5e5e5;
+			height: 14px;
+			border-right: 1px solid silver;
+		}
+		.t_cell:hover{
+			background-color: #D1DCFF;
+		}
+		.record_head{
+			font-weight: bold;
+			color: #FFF;
+		}
+		.left_cell{
+			background-color: #e5e5e5;
+			height: 14px;
+			font-size: 11px;
+			text-align: center;
+			border-right: 1px solid silver;			
+		}
+		.day_head{
+			border-bottom: 1px solid silver;
+			text-align: center;
+			font-size: 11px;
+			border-right: 1px solid silver;
+			white-space: nowrap;
+		}
+		.today{
+			background-color: #FFFDD1;
+		}
+		.odd{
+			background-color: #FFF;				
+		}
+		.t_cell_active{
+			background-color: gray;
+		}	
+		.record_item{
+			width: 97%;
+			/* min-width: 64px; */
+			min-width: 45px;			
+			z-index: 50;
+			color: #000;	
+			font-size: 10px;
+			position : relative;	
+			vertical-align: top;
+			display:inline-block;			
+			left: -4px;			
+			/* border: 1px solid; */
+			border-top-width: 0px;
+			overflow: hidden;
+			cursor: default;	
+		}
+		.record_item .record_head{
+			height: 12px;
+			vertical-align: top;
+			padding-left: 1px;
+						
+		}
+		.record_item .record_contain{
+			margin-left: 2px;
+			margin-right: 2px;
+			
+		}				
+		.meeting_item, .meeting_item .rfloat{
+			background-color: #FF9C9C;
+			/* border-color: red; */
+			border-color: #FF9C9C;
+		}
+		.meeting_item .record_head{
+			background-color: red;
+		}
+
+                .Leads_meeting .record_head{
+			background-color: #ad19d8;
+                        
+		}
+		
+		.call_item, .call_item .rfloat{
+			background-color: #91D7FF;
+			/* border-color: #1C5FBD; */
+			border-color: #91D7FF;
+		}		
+		.call_item .record_head{
+			background-color: #1C5FBD;
+		}
+
+                .Leads_call .record_head{
+			background-color: #fb891b;
+		}
+		.task_item, .task_item .rfloat{
+			background-color: #8DF488;
+			/* border-color: #015900; */
+			border-color: #8DF488;
+		}
+		.task_item .record_head{
+			background-color: #015900;
+		}
+		.monthHeader div{
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		.monthFooter div{
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		.participants .padded{
+			padding: 5px;		
+		}	
+		.participants select{
+			width: 180px;		
+		}
+		.sel_captions{
+			text-align: left;
+			padding-left: 5px;
+		}
+		.h_line{
+			margin: 0px;
+		}
+		
+		.rfloat{
+			float: right;			
+			color: black;
+			height: 11px;
+			/* border-top: 1px solid; */
+			border-bottom: 1px solid; 
+			font-size: 8px;
+		}
+		
+		ul li{
+	    	list-style:none;
+		}

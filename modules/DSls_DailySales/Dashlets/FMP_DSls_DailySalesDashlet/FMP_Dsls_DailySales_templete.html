@@ -1,0 +1,675 @@
+
+<div class="dashlet_print" >
+<a href='javascript:printDivDashlet("dashlet_{$dashletId}");' class='utilsLink'>
+    <img src='themes/Sugar/images/print.gif' width='13' height='13' alt='Print' border='0' align='absmiddle'></a>&nbsp;
+<a  href='javascript:printDivDashlet("dashlet_{$dashletId}");' class='utilsLink'>
+    Print</a>
+</div>
+<div class="yui-skin-sam-fmp-sales" id="fmp-sales">
+    <span class="yui-button-fmp-sales yui-split-button-fmp-sales" id="area_list_show"><span class="first-child-fmp-sales"><button type="button" id="yui-gen0-button" >Area</button>
+            <div id="area_panel" style="display: none; position: absolute;">
+                {$areaList}
+            </div>
+        </span></span>
+    <span class="yui-button-fmp-sales yui-split-button-fmp-sales" id="slsm_list_show"><span class="first-child-fmp-sales"><button type="button" id="yui-gen2-button" >Slsm</button>
+            <div id="slsm_panel" style="display: none; position: absolute; background-color: #FFFFFF; border: 1px solid #94C1E8;">
+                {$slsmList}
+            </div>
+        </span></span>
+    <span class="yui-button-fmp-sales yui-split-button-fmp-sales" id="dealer_list_show"><span class="first-child-fmp-sales"><button type="button" id="yui-gen4-button" >Customer Type</button>
+            <div id="dealer_panel" style="display: none; position: absolute;">
+                {$dealerList}
+            </div>
+        </span></span>
+	<a href="index.php?action=index&module=iFrames&record=f3b907aa-6a21-ab90-69d6-4a7c985b6c78&tab=tab&fmpsalesdashlet=true" target="_blank">Details</a>
+    <div id="load_gif"></div>
+    <div id="getResponce">
+        <table align="center" width="100%">
+            <caption><h1>{$title_filter}</h1></caption>
+            <tbody>
+{if $current_day_sales || $current_day_credits || $current_day_net_sales || $previous_day_sales || $previous_day_credits || $previous_day_net_sales}
+                <tr>
+                    <td width="50%">
+                        <div>
+                            <table width="100%">
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $current_day_sales}Current Day Sales{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$current_day_sales}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $current_day_credits}Current Day Credits{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$current_day_credits}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $current_day_net_sales}Current Day Net Sales{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$current_day_net_sales}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                    <td width="50%">
+                        <div>
+                            <table width="100%">
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $previous_day_sales}Previous Day's Sales{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$previous_day_sales}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $previous_day_credits}Previous Day's Credits{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$previous_day_credits}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $previous_day_net_sales}Previous Day's Net Sales{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$previous_day_net_sales}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+{/if}
+{if $daily_target || $daily_average_target || $daily_target_gp || $daily_average_target_gp}
+                <tr>
+                    <td width="50%">
+                        <div>
+                            <table width="100%">
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $daily_target}Daily Sales Target{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$daily_target}</td>
+                                </tr>
+
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $daily_target}Daily Average Sales Target{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$daily_average_target}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                    <td width="50%">
+                        <div>
+                            <table width="100%">
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $daily_target_gp}Daily GP$ Target{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$daily_target_gp}</td>
+                                </tr>
+
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $daily_average_target_gp}Daily Average GP$ Target{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$daily_average_target_gp}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+
+{/if}
+{if $mtd_projected || $mtd_projected_gp || $cm_proj_vs_budget || $cm_proj_gp_vs_budget_gp}
+                <tr>
+                    <td width="50%">
+                        <div>
+                            <table width="100%">
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_projected}Current Month Projected Sales{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_projected}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_projected_gp}Current Month Projected GP${else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_projected_gp}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                    <td width="50%">
+                        <div>
+                            <table width="100%">
+                                 <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $cm_proj_vs_budget}CM Proj Sls vs. CM Sls Budget{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$cm_proj_vs_budget}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $cm_proj_gp_vs_budget_gp}CM Proj GP$ vs. CM GP$ Budget{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$cm_proj_gp_vs_budget_gp}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+{/if}
+{if $mtd_budget_sales || $cm_gp_budget || $cm_gpp_budget || $att_sal_to_mon_sal || $att_gp_to_mon_bud || $att_gpp_to_month_budget_gpp}
+                <tr>
+                    <td width="50%">
+                        <div>
+                            <table width="100%">
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_budget_sales}Current Month Sales Budget{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_budget_sales}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $cm_gp_budget}Current Month GP$ Budget{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$cm_gp_budget}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $cm_gpp_budget}Current Month GP% Budget{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$cm_gpp_budget}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                    <td width="50%">
+                        <div>
+                            <table width="100%">
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $att_sal_to_mon_sal}% of Attainment MTD Sls to CM Sls Budget{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$att_sal_to_mon_sal}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $att_gp_to_mon_bud}% of Attainment MTD GP$ to CM GP$ Budget{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$att_gp_to_mon_bud}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $att_gpp_to_month_budget_gpp}MTD GP% vs. CM GP% Budget{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$att_gpp_to_month_budget_gpp}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+{/if}
+{if $mtd_sales || $mtd_gp || $current_month_gp || $lm_sales || $lm_gp || $last_month_gp}
+                <tr>
+                    <td width="50%">
+                        <div>
+                            <table width="100%">
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_sales}MTD Sales Invoiced{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_sales}</td>   
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_gp}MTD GP${else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_gp}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $current_month_gp}MTD GP%{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$current_month_gp}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                    <td width="50%">
+                        <div>
+                            <table width="100%">
+
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $lm_sales}Last Month's Sales{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$lm_sales}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $lm_gp}Last Month's GP${else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$lm_gp}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $last_month_gp}Last Month's GP%{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$last_month_gp}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+{/if}
+{if $mtd_sales_total || $pending_orders || $pending_credits || $previous_day_invoiced_sales || $mly_sales_invoiced || $lytm_sales_invoiced}
+                <tr>
+                    <td width="50%">
+                        <div>
+                            <table width="100%">
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $pending_orders}Pending Orders{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$pending_orders}</td>   
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $pending_credits}Pending Credits{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$pending_credits}</td>   
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_sales_total}MTD Sales Total{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_sales_total}</td>   
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                    <td width="50%">
+                        <div>
+                            <table width="100%">
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $mly_sales_invoiced}CM Proj Sls vs. LM Sls{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mly_sales_invoiced}</td>   
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $lytm_sales_invoiced}CY Proj Sls vs. LY Sls Invoiced{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$lytm_sales_invoiced}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $previous_day_invoiced_sales}Previous Day's Invoiced Sales{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$previous_day_invoiced_sales}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+{/if}
+{if $ytd_sales_projected || $ytd_sales_projected_gp || $current_sls_proj_vs_ly_sls_invoiced || $current_gp_proj_vs_ly_gp_invoiced}
+                <tr>
+                    <td width="50%">
+                        <div>
+                            <table width="100%">
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_sales_projected}Current Year Projected Sales{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_sales_projected}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_sales_projected_gp}Current Year Projected GP${else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_sales_projected_gp}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                    <td width="50%">
+                        <div>
+                            <table width="100%">
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $current_sls_proj_vs_ly_sls_invoiced}CY Proj Sls vs. CY Sls Budget{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$current_sls_proj_vs_ly_sls_invoiced}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $current_gp_proj_vs_ly_gp_invoiced}CY Proj GP$ vs. CY GP$ Budget{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$current_gp_proj_vs_ly_gp_invoiced}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+
+{/if}
+{if $cy_sales_budget || $cy_gp_budget || $cy_gpp_budget  || $current_sls_proj_vs_ly_sls_invoiced || $att_y_sls_proj_vs_cy_sls_budget || $att_y_gp_proj_vs_cy_gp_budget || $att_y_gpp_proj_vs_cy_gpp_budget}
+                <tr>
+                    <td width="50%">
+                        <div>
+                            <table width="100%">
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $cy_sales_budget}Current Year Sales Budget{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$cy_sales_budget}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $cy_gp_budget}Current Year GP$ Budget{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$cy_gp_budget}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $cy_gpp_budget}Current Year GP% Budget{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$cy_gpp_budget}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                    <td width="50%">
+                        <div>
+                            <table width="100%">
+                               <!--  <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">Daily Target</td>
+                                    <td>{$daily_target}</td>
+                                </tr>
+
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">Daily Average Target</td>
+                                    <td>{$daily_average_target}</td>
+                                </tr> -->
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $att_y_sls_proj_vs_cy_sls_budget}% of Attainment YTD Sales to CY Sales Budget{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$att_y_sls_proj_vs_cy_sls_budget}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $att_y_gp_proj_vs_cy_gp_budget}% of Attainment YTD GP$ to CY GP$ Budget{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$att_y_gp_proj_vs_cy_gp_budget}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $att_y_gpp_proj_vs_cy_gpp_budget}YTD GP% vs. CY GP% Budget{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$att_y_gpp_proj_vs_cy_gpp_budget}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+
+{/if}
+{if $ytd_sales_invoiced || $ytd_gp || $ytd_gpp || $ly_sales_invoiced || $ly_gp || $ly_gpp}
+                <tr><!-- ytd sales invoiced -->
+                    <td width="50%">
+                        <div>
+                            <table width="100%">
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_sales_invoiced}YTD Sales Invoiced{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_sales_invoiced}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_gp}YTD GP${else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_gp}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_gpp}YTD GP%{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_gpp}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                    <td width="50%">
+                        <div>
+                            <table width="100%">
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ly_sales_invoiced}LY Sales Invoiced{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ly_sales_invoiced}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $ly_gpp}LY GP${else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ly_gp}</td>   
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ly_gpp}LY GP%{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ly_gpp}</td>   
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+{/if}
+
+
+{if $ytd_invoices != '' || $mtd_invoices != '' || $wtd_invoices != '' || $ytd_av_per_trans != '' || $mtd_av_per_trans != ''}
+                <tr><!-- ytd invoices -->
+                    <td width="50%">
+                        <div>
+                            <table width="100%">
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_invoices !== ''}YTD - # of Transactions{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_invoices}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_invoices !== ''}MTD - # of Transactions{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_invoices}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $wtd_invoices !== ''}WTD - # of Transactions{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$wtd_invoices}</td>
+                                </tr>
+                                <!--<tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">LY - # of Transactions</td>
+                                    <td style="font-size: 14px;">???</td>
+                                </tr>-->
+                            </table>
+                        </div>
+                    </td>
+                    <td width="50%">
+                        <div>
+                            <table width="100%">
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_av_per_trans !== ''}YTD Avg $ per transaction{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_av_per_trans}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_av_per_trans !== ''}MTD Avg $ per transaction{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_av_per_trans}</td>   
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">&nbsp;</td>
+                                    <td style="font-size: 14px;">&nbsp;</td>   
+                                </tr>
+                                <!--<tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">WTD Avg $ per transaction</td>
+                                    <td style="font-size: 14px;">???</td>   
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">LY - Avg $ per transaction</td>
+                                    <td style="font-size: 14px;">???</td>   
+                                </tr>-->
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+{/if}
+
+ 
+{if $mtd_sls_noem || $mtd_gp_noem || $mtd_gpp_noem ||$ytd_gp_noem || $ytd_gpp_noem || $ytd_budget_noem_sales || $ly_gpp_noem || $ytd_projected_noem || $mtd_budget_noem_sales || $mtd_projected_noem || $ly_sls_noem || $ytd_sls_noem || $mtd_sls_noem_divide_mtd_sales || $ly_sls_noem_divide_ly_sales || $ytd_sls_noem_divide_ytd_sales 
+ || $mtd_gp_noem_divide_mtd_gp || $mtd_gpp_noem_divide_mtd_gpp || $mtd_budget_noem_sales_divide_mtd_budget_sales
+ || $mtd_projected_noem_divide_mtd_projected || $ytd_gp_noem_divide_ytd_gp
+ || $ytd_gpp_noem_divide_ytd_gpp  || $ytd_budget_noem_sales_divide_ytd_sales_budget
+ || $ytd_projected_noem_divide_ytd_projected || $ly_gpp_noem_divide_ly_gpp}
+                <tr><!-- ytd sales invoiced -->
+                    <td width="50%">
+                        <div>
+                            <table width="100%">
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_sls_noem !==''}MTD Non-OE Sales{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_sls_noem}</td>
+                                </tr>
+                              <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_gp_noem !==''}MTD Non-OE GP{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_gp_noem}</td>
+                                </tr> 
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_gpp_noem !==''}MTD Non-OE GP %{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_gpp_noem}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_budget_noem_sales !==''}MTD Non-OE Bgt Sls{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_budget_noem_sales}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_projected_noem !==''}MTD Non-OE Projected{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_projected_noem}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_sls_noem !==''}YTD Non-OE Sales{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_sls_noem}</td>
+                                </tr>
+                               <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_gp_noem !==''}YTD Non-OE GP{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_gp_noem}</td>   
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_gpp_noem !==''}YTD Non-OE GP %{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_gpp_noem}</td>   
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_budget_noem_sales !==''}YTD Non-OE Bgt Sls{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_budget_noem_sales}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_projected_noem !==''}YTD Non-OE Projected{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_projected_noem}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ly_sls_noem !==''}LY Non-OE Sales{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ly_sls_noem}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ly_gpp_noem !==''}LY Non-OE GP %{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ly_gpp_noem}</td>
+                                </tr>
+                                
+                            </table>
+                        </div>
+                    </td>
+                    <td width="50%">
+                        <div>
+                            <table width="100%">
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_sls_noem_divide_mtd_sales !==''}MTD % of NOE Sales vs. Total Sales{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_sls_noem_divide_mtd_sales}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_gp_noem_divide_mtd_gp !==''}MTD % of NOE GP vs. Total GP{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_gp_noem_divide_mtd_gp}</td>   
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_gpp_noem_divide_mtd_gpp !==''}MTD  NOE GP % vs. Total GP %{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_gpp_noem_divide_mtd_gpp}</td>   
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_budget_noem_sales_divide_mtd_budget_sales !==''}MTD % of NOE Bgt Sls vs. Total Bgt Sls{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_budget_noem_sales_divide_mtd_budget_sales}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_projected_noem_divide_mtd_projected !==''}MTD % of NOE Projected vs. Total Projected{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_projected_noem_divide_mtd_projected}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_sls_noem_divide_ytd_sales !==''}YTD % of NOE Sales vs. Total Sales{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_sls_noem_divide_ytd_sales}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_gp_noem_divide_ytd_gp !==''}YTD % of NOE GP vs. Total GP{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_gp_noem_divide_ytd_gp}</td>   
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_gpp_noem_divide_ytd_gpp !==''}YTD NOE GP % vs. Total GP %{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_gpp_noem_divide_ytd_gpp}</td>   
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_budget_noem_sales_divide_ytd_sales_budget !==''}YTD % of NOE Bgt Sls vs. Total Bgt Sls{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_budget_noem_sales_divide_ytd_sales_budget}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_projected_noem_divide_ytd_projected !==''}YTD % of NOE Projected vs. Total Projected{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_projected_noem_divide_ytd_projected}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ly_sls_noem_divide_ly_sales !==''}LY % of NOE Sales vs. Total Sales{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ly_sls_noem_divide_ly_sales}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ly_gpp_noem_divide_ly_gpp !==''}LY NOE GP % vs. Total GP %{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ly_gpp_noem_divide_ly_gpp}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+{/if}
+
+{if $mtd_sls_undercar || $ly_sls_undercar || $ytd_sls_undercar || $ytd_gp_undercar || $ytd_gpp_undercar || $ytd_budget_undercar_sales || $ytd_projected_undercar || $ly_gpp_undercar || $mtd_gp_undercar ||  $mtd_gpp_undercar || $mtd_budget_undercar_sales || $mtd_projected_undercar || $mtd_sls_undercar_divide_mtd_sales || $ly_sls_undercar_divide_ly_sales || $ytd_sls_undercar_divide_ytd_sales
+ || $mtd_gp_undercar_divide_mtd_gp || $mtd_gpp_undercar_divide_mtd_gpp || $mtd_budget_undercar_sales_divide_mtd_budget_sales
+ || $mtd_projected_undercar_divide_mtd_projected || $ytd_gp_undercar_divide_ytd_gp || $ytd_gpp_undercar_divide_ytd_gpp
+ || $ytd_budget_undercar_sales_divide_ytd_sales_budget || $ytd_projected_undercar_divide_ytd_projected || $ly_gpp_undercar_divide_ly_gpp}
+                <tr><!-- ytd sales invoiced -->
+                    <td width="50%">
+                        <div>
+                            <table width="100%">
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_sls_undercar !==''}MTD UnderCar Sales{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_sls_undercar}</td>
+                                </tr>
+                               <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_gp_undercar !==''}MTD UnderCar GP{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_gp_undercar}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_gpp_undercar !==''}MTD UnderCar GP %{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_gpp_undercar}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_budget_undercar_sales !==''}MTD UnderCar Bgt Sls{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_budget_undercar_sales}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_projected_undercar !==''}MTD UnderCar Projected{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_projected_undercar}</td>
+                                </tr>
+                                 <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_sls_undercar !==''}YTD UnderCar Sales{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_sls_undercar}</td>
+                                </tr>
+                               <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_gp_undercar !==''}YTD UnderCar GP{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_gp_undercar}</td>   
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_gpp_undercar !==''}YTD UnderCar GP %{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_gpp_undercar}</td>   
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_budget_undercar_sales  !==''}YTD UnderCar Bgt Sls{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_budget_undercar_sales}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_projected_undercar !==''}YTD UnderCar Projected{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_projected_undercar}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ly_sls_undercar !==''}LY UnderCar Sales{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ly_sls_undercar}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ly_gpp_undercar !==''}LY UnderCar GP %{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ly_gpp_undercar}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                    <td width="50%">
+                        <div>
+                            <table width="100%">
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_sls_undercar_divide_mtd_sales !==''}MTD % of Undercar Sales vs. Total Sales{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_sls_undercar_divide_mtd_sales}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_gp_undercar_divide_mtd_gp !==''}MTD % of Undercar GP vs. Total GP{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_gp_undercar_divide_mtd_gp}</td>   
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_gpp_undercar_divide_mtd_gpp !==''}MTD Undercar GP % vs. Total GP %{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_gpp_undercar_divide_mtd_gpp}</td>   
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_budget_undercar_sales_divide_mtd_budget_sales !==''}MTD % of Undercar Bgt Sls vs. Total Bgt Sls{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_budget_undercar_sales_divide_mtd_budget_sales}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $mtd_projected_undercar_divide_mtd_projected !==''}MTD % of Undercar Projected vs. Total Projected{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$mtd_projected_undercar_divide_mtd_projected}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_sls_undercar_divide_ytd_sales !==''}YTD % of Undercar Sales vs. Total Sales{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_sls_undercar_divide_ytd_sales}</td>
+                                </tr>
+                               <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_gp_undercar_divide_ytd_gp !==''}YTD % of Undercar GP vs. Total GP{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_gp_undercar_divide_ytd_gp}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_gpp_undercar_divide_ytd_gpp !==''}YTD Undercar GP % vs. Total GP %{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_gpp_undercar_divide_ytd_gpp}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_budget_undercar_sales_divide_ytd_sales_budget !==''}YTD % of Undercar Bgt Sls vs. Total Bgt Sls{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_budget_undercar_sales_divide_ytd_sales_budget}</td>
+                                </tr>
+                                <tr class="yui-dt-even">
+                                    <td width="70%"  style="font-size: 14px;">{if $ytd_projected_undercar_divide_ytd_projected !==''}YTD % of Undercar Projected vs. Total Projected{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ytd_projected_undercar_divide_ytd_projected}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ly_sls_undercar_divide_ly_sales !==''}LY % of Undercar Sales vs. Total Sales{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ly_sls_undercar_divide_ly_sales}</td>
+                                </tr>
+                                <tr class="yui-dt-odd">
+                                    <td width="70%"  style="font-size: 14px;">{if $ly_gpp_undercar_divide_ly_gpp !==''}LY Undercar GP % vs. Total GP %{else}&nbsp;{/if}</td>
+                                    <td style="font-size: 14px;">{$ly_gpp_undercar_divide_ly_gpp}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+{/if}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

@@ -1,0 +1,8 @@
+ table td a {font-size: 12px;}
+ .hiden-col, .yui-dt-hidden{
+    display:none;
+}
+.yui-skin-sam .yui-dt td{
+ border-bottom: 1px solid #7F7F7F;
+border-right: 1px solid #7F7F7F;
+}

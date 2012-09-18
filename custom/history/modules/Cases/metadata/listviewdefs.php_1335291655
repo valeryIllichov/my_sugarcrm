@@ -1,0 +1,55 @@
+<?php
+$listViewDefs ['Cases'] = 
+array (
+  'CASE_NUMBER' => 
+  array (
+    'width' => '5%',
+    'label' => 'LBL_LIST_NUMBER',
+    'default' => true,
+  ),
+  'NAME' => 
+  array (
+    'name' => 'name',
+    'type' => 'enum',
+    'options' => 'case_subject_list',
+    'default' => true,
+    'required' => true,
+    'vname' => 'LBL_CASE_SUBJECT',
+    'width' => '10%',
+    'link' => true,
+    'label' => 'LBL_CASE_SUBJECT',
+  ),
+  'ACCOUNT_NAME' => 
+  array (
+    'width' => '25%',
+    'label' => 'LBL_LIST_ACCOUNT_NAME',
+    'module' => 'Accounts',
+    'id' => 'ACCOUNT_ID',
+    'link' => true,
+    'default' => true,
+    'ACLTag' => 'ACCOUNT',
+    'related_fields' => 
+    array (
+      0 => 'account_id',
+    ),
+  ),
+  'PRIORITY' => 
+  array (
+    'width' => '8%',
+    'label' => 'LBL_LIST_PRIORITY',
+    'default' => true,
+  ),
+  'STATUS' => 
+  array (
+    'width' => '8%',
+    'label' => 'LBL_LIST_STATUS',
+    'default' => true,
+  ),
+  'ASSIGNED_USER_NAME' => 
+  array (
+    'width' => '5%',
+    'label' => 'LBL_ASSIGNED_TO_NAME',
+    'default' => true,
+  ),
+);
+?>

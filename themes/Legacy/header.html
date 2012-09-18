@@ -1,0 +1,357 @@
+<!--
+/*********************************************************************************
+ * SugarCRM is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004 - 2009 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+/*********************************************************************************
+
+ ********************************************************************************/
+-->
+<!-- BEGIN: main -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD html 4.01 Transitional//EN">
+
+<link REL="SHORTCUT ICON" HREF="include/images/sugar_icon.ico">
+<meta http-equiv="Content-Type" content="text/html; charset={LBL_CHARSET}">
+<title>{APP.LBL_BROWSER_TITLE}</title>
+
+<link rel="stylesheet" type="text/css" href="{IMAGE_SERVER}themes/{THEME}/navigation.css?s={SUGAR_VERSION}&c={JS_CUSTOM_VERSION}" />
+<link rel="stylesheet" type="text/css" href="{IMAGE_SERVER}themes/{THEME}/style.css?s={SUGAR_VERSION}&c={JS_CUSTOM_VERSION}" />
+<link rel="stylesheet" type="text/css" href="{IMAGE_SERVER}themes/{THEME}/colors.{STARTING_COLOR_NAME}.css?s={SUGAR_VERSION}&c={JS_CUSTOM_VERSION}" id="current_color_style" />
+<link rel="stylesheet" type="text/css" href="{IMAGE_SERVER}themes/{THEME}/fonts.{STARTING_FONT_NAME}.css?s={SUGAR_VERSION}&c={JS_CUSTOM_VERSION}" id="current_font_style"/>
+<script language="javascript" src="{IMAGE_SERVER}themes/default/SiteMapJS.js?s={SUGAR_VERSION}&c={JS_CUSTOM_VERSION}"></script>
+<script language="javascript" src="{IMAGE_SERVER}themes/menu.js?s={SUGAR_VERSION}&c={JS_CUSTOM_VERSION}"></script>
+<script language="javascript" src="{IMAGE_SERVER}themes/cookie.js?s={SUGAR_VERSION}&c={JS_CUSTOM_VERSION}"></script>
+<script language="javascript" src="{IMAGE_SERVER}themes/{THEME}/style.js?s={SUGAR_VERSION}&c={JS_CUSTOM_VERSION}"></script>
+<!-- BEGIN: no_group_placeholder_js -->
+<script language="javascript">
+
+SUGAR.themes.resetSubTabsTimer = 0;
+SUGAR.themes.moreTab = 0;
+SUGAR.themes.setResetTimer = function(){};
+SUGAR.themes.updateSubTabHtml = function(){};
+SUGAR.themes.updateSubTabsDelay = function(){};
+SUGAR.themes.updateMoreTabDelay = function(){};
+SUGAR.themes.chooseTab = function(){};
+SUGAR.themes.theme_name='{THEME}';
+
+</script>
+<!-- END: no_group_placeholder_js -->
+<!-- BEGIN: group_tabs_js -->
+<script language="javascript">
+SUGAR.themes.theme_name='{THEME}';
+SUGAR.themes.imagePath = '{IMAGE_PATH}';
+
+SUGAR.themes.startTab = '{PARENT_TAB}';
+
+if(SUGAR.themes.startTab == null){
+	SUGAR.themes.startTab = 'Home';
+}
+
+SUGAR.themes.activeTab = SUGAR.themes.startTab;
+SUGAR.themes.moreTab = '{MAIN_MORE_TAB}';
+
+SUGAR.themes.subTabs = new Array();
+<!-- BEGIN: js_subtabs -->
+SUGAR.themes.subTabs['{MAIN_TAB_NAME}'] = '<ul class=\'subTabs\' onclick="SUGAR.themes.chooseTab(\'{MAIN_TAB_NAME}\');return true;"><!-- BEGIN: js_subtabs_html --><li class="{SUB_CLASS}"><a href="{SUB_URL}">{SUB_NAME}</a></li>{SUB_MORE}<!-- END: js_subtabs_html --></ul>';
+<!-- END: js_subtabs -->
+
+SUGAR.themes.updateSubTabsTimer = 0;
+SUGAR.themes.resetSubTabsTimer = 0;
+SUGAR.themes.moreTabUrl = null;
+
+</script>
+<script language="javascript" src="{IMAGE_SERVER}themes/{THEME}/groupTabs.js?s={SUGAR_VERSION}&c={JS_CUSTOM_VERSION}"></script>
+<script language="javascript">
+
+YAHOO.util.Event.addListener(window, "load", SUGAR.themes.firstReset);
+
+</script>
+<!-- END: group_tabs_js -->
+<script language="javascript">
+
+function hideLeftCol(id){
+
+	if(this.document.getElementById( id).style.display=='none'){
+		this.document.getElementById( id).style.display='inline';
+
+		Set_Cookie('showLeftCol','true',30,'/','','');
+		var show = Get_Cookie('showLeftCol');
+		document['HideHandle'].src = '{IMAGE_PATH}hide.gif';
+	}else{
+		this.document.getElementById(  id).style.display='none';
+
+		Set_Cookie('showLeftCol','false',30,'/','','');
+		var show = Get_Cookie('showLeftCol');
+		document['HideHandle'].src = '{IMAGE_PATH}show.gif';
+
+	}
+}
+
+function showSubMenu(id){
+	if(this.document.getElementById( id).style.display=='none'){
+		tbButtonMouseOver('HideHandle',139,'',10);
+	}
+}
+
+</script>
+</head>
+
+<body {ONLOAD} onMouseOut="closeMenus();" >
+	<!-- BEGIN: gcl_submenu -->
+	<div id="{GCL_SUBMENU_KEY}Menu" class="menu">
+	<!-- BEGIN: gcl_submenu_items -->
+	<a href="{GCL_SUBMENU_LINK_URL}" class="menuItem" id="{GCL_SUBMENU_LINK_KEY}Handle" parentid="{GCL_SUBMENU_KEY}Menu" onMouseOver="hiliteItem(this,'yes'); closeSubMenus(this);" onMouseOut="unhiliteItem(this);">{GCL_SUBMENU_LINK_LABEL}</a>
+	<!-- END: gcl_submenu_items -->
+	</div>
+	<!-- END: gcl_submenu -->
+
+
+	<div id="MoreMenu" class="menu" onMouseOver="window.clearTimeout(SUGAR.themes.resetSubTabsTimer);" onMouseOut="SUGAR.themes.setResetTimer();">
+	<!-- BEGIN: more -->
+	<a href="{TAB_URL}" class="menuItem" id="{MODULE_KEY}Handle" parentid="MoreMenu" onMouseOver="hiliteItem(this,'yes');SUGAR.themes.updateSubTabsDelay(SUGAR.themes.moreTab,'{{MODULE_NAME|htmlspecialchars}','{MODULE_NAME|htmlspecialchars}');closeSubMenus(this);" onMouseOut="unhiliteItem(this);" onClick="SUGAR.themes.chooseTab('{MODULE_NAME}'); return true;">{MODULE_NAME}</a>
+	<!-- END: more -->
+	</div>
+
+	<!-- BEGIN: moresubmenu -->
+	<div id="MoreSub{MENU_NAME}Menu" class="menu" onMouseOver="window.clearTimeout(SUGAR.themes.resetSubTabsTimer);" onMouseOut="SUGAR.themes.setResetTimer();">
+	<!-- BEGIN: moresubmenuitem -->
+	<a href="{SUB_URL}" class="menuItem" id="{MODULE_KEY}Handle" parentid="MoreSub{MENU_NAME}Menu" onMouseOver="hiliteItem(this,'yes'); closeSubMenus(this);" onMouseOut="unhiliteItem(this);" onClick="SUGAR.themes.chooseTab('{MENU_NAME}'); return true;">{MODULE_NAME}</a>
+	<!-- END: moresubmenuitems -->
+	</div>
+
+
+	<!-- END: moresubmenu -->
+
+	<div id="HideMenu" class="subDmenu">
+	<!-- BEGIN: hide_recent -->
+	<h3 class="leftColumnModuleName">{TITLE_LAST_VIEW}</h3>
+
+	<div id="div_shortcuts_hide" onMouseOver="hiliteItem(this,'no');" style="width: 180; margin:0; padding:0;">
+				<ul class="subMenu" style="margin:0; padding:0;">
+	<!-- BEGIN: hide_recent_item -->
+		<li id="{RL_ID}_lvh"><a href="{RECENT_URL}">{RL_IMAGE}&nbsp;{RECENT_LABEL}</a></li>
+	<!-- END: hide_recent_item -->
+	<!-- BEGIN: left_form_recent_view_empty -->
+		<li id="{RL_ID}_lvh"><span>{RL_IMAGE}&nbsp;{APP.NTC_NO_ITEMS_DISPLAY}</span></li>
+	<!-- END: left_form_recent_view_empty -->
+	</ul>
+	</div>
+	<!-- END: hide_recent -->
+
+	<!-- BEGIN: hide_shortcut -->
+	<h3 class="leftColumnModuleName">{SHORTCUTS}</h3>
+
+	<div id="div_shortcuts_hide" onMouseOver="hiliteItem(this,'no');" style="width: 180;">
+				<ul class="subMenu">
+	<!-- BEGIN: hide_shortcut_item -->
+		<li id="{SC_ID}_shh"><a href="{URL}">{SC_IMAGE}&nbsp;{LABEL}</a></li>
+	<!-- END: hide_shortcut_item -->
+	<!-- BEGIN: hide_shortcut_special -->
+		<li id="{SC_ID}_shh">{LABEL}</li>
+	<!-- END: hide_shortcut_special -->
+
+	</ul>
+	</div>
+	<!-- END: hide_shortcut -->
+	</div>
+
+
+<table width="100%" cellspacing="0" cellpadding="0" border="0" class="headerBg" id="header">
+	<tr>
+		<td>
+			<table border="0" cellspacing="0" cellpadding="0" align="right"><tr>
+			<!-- BEGIN: welcome -->
+			    <td class="welcome" id="welcome"  style="vertical-align: top; text-align: right;">{APP.NTC_WELCOME},  <strong>{CURRENT_USER}</strong> [ <a href='{LOGOUT_LINK}'  class='utilsLink'>{LOGOUT_LABEL}</a> ]</td>
+				<!-- END: welcome -->
+					<td nowrap class="myArea"  style="vertical-align: top;"><ul class="subTabs"><!-- BEGIN: global_control_links --><li><a href="{GCL_URL}" {GCL_MENU}>{GCL_LABEL}</a>{MENU_ARROW}</li><!-- END: global_control_links --></ul>
+				</td>
+				<td id="colorpicker" nowrap  style="vertical-align: top;"><ul class="colorpicker">
+					<!-- BEGIN: font --><li onClick="SUGAR.themes.changeFont('{FONT_NAME}');"><img src="{IMAGE_SERVER}themes/{THEME}/fonts.{FONT_NAME}.icon.gif" alt="{FONT_NAME}" border="0" style="margin: 0 3px 0 3px;"></li><!-- END: font -->
+					</ul>
+					</td><!-- BEGIN: left_form_search -->
+					
+								<td class="search" style="padding: 0px 5px 0px 10px;">
+									<span style="cursor:pointer;" onClick="getSiteMap(10,62);">{SITEMAP}<img src="{IMAGE_PATH}MoreDetail.png" style="margin-left: 2px;" style="cursor:pointer;"></span><span id='sm_holder'></span>&nbsp;&nbsp;|
+								</td>
+								<td align="right" valign="top" nowrap style="padding: 0px 10px 0px 0;" class="search">
+	                   <form name='UnifiedSearch' onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
+					  <input type="hidden" name="action" value="UnifiedSearch">
+					  <input type="hidden" name="module" value="Home">
+					  <input type="hidden" name="search_form" value="false">
+					  <input type="hidden" name="advanced" value="false">
+					 <img id="unified_search_advanced_img" src="{IMAGE_PATH}searchMore.gif" border="0" alt="Search"> <input type="text" class="searchField" name="query_string" id="query_string" size="20" value="{SEARCH}">&nbsp;<input type="submit" class="button" value="{TITLE}"><br>
+	                  </form>
+	                  <div id="unified_search_advanced_div" style="display: none; height: 1px; position: absolute; overflow: hidden; width: 300px; padding-top: 5px;"></div>
+					</td>
+					<!-- END: left_form_search --></tr><tr><!-- BEGIN: left_form_search_placeholder -->
+					<td colspan="5" align="right" valign="top" nowrap style="padding: 10px 10px 0px 10px; font-size: 12px;">
+					  <br />
+					</td>
+					<!-- END: left_form_search_placeholder --></tr>			
+				   </table>
+</tr>
+<tr><td id="logo"><img width="212" height="40" border="0" alt="Company Logo" src="{COMPANY_LOGO}">	</td></tr>
+<tr>
+    <td colspan="2">
+		<table cellspacing="0" cellpadding="0" border="0" width="100%">		
+	
+		 <tr>
+		    <td colspan="3" class="tabRow">
+			
+			
+				<ul id="tabRow">
+					<!-- BEGIN: tab -->			    
+					<li class="{TAB_CLASS}" id="{TAB_NAME}_tab"><a class="{TAB_CLASS}Link" href="{TAB_URL}" onclick="SUGAR.themes.chooseTab('{TAB_NAME}' );return true;">{TAB_NAME}</a></li>
+					<!-- END: tab -->
+				<!-- BEGIN: module_tab -->
+			    <li class="{TAB_CLASS}" id="{TAB_NAME}_tab">{LINK}</li>
+				<!-- END: module_tab -->
+				<!-- BEGIN: moreHandle -->
+														
+				<li class="{MORE_HANDLE_CLASS}" id="MoreHandle" style="cursor: pointer; cursor: hand;" onMouseOver="tbButtonMouseOver(this.id,100,'',-6);">&nbsp;&nbsp;&gt;&gt;&nbsp;&nbsp;</li>
+													
+											<!-- END: moreHandle -->
+						
+				</ul>	
+     </td>
+  </tr>
+		</table>
+		
+	</td>
+</tr>
+<!-- BEGIN: left_form_recent_view -->
+<tr height="20">
+	<td colspan="3" class="lastView"><b style="white-space:nowrap;">{TITLE_LAST_VIEW}:&nbsp;&nbsp;</b>
+		<!-- BEGIN: left_form_recent_view_row -->
+			 	<a class="lastViewLink" title="[{APP.LBL_ALT_HOT_KEY}{ROW_NUMBER}]" accessKey="{ROW_NUMBER}" href="{RECENT_URL}">{RL_IMAGE}&nbsp;{RECENT_LABEL}</a>
+		<!-- END: left_form_recent_view_row -->
+		<!-- BEGIN: left_form_recent_view_empty -->
+			{APP.NTC_NO_ITEMS_DISPLAY}
+		<!-- END: left_form_recent_view_empty -->
+		
+	</td>
+</tr>
+<!-- END: left_form_recent_view -->
+<!-- BEGIN: left_form_shortcuts -->
+<tr>
+	<td colspan="3" class="lastView"><b style="white-space:nowrap;">{SHORTCUTS}:&nbsp;&nbsp;</b>
+							<!-- BEGIN: shortcut_item --> <span style="white-space:nowrap;"><a class="lastViewLink" href="{URL}">{SC_IMAGE}&nbsp;{LABEL}</a></span><!-- END: shortcut_item -->
+				
+	</td>
+</tr>
+<!-- END: left_form_shortcuts -->
+
+<tr>
+	<td colspan="3">
+	<table cellpadding="0" cellspacing="0" border="0" width="100%">
+	<tr>
+	<!-- BEGIN: left_form_empty_td -->
+	<td style="padding-left: 10px" id="HideMenu">&nbsp;<img style="display:none; cursor: pointer; cursor: hand;" id="HideHandle" name="HideHandle" src="{IMAGE_PATH}show.gif" alt="" onclick='hideLeftCol("leftCol");closeMenus();' onmouseover="showSubMenu('leftCol')"><div style="display: none;" id="leftCol"></div></td>
+	<!-- END: left_form_empty_td -->
+	
+    <!-- BEGIN: left_form_otd -->
+    	<td valign="top" style="width: 10px;" id="HideMenu">
+	    	<!-- BEGIN: left_form_otd_icon -->
+    		<img style="cursor: pointer; cursor: hand;" id="HideHandle" name="HideHandle" src="{IMAGE_PATH}show.gif" alt="" onclick='hideLeftCol("leftCol");closeMenus();' onmouseover="showSubMenu('leftCol')">
+    		<!-- END: left_form_otd_icon -->
+    		<!-- BEGIN: left_form_otd_noicon -->
+    		&nbsp;<img style="display:none; cursor: pointer; cursor: hand;" id="HideHandle" name="HideHandle" src="{IMAGE_PATH}show.gif" alt="" onclick='hideLeftCol("leftCol");closeMenus();' onmouseover="showSubMenu('leftCol')">
+    		<!-- END: left_form_otd_noicon -->
+    	</td>
+    	<td id="left" valign="top" style="width: 160px;" class="leftColumn">
+    		<div style="display: none;" id="leftCol"><table cellpadding="0" cellspacing="0" border="0" width="160">
+    		<tr>
+    			<td>
+    <!-- END: left_form_otd -->
+				<!-- BEGIN: left_form_recent -->
+				      	<h3 class="leftColumnModuleName">{TITLE_LAST_VIEW}</h3>
+						<div id="div_lastview">
+						<!-- BEGIN: sub_menu -->
+				<ul class="subMenu">
+						<!-- BEGIN: sub_menu_item -->
+							<li id="{RL_ID}_lv"><a title="[{APP.LBL_ALT_HOT_KEY}{ROW_NUMBER}]" accessKey="{ROW_NUMBER}" href="{RECENT_URL}">{RL_IMAGE}&nbsp;{RECENT_LABEL}</a></li>
+						<!-- END: sub_menu_item -->
+						<!-- BEGIN: left_form_recent_view_empty -->
+						<li id="{RL_ID}_lv"><a title="[{APP.LBL_ALT_HOT_KEY}{ROW_NUMBER}]" accessKey="{ROW_NUMBER}"  href="{RECENT_URL}">{RL_IMAGE}&nbsp;{APP.NTC_NO_ITEMS_DISPLAY}</a></li>
+						<!-- END: left_form_recent_view_empty -->
+						</ul>
+					<!-- END: sub_menu -->
+					</div>
+				<!-- END: left_form_recent -->
+				<!-- BEGIN: left_form -->
+				      	<h3 class="leftColumnModuleName">{SHORTCUTS}</h3><div id="div_shortcuts">
+				<ul class="subMenu" id="subMenu">
+						<!-- BEGIN: sub_menu -->
+						<!-- BEGIN: sub_menu_item -->
+							<li id="{SC_ID}_lv"><a href="{URL}">{SC_IMAGE}&nbsp;{LABEL}</a></li>
+						<!-- END: sub_menu_item -->
+						<!-- BEGIN: sub_menu_special -->
+							<li id="{SC_ID}_lv">{LABEL}</li>
+						<!-- END: sub_menu_special -->
+						<!-- BEGIN: left_form_recent_view_empty -->
+						<li id="{SC_ID}_lv"><a title="[{APP.LBL_ALT_HOT_KEY}{ROW_NUMBER}]" accessKey="{ROW_NUMBER}"  href="{URL}">{SC_IMAGE}&nbsp;{APP.NTC_NO_ITEMS_DISPLAY}</a></li>
+						<!-- END: left_form_recent_view_empty -->
+						</ul>
+					<!-- END: sub_menu -->
+					</div>
+					</p>
+				<!-- END: left_form -->
+	<!-- BEGIN: left_form_new_record -->
+					{NEW_RECORD}
+	<!-- END: left_form_new_record -->
+			
+	<!-- BEGIN: left_form_ctd -->
+					<img src="{IMAGE_PATH}blank.gif" alt="" width="160" height="1" border="0">
+				</td>
+			</tr>
+			</table>
+		</div>
+	</td>
+	<script language="Javascript">
+	if (!Get_Cookie('showLeftCol')) {
+		Set_Cookie('showLeftCol','true',30,'/','','');
+	}
+	var show = Get_Cookie('showLeftCol');
+
+	if (show == 'true') {
+		this.document.getElementById('leftCol').style.display='inline';
+		document['HideHandle'].src = '{IMAGE_PATH}hide.gif';
+	} else {
+		this.document.getElementById('leftCol').style.display='none';
+		document['HideHandle'].src = '{IMAGE_PATH}show.gif';	
+		
+	}
+	</script>
+	<!-- END: left_form_ctd -->
+    <td style="vertical-align: top; width: 100%;" id="mainWindow">
+<!-- END: main -->

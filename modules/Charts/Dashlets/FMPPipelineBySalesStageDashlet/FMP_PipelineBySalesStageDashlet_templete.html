@@ -1,0 +1,526 @@
+
+{literal}
+<script language="javascript">
+  function enableQuickSearchOppchart(noReload){
+    Ext.onReady(function(){
+        var qsFields=Ext.query('.sqsPipeline');
+        for(var qsField in qsFields){
+            var loaded=false;
+            if(isInteger(qsField)&&(qsFields[qsField].id&&!document.getElementById(qsFields[qsField].id).readOnly)&&typeof sqs_objects!='undefined'&&sqs_objects[qsFields[qsField].id]&&sqs_objects[qsFields[qsField].id]['disable']!=true){
+                if(!loaded){
+                    if(typeof QSFieldsArray[qsFields[qsField].id]=='undefined'){
+                        var Arr=new Array(qsFields[qsField].parentNode,qsFields[qsField].nextSibling,qsFields[qsField]);
+                        QSFieldsArray[qsFields[qsField].id]=Arr;
+                    }
+                    var sqs=sqs_objects[qsFields[qsField].id];
+                    //console.log(sqs);
+                    var display_field=sqs.field_list[0];
+            
+                    var ds=new Ext.data.Store({
+                        storeId:"store_"+qsFields[qsField].id,
+                        proxy:new Ext.data.HttpProxy({
+                            url:'index.php'
+                        }),
+                        remoteSort:true,
+                        reader:new Ext.data.JsonReader({
+                            root:'fields',
+                            totalProperty:'totalCount',
+                            id:'id'    
+                        },[{
+                            name:display_field
+                        },]),
+                        baseParams:{
+                            to_pdf:'true',
+                            module:'Opportunities',
+                            action:'quicksearchQuery',
+                            data:Ext.util.JSON.encode(sqs)
+                        }
+                    });
+                   
+                    var search=new Ext.form.ComboBox({
+                        id:"combobox_"+qsFields[qsField].id,
+                        store:ds,
+                        queryDelay:700,
+                        maxHeight:300,
+                        minListWidth: 'auto',
+                        displayField:display_field,
+                        fieldClass:'',
+                        listClsClass:typeof(Ext.version)!='undefined'?'x-sqs-list':'x-combo-list',
+                        focusClass:'',
+                        disabledClass:'',
+                        emptyClass:'',
+                        invalidClass:'',
+                        selectedClass:typeof(Ext.version)!='undefined'?'x-sqs-selected':'x-combo-list',
+                        typeAhead:false,
+                        loadingText:SUGAR.language.get('app_strings','LBL_SEARCHING'),
+                        valueNotFoundText:sqs.no_match_text,
+                        hideTrigger:false,
+                        confirmed:false,
+                        pageSize:20,
+                        applyTo:typeof(Ext.version)!='undefined'?qsFields[qsField].id:Ext.form.ComboBox.prototype.applyTo,
+                        minChars:1,
+                        onSelect: function(record, index){
+                            if(this.fireEvent('beforeselect', this, record, index) !== false){
+                                this.setValue(record.data[this.valueField || this.displayField]);
+                                this.fireEvent('select', this, record, index);
+                            }  							
+                        },
+                        listeners:{
+                            select:function(el,type, index){
+                              setOppchartFields(type,el,index,/\S/);    
+                            }
+                        }    
+                    });
+                    if(typeof search.applyTo!='undefined'){
+                        search.applyTo(qsFields[qsField].id);
+                    }
+                    search.wrap.applyStyles('display:inline');
+                    qsFields[qsField].className=qsFields[qsField].className.replace('x-form-text','');
+                    if(Ext.isMac&&Ext.isGecko){
+                        document.getElementById(qsFields[qsField].id).addEventListener('keypress',preventDef,false);
+                    }
+                    if((qsFields[qsField].form&&typeof(qsFields[qsField].form)=='object'&&qsFields[qsField].form.name=='search_form')||(qsFields[qsField].className.match('sqsNoAutofill')!=null)){
+                        search.events.autofill.listeners[0].fireFn=function(){};
+
+                    }
+                }
+            }
+        }
+    });
+}
+function setOppchartFields(type,el,index,filter){
+    for(var field in type.json){
+        for(var key in sqs_objects[el.el.id].field_list){
+                if(field==sqs_objects[el.el.id].field_list[key]&&document.getElementById(sqs_objects[el.el.id].populate_list[key])&&sqs_objects[el.el.id].populate_list[key].match(filter)){
+                     document.getElementById(sqs_objects[el.el.id].populate_list[key]).value=type.json[field];    
+                }
+        }
+    }
+    if(hasClass(el.innerList.dom.children[index],"selected-oppchart")){
+        removeClass(el.innerList.dom.children[index], "selected-oppchart");
+        remove_oppchart();
+    }else{
+        addClass(el.innerList.dom.children[index], "selected-oppchart");
+        add_oppchart();    
+    }
+}
+
+QSFieldsArray=new Array();
+if(typeof Ext=='object'){
+    enableQuickSearchOppchart(true);
+}
+function addClass(o, c){
+	var re = new RegExp("(^|\\s)" + c + "(\\s|$)", "g");
+	if (re.test(o.className)) return;
+	o.className = (o.className + " " + c).replace(/\s+/g, " ").replace(/(^ | $)/g, "");
+}
+	  
+function removeClass(o, c){
+	var re = new RegExp("(^|\\s)" + c + "(\\s|$)", "g");
+	o.className = o.className.replace(re, "$1").replace(/\s+/g, " ").replace(/(^ | $)/g, "");
+}
+
+function hasClass(ele,cls) {
+	return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}   
+// End of File include/javascript/quicksearch.js
+
+function add_oppchart(){
+    var oppchart_id = document.getElementById('fmp-oppchart-id').value;
+    var oppchart_name = document.getElementById('fmp-oppchart-name').value;    
+    if(sessionStorage.getItem("oppchart_id") != null && sessionStorage.getItem("oppchart_name") != null && oppchart_id != '' && oppchart_name != ''){ 
+            var oppchart_id_arr = eval('(' + sessionStorage.getItem("oppchart_id") + ')');
+            var oppchart_name_arr = eval('(' + sessionStorage.getItem("oppchart_name") + ')');    
+            oppchart_id_arr.jsonObject[oppchart_id] = oppchart_id;  
+            oppchart_name_arr.jsonObject[oppchart_id] = oppchart_name;    
+            sessionStorage.setItem("oppchart_id", JSON.stringify(oppchart_id_arr.jsonObject));
+            sessionStorage.setItem("oppchart_name", JSON.stringify(oppchart_name_arr.jsonObject));
+            var str_val = '';    
+            for(var key in oppchart_name_arr.jsonObject) {
+                str_val += oppchart_name_arr.jsonObject[key]+", ";
+            } 
+            str_val = str_val.slice(0,str_val.length-2);    
+            $("#loppchartname").html("Opportunity "+str_val);    
+    }else if(oppchart_id != '' && oppchart_name != ''){
+            var oppchart_id_arr = {};
+            var oppchart_name_arr = {};    
+            oppchart_id_arr[oppchart_id] = oppchart_id;
+            oppchart_name_arr[oppchart_id] = oppchart_name;    
+            sessionStorage.setItem("oppchart_id", JSON.stringify(oppchart_id_arr));
+            sessionStorage.setItem("oppchart_name", JSON.stringify(oppchart_name_arr));    
+            var str_val = '';    
+            for(var key in oppchart_name_arr) {
+                str_val += oppchart_name_arr[key]+", ";
+            }   
+            str_val = str_val.slice(0,str_val.length-2);    
+            $("#loppchartname").html("Opportunity "+str_val);     
+    } 
+}
+function remove_oppchart(){
+    var oppchart_id = document.getElementById('fmp-oppchart-id').value;
+    if(sessionStorage.getItem("oppchart_id") != null && sessionStorage.getItem("oppchart_name") != null){ 
+            var oppchart_id_arr = eval('(' + sessionStorage.getItem("oppchart_id") + ')');
+            var oppchart_name_arr = eval('(' + sessionStorage.getItem("oppchart_name") + ')');    
+            delete oppchart_id_arr.jsonObject[oppchart_id];  
+            delete oppchart_name_arr.jsonObject[oppchart_id];    
+            sessionStorage.setItem("oppchart_id", JSON.stringify(oppchart_id_arr.jsonObject));
+            sessionStorage.setItem("oppchart_name", JSON.stringify(oppchart_name_arr.jsonObject));    
+            var str_val = '';    
+            for(var key in oppchart_name_arr.jsonObject) {
+                str_val += oppchart_name_arr.jsonObject[key]+", ";
+            }
+            if(str_val != ''){
+                str_val = str_val.slice(0,str_val.length-2);
+                $("#loppchartname").html("Opportunity "+str_val);
+            }else{
+                $("#loppchartname").html("");
+            }        
+    }
+}    
+    function get_date_for_pipeline(){
+        $(".yui-skin-sam-fmp-sales").find("#pipeline_panel").slideUp("fast");
+        /*         $("#load_gif").show();*/
+        var url = "index.php?module=Opportunities&action=processWhere";
+        var input_value = $("#pipeline_fmp_slsm_input").val();
+        if(input_value.length == 0){
+            var select_slsm = $("#pipeline_fmprep_slsm_tree option:selected").val();
+        }else{
+            var select_slsm = $("#pipeline_fmprep_slsm_tree_search option:selected").val();
+        }
+        var select_reg_loc = $("#pipeline_fmp_reg_loc option:selected").val();
+        var select_dealer = $("#pipeline_fmp_dealer_type option:selected").val();
+
+        if(select_slsm == null){
+            select_slsm = 'all';
+        } else if (select_slsm != 'all') {
+	    var selected_slsm = new Array();
+	    if (input_value.length == 0) {
+		    $("#pipeline_fmprep_slsm_tree option:selected").each(function(k, v) {
+			selected_slsm[k] = $(this).val();
+		    });
+	    }else{
+		    $("#pipeline_fmprep_slsm_tree_search option:selected").each(function(k, v) {
+			selected_slsm[k] = $(this).val();
+		    });
+			    
+	   }
+            select_slsm = selected_slsm.join(" ");			
+	}
+        if(select_reg_loc == null){
+            select_reg_loc = 'all';
+        }else if(select_reg_loc != 'all') {
+			    var selected_reg_loc = new Array();
+			    $("#pipeline_fmp_reg_loc option:selected").each(function(k, v) {
+				selected_reg_loc[k] = $(this).val();
+			    });
+                            select_reg_loc = selected_reg_loc.join(" ");
+	}
+        if(select_dealer == null){
+            select_dealer = 'all';
+        }else if(select_dealer != 'all') {
+			    var selected_dealer = new Array();
+			    $("#pipeline_fmp_dealer_type option:selected").each(function(k, v) {
+				selected_dealer[k] = $(this).val();
+			    });
+                            select_dealer = selected_dealer.join(" ");
+	}
+
+
+        var pipeline_str = "";
+        var pipeline_sales_reps_names = "";
+
+        if($("#pipeline_sales_reps_list").val()){
+            $("#pipeline_sales_reps_list option:selected").each(function () {
+                pipeline_str += this.value + " ";
+                pipeline_sales_reps_names += this.text + " ";
+            });
+        }
+        else{
+            $("#pipeline_sales_reps_list option").each(function(){
+                this.selected=true;
+            });
+            pipeline_sales_reps_names = "all";
+            $("#pipeline_sales_reps_list option:selected").each(function () {
+                pipeline_str += this.value + " ";
+            });
+        }
+        if(sessionStorage.getItem("oppchart_name") != null && sessionStorage.getItem("oppchart_id") != null){
+                var oppchart_id_arr = eval('(' + sessionStorage.getItem("oppchart_id") + ')');
+                var oppchart_name_arr = eval('(' + sessionStorage.getItem("oppchart_name") + ')'); 
+                var ids = '';
+                for(var key in oppchart_id_arr.jsonObject) {
+                    ids += oppchart_id_arr.jsonObject[key]+",";
+                } 
+                ids = ids.slice(0,ids.length-1);    
+                var names = '';    
+                for(var key in oppchart_name_arr.jsonObject) {
+                    names += oppchart_name_arr.jsonObject[key]+",";
+                } 
+                names = names.slice(0,names.length-1);     
+        }else{
+            var names = document.getElementById('fmp-oppchart-name').value;      
+        } 
+        $.post(url, {pipeline_slsm_num: select_slsm, pipeline_reg_loc: select_reg_loc, pipeline_dealer: select_dealer, pipeline_sales_reps: pipeline_str, pipeline_sr_names: pipeline_sales_reps_names, oppchart_name: names }, function(data){
+            SUGAR.mySugar.retrieveDashlet("{/literal}{$dashletId}{literal}", 'predefined_chart');
+        });
+    }
+    function reset_date_for_pipeline(){
+        var url = "index.php?module=Opportunities&action=ProcessWhere";
+        var select_slsm = 'all';
+        var select_reg_loc = 'all';
+        var select_dealer = 'all';
+        var pipeline_sales_reps_names = "all";
+        var pipeline_str = "";
+        var opportunity = "";
+        $("#pipeline_sales_reps_list option").each(function(){
+                this.selected=true;
+            });
+        $("#pipeline_sales_reps_list option:selected").each(function () {
+             pipeline_str += this.value + " ";
+        });
+        var reset_clicked = true;
+        sessionStorage.removeItem("oppchart_name");
+        sessionStorage.removeItem("oppchart_id");
+        $.post(url, {pipeline_slsm_num: select_slsm, pipeline_reg_loc: select_reg_loc, pipeline_dealer: select_dealer, pipeline_sales_reps: pipeline_str, pipeline_sr_names: pipeline_sales_reps_names, reset_clicked: reset_clicked,oppchart_name:opportunity }, function(data){
+            SUGAR.mySugar.retrieveDashlet("{/literal}{$dashletId}{literal}", 'predefined_chart');
+        });
+    }
+    function pipeline_fmp_slsm_list_quick_search(input_val){
+        if(input_val.length != 0){
+            $("#pipeline_box_for_slsm_first").hide();
+            var new_select = "";
+            new_select += '<select id="pipeline_fmprep_slsm_tree_search" size="15" multiple="multiple" style="width: 340px;">';
+            new_select += '<option value="all" style="border-bottom: 2px solid grey;">ALL</option>';
+            $.each($("#pipeline_fmprep_slsm_tree option"), function(){
+                var option_val = this.text;
+                if(option_val.indexOf(input_val.toUpperCase()) + 1) {
+                    new_select += '<option value="'+this.value+'">'+this.text+'</option>';
+                }
+            });
+            new_select += '</select>';
+            $("#pipeline_box_for_slsm_second").show();
+            $("#pipeline_box_for_slsm_second").html(new_select);
+        }else{
+            $("#pipeline_box_for_slsm_second").hide();
+            $("#pipeline_box_for_slsm_first").show();
+        }
+        $("#pipeline_fmprep_slsm_tree_search").click(function(){
+            var fmprep_slsm_tree_search = $("#pipeline_fmprep_slsm_tree_search option:selected").val();
+            if (fmprep_slsm_tree_search != 'all'){
+                $("#pipeline_lslsm").html("SLSM "+fmprep_slsm_tree_search);
+            }
+            else{
+                $("#pipeline_lslsm").html("");
+            }
+        });
+    }
+
+    $(document).ready(function(){
+        $("#pipeline_slsm_list_show").hover(
+        function(){
+            $("#pipeline_slsm_list_show").find("#pipeline_slsm_panel").stop(true, true);
+            $("#pipeline_slsm_list_show").find("#pipeline_slsm_panel").slideDown("slow");
+        },
+        function() {
+            $("#pipeline_slsm_list_show").find("#pipeline_slsm_panel").slideUp("slow");
+        }
+    );
+        $("#pipeline_area_list_show").hover(
+        function(){
+            $("#pipeline_area_list_show").find("#pipeline_area_panel").stop(true, true);
+            $("#pipeline_area_list_show").find("#pipeline_area_panel").slideDown("slow");
+        },
+        function() {
+            $("#pipeline_area_list_show").find("#pipeline_area_panel").slideUp("slow");
+        }
+    );
+        $("#pipeline_dealer_list_show").hover(
+        function(){
+            $("#pipeline_dealer_list_show").find("#pipeline_fmp_dealer_type").stop(true, true);
+            $("#pipeline_dealer_list_show").find("#pipeline_fmp_dealer_type").slideDown("slow");
+        },
+        function() {
+            $("#pipeline_dealer_list_show").find("#pipeline_fmp_dealer_type").slideUp("slow");
+        }
+    );
+        $("#pipeline_sales_reps_list_show").hover(
+        function(){
+            $("#pipeline_sales_reps_list_show").find("#pipeline_sales_reps_panel").stop(true, true);
+            $("#pipeline_sales_reps_list_show").find("#pipeline_sales_reps_panel").slideDown("slow");
+        },
+        function() {
+            $("#pipeline_sales_reps_list_show").find("#pipeline_sales_reps_panel").slideUp("slow");
+        }
+    );
+    $("#fmp-oppchart-list-show").hover(
+        function(){
+                $("#fmp-oppchart-list-show").find("#fmp-oppchart-panel").stop(true, true);
+                $("#fmp-oppchart-list-show").find("#fmp-oppchart-panel").slideDown("slow");
+        },
+        function() {
+                if ( $(".x-shadow").css("display") == "none" || $(".x-shadow").length == 0) { 
+                        $("#fmp-oppchart-list-show").find("#fmp-oppchart-panel").slideUp("slow");
+                } 
+        }
+    );
+        $("#pipeline_sales_reps_list").click(function(){
+            var select_sales_reps = $("#pipeline_sales_reps_list option:selected").html();
+            if (select_sales_reps != 'all'){
+                $("#pipeline_lsalesreps").html("Sales Reps "+select_sales_reps);
+            }
+            else{
+                $("#pipeline_lsalesreps").html("");
+            }
+        });
+        $("#pipeline_fmp_reg_loc").click(function(){
+            var select_reg_loc = $("#pipeline_fmp_reg_loc option:selected").val();
+            if (select_reg_loc != 'all'){
+			var selected_reg_loc = new Array();
+				$("#pipeline_fmp_reg_loc option:selected").each(function (k, v) {
+					selected_reg_loc[k] = $(this).val();	
+				});
+                $("#pipeline_larea").html("Area "+selected_reg_loc.join(", "));
+            }
+            else{
+                $("#pipeline_larea").html("");
+            }
+        });
+        $("#pipeline_fmprep_slsm_tree").click(function(){
+            var fmprep_slsm_tree = $("#pipeline_fmprep_slsm_tree option:selected").val();
+            if (fmprep_slsm_tree != 'all'){
+		var selected_fmprep_slsm_tree = new Array();
+				$("#pipeline_fmprep_slsm_tree option:selected").each(function (k, v) {
+					selected_fmprep_slsm_tree[k] = $(this).val();	
+				});
+                $("#pipeline_lslsm").html("SLSM "+selected_fmprep_slsm_tree.join(", "));
+            }
+            else{
+                $("#pipeline_lslsm").html("");
+            }
+        });
+
+        $("#pipeline_fmprep_slsm_tree_search").click(function(){
+            var fmprep_slsm_tree_search = $("#pipeline_fmprep_slsm_tree_search option:selected").val();
+            if (fmprep_slsm_tree_search != 'all'){
+						var selected_fmprep_slsm_tree_search = new Array();
+				$("#pipeline_fmprep_slsm_tree_search option:selected").each(function (k, v) {
+					selected_fmprep_slsm_tree_search[k] = $(this).val();	
+				});
+                $("#pipeline_lslsm").html("SLSM "+selected_fmprep_slsm_tree_search.join(", "));
+            }
+            else{
+                $("#pipeline_lslsm").html("");
+            }
+        });
+        $("#pipeline_fmp_dealer_type").click(function(){
+            var select_dealer = $("#pipeline_fmp_dealer_type option:selected").val();
+            if (select_dealer != 'all'){
+
+				var selected_dealer = new Array();
+				$("#pipeline_fmp_dealer_type option:selected").each(function (k, v) {
+					selected_dealer[k] = $(this).val();	
+				});
+                $("#pipeline_lcustype").html("Customer Type "+selected_dealer.join(", "));
+            }
+            else{
+                $("#pipeline_lcustype").html("");
+            }
+        });
+    })
+    /*var word = document.getElementById("sales_reps_list").value;*/
+               function clear_oppchart(){
+                    document.getElementById('fmp-oppchart-name').value = ''; 
+                    document.getElementById('fmp-oppchart-id').value = '';       
+                }       
+                /*var word = document.getElementById("sales_reps_list").value;*/
+                </script>
+<style type="text/css">
+	.selected-oppchart {
+            background: none repeat scroll 0 0 #D0D0D0;
+            border: 1px dotted #F6F6F6 !important;
+	}   
+        #fmp-oppchart-panel .x-form-field-wrap img.x-form-trigger{
+            width: 18px !important;
+            height: 19px;
+            position: absolute;
+            top: -4px;
+            left: -17px;
+        }
+        #fmp-oppchart-panel .x-form-field-wrap img.x-form-arrow-trigger{
+            background-position: -50px 0;
+        }
+        #fmp-oppchart-panel .x-form-field-wrap img.x-form-trigger-click{
+            background-position: -67px 0 !important;
+        }
+        #fmp-oppchart-panel .x-form-field-wrap img.x-form-trigger-over{
+            background-position: -33px 0;
+        }
+</style>
+{/literal}
+
+<div class="yui-skin-sam-fmp-sales">
+    <table style="border:none" cellspacing="0" cellpadding="0" border="0">
+        <tr>
+            <td style="border:none">
+                <span class="yui-button-fmp-sales yui-split-button-fmp-sales" id="pipeline_area_list_show"><span class="first-child-fmp-sales"><button type="button" id="yui-gen0-button" >Area</button>
+                        <div id="pipeline_area_panel" style="display: none; position: absolute;">
+                            {$areaList}
+                        </div>
+                    </span></span>
+            </td>
+            <td style="border:none">
+                <span class="yui-button-fmp-sales yui-split-button-fmp-sales" id="pipeline_slsm_list_show"><span class="first-child-fmp-sales"><button type="button" id="yui-gen2-button" >Slsm</button>
+                        <div id="pipeline_slsm_panel" style="display: none; position: absolute; background-color: #FFFFFF; border: 1px solid #94C1E8;">
+                            {$slsmList}
+                        </div>
+                    </span></span>
+            </td>
+            <td style="border:none">  <span class="yui-button-fmp-sales yui-split-button-fmp-sales" id="pipeline_dealer_list_show"><span class="first-child-fmp-sales"><button type="button" id="yui-gen4-button" >Customer Type</button>
+                        <div id="pipeline_fmp_dealer_type" style="display: none; position: absolute;">
+                            {$dealerList}
+                        </div>
+                    </span></span>
+            </td>
+            <td style="border:none">  <span class="yui-button-fmp-sales yui-split-button-fmp-sales" id="pipeline_sales_reps_list_show"><span class="first-child-fmp-sales"><button type="button" id="yui-gen4-button" >Sales Reps</button>
+                        <div id="pipeline_sales_reps_panel" style="display: none; position: absolute;">
+                            {$salesRepsList}
+                        </div>
+                    </span></span>
+            </td>
+            <td style="border:none">
+                <span class="yui-button-fmp-sales yui-split-button-fmp-sales" id="fmp-oppchart-list-show"><span class="first-child-fmp-sales"><button type="button" id="yui-gen5-button" >Opportunity</button>    
+                <div id="fmp-oppchart-panel" style="display: none; padding: 3px; position: absolute; background-color: #FFFFFF; border: 1px solid #94C1E8;">  
+                    <br><label for="fmp-oppchart-name" style="display: inline-block; width: 90px; font-size: 12px; color: #000000;padding-left: 10px;">Name: </label>
+                    <input type="text" name="fmp-oppchart-name" class="sqsPipeline" tabindex="1" id="fmp-oppchart-name" size="32" value="{$opp_name}" title='' autocomplete="off">
+                    <input type="hidden" name="fmp-oppchart-id" id="fmp-oppchart-id" value="">
+                    <input type="button" style="font-size: 12px; width: 40px;" title="Clear" class="button" onclick="javaScript:clear_oppchart()" value="Clear">
+                    </br>
+                    <br>
+                </div>  
+                    {$quicksearch_js}  
+                 </span></span>     
+            </td>
+            <td style="border:none">    <span>
+                    <button class='button' onclick='javaScript:get_date_for_pipeline()'> Filter </button>
+                </span>
+            </td>
+            <td style="border:none">    <span>
+                    <button class='button' onclick='javaScript:reset_date_for_pipeline()'> Reset </button>
+                </span>
+            </td>
+            <td style="border:none">
+                <p id="pipeline_larea"></p>
+                <p id="pipeline_lslsm"></p>
+                <p id="pipeline_lcustype"></p>
+                <p id="loppchartname"></p>
+                <p id="pipeline_lsalesreps" style="display: none"></p>
+            </td>
+            <td style="border:none">
+                <h1>{$pipeline_dashlet_title}</h1>
+            </td>
+            <td style="border:none">
+                <p>{$sales_reps_name}</p>
+            </td>
+        </tr>
+    </table>
+</div>
