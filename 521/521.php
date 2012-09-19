@@ -16,7 +16,7 @@ if(!isset($_COOKIE["current_user_keep_filters"]) || $_COOKIE["current_user_keep_
         $checked_keep_filters = 'checked';
 }
 $userid=$_SESSION['authenticated_user_id'];
-//test git
+
 $areaRollup=FMPSales::getUserAreaRollup($userid);
 $slsmRollup=FMPSales::getUserSlsmRollup($userid);
 $userName=FMPSales::getUserName($userid);
