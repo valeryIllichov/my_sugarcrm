@@ -531,6 +531,97 @@ if (isPro() && is551()) {
                     $(".print-list").hide();
                 }
             }
+            
+        function loadSavedDate(typeDate,typeInput){
+            var prev = eval('(' + sessionStorage.getItem(typeDate) + ')');
+            var end_rec_meet=prev.jsonObject['Meeting'];
+            var end_rec_call=prev.jsonObject['Call'];
+            if(typeof end_rec_meet != 'undefined'){
+                $.each(end_rec_meet, function (k, v) {
+                    $("#"+k+"_"+typeInput).val(v);
+                });
+            }
+            if(typeof end_rec_call != 'undefined'){
+                $.each(end_rec_call, function (k, v) {
+                    $("#"+k+"_"+typeInput).val(v);
+                });
+            }
+        }    
+        
+        function saveEndRecurrence(elem,inputVal){
+            var recID = $(elem).attr('rec_id');
+            var startDateVal = $("#"+recID+"_start_date").html();
+            var endDateVal = $("#"+recID+"_end_date").html();
+            var typeSchedule = $("#"+recID+"_type_schedule").html();
+            if(isDate(inputVal)&&isDate(startDateVal)&&isDate(endDateVal)){
+                var startDate = new Date(startDateVal).valueOf();
+                var endDate = new Date(endDateVal).valueOf();
+                var endRec = new Date(inputVal).valueOf();
+                if(endRec > startDate && endRec < endDate){
+                    $(elem).val(inputVal);
+                    $("#"+recID+"_extend_reccurence").datepicker('disable');
+                    if(sessionStorage.getItem("endReccurence") != null){ 
+                        var end_reccurence_obj= eval('(' + sessionStorage.getItem("endReccurence") + ')');
+                        var end_reccurence_arr=end_reccurence_obj.jsonObject[typeSchedule];
+                        if(typeof end_reccurence_arr == 'undefined')
+                            end_reccurence_arr = {};
+                        end_reccurence_arr[recID] = inputVal;
+                        end_reccurence_obj.jsonObject[typeSchedule] = end_reccurence_arr; 
+                        sessionStorage.setItem("endReccurence", JSON.stringify(end_reccurence_obj.jsonObject)); 
+                    }else {
+                        var end_reccurence_obj = {};
+                        var end_reccurence_arr = {};
+                        end_reccurence_arr[recID] = inputVal;
+                        end_reccurence_obj[typeSchedule]  = end_reccurence_arr;
+                        sessionStorage.setItem("endReccurence", JSON.stringify(end_reccurence_obj));   
+                    }
+                }else{
+                    //alert("End Recurrence date must be within the start and end dates.");
+                    $("#"+recID+"_extend_reccurence").datepicker('disable');
+                    $(elem).val(endDateVal);
+                }
+            }else if(inputVal == ""){
+                $("#"+recID+"_extend_reccurence").datepicker('enable');
+            }else{
+                alert("Invalid Date");
+            }
+        }  
+        function saveExtendRecurrence(elem,inputVal){
+            var recID = $(elem).attr('rec_id');
+            var endDateVal = $("#"+recID+"_end_date").html();
+            var typeSchedule = $("#"+recID+"_type_schedule").html();
+            if(isDate(inputVal)&&isDate(endDateVal)){
+                var endDate = new Date(endDateVal).valueOf();
+                var extRec = new Date(inputVal).valueOf();
+                if(extRec > endDate){
+                    $(elem).val(inputVal);
+                    $("#"+recID+"_end_reccurence").datepicker('disable');
+                    if(sessionStorage.getItem("extendReccurence") != null){ 
+                        var extend_reccurence_obj= eval('(' + sessionStorage.getItem("extendReccurence") + ')');
+                        var extend_reccurence_arr=extend_reccurence_obj.jsonObject[typeSchedule];
+                        if(typeof extend_reccurence_arr == 'undefined')
+                            extend_reccurence_arr = {};
+                        extend_reccurence_arr[recID] = inputVal;
+                        extend_reccurence_obj.jsonObject[typeSchedule] = extend_reccurence_arr; 
+                        sessionStorage.setItem("extendReccurence", JSON.stringify(extend_reccurence_obj.jsonObject)); 
+                    }else {
+                        var extend_reccurence_obj = {};
+                        var extend_reccurence_arr = {};
+                        extend_reccurence_arr[recID] = inputVal;
+                        extend_reccurence_obj[typeSchedule]  = extend_reccurence_arr;
+                        sessionStorage.setItem("extendReccurence", JSON.stringify(extend_reccurence_obj));   
+                    }
+                }else{
+                    //alert("Extend End Date of Recurrence may not be earlier than End Date of Recurrence.");
+                    $("#"+recID+"_end_reccurence").datepicker('disable');
+                    $(elem).val(endDateVal);
+                }
+            }else if(inputVal == ""){
+                $("#"+recID+"_end_reccurence").datepicker('enable');
+            }else{
+                alert("Invalid Date");
+            }
+    } 
         //quick customer input
         $("#recurrence-list-button").click(function() {
             $('#recurrence_dialog').dialog('open');
@@ -554,7 +645,10 @@ if (isPro() && is551()) {
                         return false;
                 }
             );
-
+            if(sessionStorage.getItem("endReccurence") != null || sessionStorage.getItem("extendReccurence") != null) {
+                sessionStorage.removeItem("endReccurence");
+                sessionStorage.removeItem("extendReccurence");
+            }   
              var url ="index.php?module=Calendar2&action=AjaxGetReccurence";
              $("#recurrence_list").dataTable({
                                 "bJQueryUI": true,
@@ -562,7 +656,8 @@ if (isPro() && is551()) {
                                 "bProcessing": true,
                                 "bServerSide": true,
                                 "bAutoWidth": false,
-                                "aaSorting": [[ 3, "desc" ]],
+                                "aaSorting": [[ 4, "desc" ]],
+                               "sDom": '<"H"lfr<"#autofill_date">>t<"F"ip>',
                                 "aoColumns": [ 
                                     { "bSearchable": true },
                                     { "bSearchable": true },
@@ -586,11 +681,6 @@ if (isPro() && is551()) {
 		                                                        '</select> entries'
 		                    },
                                     "fnDrawCallback": function(oSettings, json) {
-                                                if(sessionStorage.getItem("endReccurence") != null || sessionStorage.getItem("extendReccurence") != null) {
-                                                    sessionStorage.removeItem("endReccurence");
-                                                    sessionStorage.removeItem("extendReccurence");
-                                                }
-                                        
                                                 $(".end_reccurence").datepicker({
                                                         dateFormat: "mm/dd/yy",
                                                         showOn: "button",
@@ -657,85 +747,121 @@ if (isPro() && is551()) {
                                                 $('img.ui-datepicker-trigger').css({'cursor':'pointer','padding-left': '2px'});
                                                 
                                                 $('.end_reccurence').change(function() {
-                                                    var recID = $(this).attr('rec_id');
-                                                    var startDateVal = $("#"+recID+"_start_date").html();
-                                                    var endDateVal = $("#"+recID+"_end_date").html();
-                                                    var typeSchedule = $("#"+recID+"_type_schedule").html();
-                                                    var inputVal =  this.value;
-                                                    if(isDate(inputVal)&&isDate(startDateVal)&&isDate(endDateVal)){
-                                                        var startDate = new Date(startDateVal).valueOf();
-                                                        var endDate = new Date(endDateVal).valueOf();
-                                                        var endRec = new Date(inputVal).valueOf();
-                                                       if(endRec > startDate && endRec < endDate){
-                                                           $("#"+recID+"_extend_reccurence").datepicker('disable');
-                                                             if(sessionStorage.getItem("endReccurence") != null){ 
-                                                                    var end_reccurence_obj= eval('(' + sessionStorage.getItem("endReccurence") + ')');
-                                                                    var end_reccurence_arr=end_reccurence_obj.jsonObject[typeSchedule];
-                                                                    if(typeof end_reccurence_arr == 'undefined')
-                                                                        end_reccurence_arr = {};
-                                                                    end_reccurence_arr[recID] = inputVal;
-                                                                    end_reccurence_obj.jsonObject[typeSchedule] = end_reccurence_arr; 
-                                                                    sessionStorage.setItem("endReccurence", JSON.stringify(end_reccurence_obj.jsonObject)); 
-                                                            }else {
-                                                                    var end_reccurence_obj = {};
-                                                                    var end_reccurence_arr = {};
-                                                                    end_reccurence_arr[recID] = inputVal;
-                                                                    end_reccurence_obj[typeSchedule]  = end_reccurence_arr;
-                                                                    sessionStorage.setItem("endReccurence", JSON.stringify(end_reccurence_obj));   
-                                                            }
-                                                       }else{
-                                                           alert("End Recurrence date must be within the start and end dates.");
-                                                           $("#"+recID+"_extend_reccurence").datepicker('enable');
-                                                           $(this).val("");
-                                                       }
-                                                    }else if(inputVal == ""){
-                                                        $("#"+recID+"_extend_reccurence").datepicker('enable');
-                                                    }else{
-                                                        alert("Invalid Date");
-                                                    }
+                                                   saveEndRecurrence(this,this.value);
                                                 });
                                                  $('.extend_reccurence').change(function() {
-                                                    var recID = $(this).attr('rec_id');
-                                                    var endDateVal = $("#"+recID+"_end_date").html();
-                                                    var typeSchedule = $("#"+recID+"_type_schedule").html();
-                                                    var inputVal =  this.value;
-                                                    if(isDate(inputVal)&&isDate(endDateVal)){
-                                                        var endDate = new Date(endDateVal).valueOf();
-                                                        var extRec = new Date(inputVal).valueOf();
-                                                       if(extRec > endDate){
-                                                           $("#"+recID+"_end_reccurence").datepicker('disable');
-                                                           if(sessionStorage.getItem("extendReccurence") != null){ 
-                                                                    var extend_reccurence_obj= eval('(' + sessionStorage.getItem("extendReccurence") + ')');
-                                                                    var extend_reccurence_arr=extend_reccurence_obj.jsonObject[typeSchedule];
-                                                                    if(typeof extend_reccurence_arr == 'undefined')
-                                                                        extend_reccurence_arr = {};
-                                                                    extend_reccurence_arr[recID] = inputVal;
-                                                                    extend_reccurence_obj.jsonObject[typeSchedule] = extend_reccurence_arr; 
-                                                                    sessionStorage.setItem("extendReccurence", JSON.stringify(extend_reccurence_obj.jsonObject)); 
-                                                            }else {
-                                                                    var extend_reccurence_obj = {};
-                                                                    var extend_reccurence_arr = {};
-                                                                    extend_reccurence_arr[recID] = inputVal;
-                                                                    extend_reccurence_obj[typeSchedule]  = extend_reccurence_arr;
-                                                                    sessionStorage.setItem("extendReccurence", JSON.stringify(extend_reccurence_obj));   
-                                                            }
-                                                       }else{
-                                                           alert("Extend End Date of Recurrence may not be earlier than End Date of Recurrence.");
-                                                           $("#"+recID+"_end_reccurence").datepicker('enable');
-                                                           $(this).val("");
-                                                       }
-                                                    }else if(inputVal == ""){
-                                                        $("#"+recID+"_end_reccurence").datepicker('enable');
-                                                    }else{
-                                                        alert("Invalid Date");
-                                                    }
+                                                    saveExtendRecurrence(this,this.value);
                                                 });
+                                                
+                                                if($('#autofill-end_reccurence').val() != '' || $('#autofill-extend_reccurence').val() != ''){
+                                                    if($('#autofill-end_reccurence').val() != ''){
+                                                        var inputVal = $('#autofill-end_reccurence').val();
+                                                        if(isDate(inputVal)){
+                                                            $("#autofill-extend_reccurence").datepicker('disable');
+                                                            $('.end_reccurence').each(function(){
+                                                                saveEndRecurrence(this,inputVal);
+                                                            });
+                                                        }
+                                                    }
+                                                    if($('#autofill-extend_reccurence').val() != ''){
+                                                        var inputVal = $('#autofill-extend_reccurence').val();
+                                                        if(isDate(inputVal)){
+                                                            $("#autofill-end_reccurence").datepicker('disable');
+                                                            $('.extend_reccurence').each(function(){
+                                                                saveExtendRecurrence(this,inputVal);
+                                                            });
+                                                        }
+                                                    }
+                                                }else if(sessionStorage.getItem("endReccurence") != null || sessionStorage.getItem("extendReccurence") != null) {
+                                                     if(sessionStorage.getItem("endReccurence") != null){
+                                                        loadSavedDate("endReccurence","end_reccurence");
+                                                     } 
+                                                      if(sessionStorage.removeItem("extendReccurence") != null){
+                                                        loadSavedDate("extendReccurence","extend_reccurence");
+                                                     } 
+                                                }
                                     },
                                      "sAjaxSource": url,
                                     "sPaginationType": "full_numbers"
                   });
+                  $("#autofill_date").css("float", "right");
+                  $("#recurrence_list_filter").css("width", "auto");
+                  $("#recurrence_list_filter").css("float", "left");
+                  $("#autofill_date").append('<span style="padding-right: 6px;font-size: 0.9em;"><input type="text" name="autofill-end_reccurence" class="autofill-date" id="autofill-end_reccurence" size="11" value=""></span>');
+                  $("#autofill_date").append('<span style="padding-right: 6px;font-size: 0.9em;"><input type="text" name="autofill-extend_reccurence" class="autofill-date" id="autofill-extend_reccurence" size="11" value=""></span>');           
                   $("#recurrence_list").css('width','100%');
-                            
+                  
+                $(".autofill-date").datepicker({
+                    dateFormat: "mm/dd/yy",
+                    showOn: "button",
+                    buttonImage: "themes/default/images/jscalendar.gif",
+                    buttonImageOnly: true,
+                    showButtonPanel: true,
+                    closeText: 'Clear',
+                    beforeShow: function( input, inst ) {
+                        setTimeout(function() {
+                            $(".ui-datepicker-close").click(function(){
+                                if(input.id == "autofill-end_reccurence"){
+                                    $('.end_reccurence').val('');
+                                    $(".extend_reccurence").datepicker('enable');
+                                    sessionStorage.removeItem("endReccurence");
+                                }
+                                 if(input.id == "autofill-extend_reccurence"){
+                                    $('.extend_reccurence').val('');
+                                    $(".end_reccurence").datepicker('enable');
+                                    sessionStorage.removeItem("extendReccurence");
+                                }
+                                DP_jQuery.datepicker._clearDate(input);
+                            });
+                        }, 10 );
+                    },
+                    onChangeMonthYear:function() {
+                        var input = this;
+                        setTimeout(function() {
+                            $(".ui-datepicker-close").click(function(){
+                                if(input.id == "autofill-end_reccurence"){
+                                    $('.end_reccurence').val('');
+                                    $(".extend_reccurence").datepicker('enable');
+                                    sessionStorage.removeItem("endReccurence");
+                                }
+                                 if(input.id == "autofill-extend_reccurence"){
+                                    $('.extend_reccurence').val('');
+                                    $(".end_reccurence").datepicker('enable');
+                                    sessionStorage.removeItem("extendReccurence");
+                                }
+                                DP_jQuery.datepicker._clearDate(input);
+                            });
+                        }, 10 );
+                    }
+                });
+               $('#autofill-end_reccurence').change(function() { 
+                    var inputVal = this.value;
+                    if(isDate(inputVal)){
+                        $("#autofill-extend_reccurence").datepicker('disable');
+                        $('.end_reccurence').each(function(){
+                            saveEndRecurrence(this,inputVal);
+                        });
+                    }else{
+                        $('.end_reccurence').val('');
+                        $(".extend_reccurence").datepicker('enable');
+                        sessionStorage.removeItem("endReccurence");
+                        $("#autofill-extend_reccurence").datepicker('enable');
+                    }
+                }); 
+                $('#autofill-extend_reccurence').change(function() { 
+                    var inputVal = this.value;
+                    if(isDate(inputVal)){
+                        $("#autofill-end_reccurence").datepicker('disable');
+                        $('.extend_reccurence').each(function(){
+                            saveExtendRecurrence(this,inputVal);
+                        });
+                     }else{
+                         $('.extend_reccurence').val('');
+                         $(".end_reccurence").datepicker('enable');
+                         sessionStorage.removeItem("extendReccurence");
+                        $("#autofill-end_reccurence").datepicker('enable');
+                    }
+                }); 
         });
         
         $("#current-customer-call-list, #leads-call-list").click(function() {

@@ -110,7 +110,7 @@ class Calendar2Controller extends SugarController {
                 break;
         
             default:
-                $field = "date_start";
+                $field = "date_end";
                 break;
         }
         $like_q = "";
