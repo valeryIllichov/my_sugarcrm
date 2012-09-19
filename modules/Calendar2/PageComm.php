@@ -1740,6 +1740,13 @@ $table_leads = '<table id="customers_list" style="width: 100%"><thead><th style=
                                         if (!edit_all_recurrence && delete_first_recurring) {
                                             alert(lbl_cannot_remove_first);
                                         } else if(confirm("<?php echo $current_module_strings['MSG_REMOVE_CONFIRM']; ?>")){
+                                            $('#ui-dialog-title-record_dialog').html(lbl_wait_please);
+                                            $(".record_dialog_class .ui-dialog-buttonpane button:nth-child(1)").attr("disabled","disabled");
+                                            $(".record_dialog_class .ui-dialog-buttonpane button:nth-child(6)").attr("disabled","disabled");
+                                            $(".record_dialog_class .ui-dialog-buttonpane button:nth-child(5)").attr("disabled","disabled");
+                                            $(".record_dialog_class .ui-dialog-buttonpane button:nth-child(4)").attr("disabled","disabled");
+                                            $(".record_dialog_class .ui-dialog-buttonpane button:nth-child(3)").attr("disabled","disabled");
+                                            $(".record_dialog_class .ui-dialog-buttonpane button:nth-child(2)").attr("disabled","disabled");  
                                             deleted_id = $("#form_record").val();
                                             deleted_module = $("#cur_module").val();
                                             if(edit_all_recurrence){
@@ -1773,9 +1780,9 @@ $table_leads = '<table id="customers_list" style="width: 100%"><thead><th style=
                                                         align_divs(ids[i]);		
                                                     }				
                                                 );
+                                                    $("#record_dialog").dialog('close');
                                                 }					
                                             );
-                                                $("#record_dialog").dialog('close');
                                             } else if (!delete_first_recurring) {
                                                 $.post(
                                                 "index.php?module=Calendar2&action=AjaxRemove&sugar_body_only=true",
@@ -1792,9 +1799,10 @@ $table_leads = '<table id="customers_list" style="width: 100%"><thead><th style=
                                                         removeSharedById(deleted_id);												
                                                     $("#" + deleted_id).remove();
                                                     align_divs(cell_id);
+                                                    $("#record_dialog").dialog('close');
                                                 }
                                             );
-                                                $("#record_dialog").dialog('close');
+                                                
                                             }
                                         }
                                     }

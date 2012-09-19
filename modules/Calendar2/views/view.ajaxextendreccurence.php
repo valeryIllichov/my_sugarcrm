@@ -37,7 +37,8 @@ class Calendar2ViewAjaxExtendReccurence extends SugarView {
             foreach ($post_obj->Call as $rec_id => $end_date) {
                 $call_bean = new Call();
                 $call_bean->retrieve($rec_id);
-                $start_date = $call_bean->cal2_repeat_end_date_c;
+                $start_date = $this->getStartDate($call_bean, $jn, $rec_id,$call_bean->cal2_repeat_end_date_c);
+                $start_date = $start_date." ".date('h:ia',strtotime($call_bean->date_start));
                 $call_bean->cal2_repeat_end_date_c = $end_date;
                 $call_bean->save();
                 $this->extendRecurrence($call_bean, $jn, $type, $start_date);
@@ -49,7 +50,8 @@ class Calendar2ViewAjaxExtendReccurence extends SugarView {
             foreach ($post_obj->Meeting as $rec_id => $end_date) {
                 $meeting_bean = new Meeting();
                 $meeting_bean->retrieve($rec_id);
-                $start_date = $meeting_bean->cal2_repeat_end_date_c." ".date('h:ia',strtotime($meeting_bean->date_start));
+                $start_date = $this->getStartDate($meeting_bean, $jn, $rec_id,$meeting_bean->cal2_repeat_end_date_c);
+                $start_date = $start_date." ".date('h:ia',strtotime($meeting_bean->date_start));
                 $meeting_bean->cal2_repeat_end_date_c = $end_date;
                 $meeting_bean->save();
                 $this->extendRecurrence($meeting_bean, $jn, $type, $start_date);
@@ -73,7 +75,6 @@ class Calendar2ViewAjaxExtendReccurence extends SugarView {
             //$bean->retrieve($bean->id); // do not delete this line!!! it prevents the sugar's bug with timedate!
 
             global $timedate;
-
 
             if ($type == 'call')
                 $users = $bean->get_call_users();
@@ -194,6 +195,7 @@ class Calendar2ViewAjaxExtendReccurence extends SugarView {
         global $timedate;
 
         $start_unix = to_timestamp_from_uf($start);
+        $start_unix = $start_unix;
         $end = date("m/d/Y", strtotime($bean->cal2_repeat_end_date_c));
         $end_unix = to_timestamp_from_uf($end);
         $end_unix = $end_unix + 60 * 60 * 24 - 1;
@@ -328,7 +330,7 @@ class Calendar2ViewAjaxExtendReccurence extends SugarView {
         $obj->parent_type = $bean->parent_type;
         $obj->parent_id = $bean->parent_id;
         //$obj->description = $bean->description;
-        //$obj->cal2_category_c = $bean->cal2_category_c;
+        $obj->cal2_category_c = "customerin";
         //$obj->cal2_options_c = $bean->cal2_options_c;
         //$obj->cal2_whole_day_c = $bean->cal2_whole_day_c;
 
@@ -340,6 +342,19 @@ class Calendar2ViewAjaxExtendReccurence extends SugarView {
 //        }
 
         return $obj;
+    }
+    
+    function getStartDate(&$bean, $jn, $rec_id,$start_date){
+        $rec_sql = "SELECT t.date_start as date_start
+            FROM ".$bean->table_name." t
+            WHERE t.".$jn." = '".addslashes($rec_id)."' AND t.deleted = 0
+            ORDER BY t.date_start DESC";
+        $result = $bean->db->query($rec_sql);
+        $rec = $bean->db->fetchByAssoc($result);
+        if(!empty($rec) && strtotime($rec['date_start']))
+            $start_date =  date("m/d/Y", strtotime($rec['date_start']));
+ 
+        return $start_date;
     }
 
 }
