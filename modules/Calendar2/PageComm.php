@@ -1815,11 +1815,6 @@ $table_leads = '<table id="customers_list" style="width: 100%"><thead><th style=
                                     $(".record_dialog_class .ui-dialog-buttonpane button:nth-child(3)").attr("disabled","disabled");
                                     $(".record_dialog_class .ui-dialog-buttonpane button:nth-child(2)").attr("disabled","disabled");
 
-                                    deleted_id = $("#form_record").val();
-                                    //var clicked_record = '';
-                                    clicked_record = $('#clicked_record').val();
-                                    //alert('clicked_record: '+clicked_record);
-
                                     if(!(check_form('EditView') && isValidDuration()))
                                         return false;
                                     fill_invitees2();
@@ -1849,7 +1844,7 @@ $table_leads = '<table id="customers_list" style="width: 100%"><thead><th style=
 //                                                $("div[cal2_recur_id_c='" + deleted_id + "']").remove();
                                                 $.each(res.deleted_ids,function (i,v){
                                                     if (v != '')
-                                                        $("div[record='" + deleted_id + "']").remove();
+                                                        $("div[record='" + v + "']").remove();
                                                 });
 
 
