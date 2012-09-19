@@ -656,7 +656,7 @@ if (isPro() && is551()) {
                                 "bProcessing": true,
                                 "bServerSide": true,
                                 "bAutoWidth": false,
-                                "aaSorting": [[ 4, "desc" ]],
+                                "aaSorting": [[ 4, "asc" ]],
                                "sDom": '<"H"lfr<"#autofill_date">>t<"F"ip>',
                                 "aoColumns": [ 
                                     { "bSearchable": true },
