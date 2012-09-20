@@ -205,7 +205,7 @@ l.first_name LIKE '%".$_REQUEST['sSearch']."%' OR l.last_name LIKE '%".$_REQUEST
 							m.cal2_meeting_id_c as rec_id, 
 							if(m.parent_type = 'Leads',l.id,a.id) as parent_id,
 							if(m.parent_type = 'Leads',if(l.account_name is null,'', l.account_name),a.custno_c) as acc_number,
-							if(m.parent_type = 'Leads',if(l.first_name is null AND l.last_name is null,m.name, CONCAT_WS(' ',l.first_name,l.last_name)),a.name) as acc_name,
+							if(m.parent_type = 'Leads',if((l.first_name is null AND l.last_name is null),m.name, CONCAT_WS(' ',l.first_name,l.last_name)),if((a.name is null),m.name, a.name)) as acc_name,
 							'Meeting' as type_schedule,
 							(SELECT meetings.date_start FROM meetings
 									WHERE meetings.id = m.cal2_meeting_id_c
@@ -230,7 +230,7 @@ l.first_name LIKE '%".$_REQUEST['sSearch']."%' OR l.last_name LIKE '%".$_REQUEST
 							c.cal2_call_id_c as rec_id, 
 							if(c.parent_type = 'Leads',l.id,a.id) as parent_id,
 							if(c.parent_type = 'Leads',if(l.account_name is null,'', l.account_name),a.custno_c) as acc_number,
-							if(c.parent_type = 'Leads',if(l.first_name is null AND l.last_name is null,c.name, CONCAT_WS(' ',l.first_name,l.last_name)),a.name) as acc_name,
+							if(c.parent_type = 'Leads',if((l.first_name is null AND l.last_name is null),c.name, CONCAT_WS(' ',l.first_name,l.last_name)),if((a.name is null),c.name, a.name)) as acc_name,
 							'Call' as type_schedule,
 							(SELECT calls.date_start FROM calls
 									WHERE calls.id = c.cal2_call_id_c
