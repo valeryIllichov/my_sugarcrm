@@ -114,59 +114,139 @@ class Calendar2Controller extends SugarController {
                 break;
         }
         $like_q = "";
+        $like_otMeeting = "";
+        $like_otCall = "";
         if(!empty($_REQUEST['sSearch'])){
             $like_q = " AND (l.account_name LIKE '%".$_REQUEST['sSearch']."%' OR a.custno_c LIKE '%".$_REQUEST['sSearch']."%' OR
 l.first_name LIKE '%".$_REQUEST['sSearch']."%' OR l.last_name LIKE '%".$_REQUEST['sSearch']."%' OR a.name LIKE '%".$_REQUEST['sSearch']."%') ";
+			$like_otMeeting = " AND (m.name LIKE '%".$_REQUEST['sSearch']."%') ";
+			$like_otCall = " AND (c.name LIKE '%".$_REQUEST['sSearch']."%') ";
         }
+        $other_rec_sql = "";
+        $other_count = 0;
+         if(isset($_REQUEST['otherLoad']) && $_REQUEST['otherLoad'] == 'true'){                                                       
+			$other_rec_sql = " UNION
+					SELECT 
+						m.cal2_meeting_id_c as rec_id, 
+						m.parent_id as parent_id,
+						'' as acc_number,
+						m.name as acc_name,
+						'Meeting' as type_schedule,
+						(SELECT meetings.date_start FROM meetings
+								WHERE meetings.id = m.cal2_meeting_id_c
+						) as date_start,
+						(SELECT meetings.cal2_repeat_end_date_c FROM meetings
+								WHERE meetings.id = m.cal2_meeting_id_c
+						) as date_end
+					FROM meetings m
+					WHERE EXISTS (SELECT meetings.id FROM meetings
+										WHERE meetings.id = m.cal2_meeting_id_c)
+						AND m.cal2_meeting_id_c is not NULL 
+						AND m.deleted = 0
+						AND m.parent_type != 'Accounts' AND m.parent_type != 'Leads'
+						AND m.assigned_user_id = '".$current_user->id."'
+						".$like_otMeeting."
+					 GROUP BY m.cal2_meeting_id_c   
+					 UNION
+					 SELECT 
+						c.cal2_call_id_c as rec_id, 
+						c.parent_id as parent_id,
+						'' as acc_number,
+						c.name as acc_name,
+						'Meeting' as type_schedule,
+						(SELECT calls.date_start FROM calls
+								WHERE calls.id = c.cal2_call_id_c
+						) as date_start,
+						(SELECT calls.cal2_repeat_end_date_c FROM calls
+								WHERE calls.id = c.cal2_call_id_c
+						) as date_end
+					FROM calls c
+					WHERE EXISTS (SELECT calls.id FROM calls
+										WHERE calls.id = c.cal2_call_id_c)
+						AND c.cal2_call_id_c is not NULL 
+						AND c.deleted = 0
+						AND c.parent_type != 'Accounts' AND c.parent_type != 'Leads'
+						AND c.assigned_user_id = '".$current_user->id."'
+						".$like_otCall."
+					 GROUP BY c.cal2_call_id_c ";
+		$other_sql_count = "SELECT count(counter) AS other_records  FROM(SELECT 
+						   count(c.cal2_call_id_c) as counter
+						FROM calls c
+						WHERE EXISTS (SELECT calls.id FROM calls
+											WHERE calls.id = c.cal2_call_id_c)
+							AND c.cal2_call_id_c is not NULL 
+							AND c.deleted = 0
+							AND c.parent_type != 'Accounts' AND c.parent_type != 'Leads'
+							and c.assigned_user_id = '".$current_user->id."'
+							".$like_otCall."
+						 GROUP BY c.cal2_call_id_c
+						 UNION
+						 SELECT 
+						   count(m.cal2_meeting_id_c) as counter
+						FROM meetings m
+						WHERE EXISTS (SELECT meetings.id FROM meetings
+											WHERE meetings.id = m.cal2_meeting_id_c)
+							AND m.cal2_meeting_id_c is not NULL 
+							AND m.deleted = 0
+							AND m.parent_type != 'Accounts' AND m.parent_type != 'Leads'
+							and m.assigned_user_id = '".$current_user->id."'
+							".$like_otMeeting."
+						 GROUP BY m.cal2_meeting_id_c) countOther";
+			$other_count_result = $focus->db->query($other_sql_count);
+			$other_count_arr = $focus->db->fetchByAssoc($other_count_result);
+			$other_count = $other_count_arr['other_records'];
+						 
+			}			                          
          $reccurence_sql = "SELECT 
-                                                    m.cal2_meeting_id_c as rec_id, 
-                                                    if(m.parent_type = 'Leads',l.id,a.id) as parent_id,
-                                                    if(m.parent_type = 'Leads',if(l.account_name is null,'', l.account_name),a.custno_c) as acc_number,
-                                                    if(m.parent_type = 'Leads',CONCAT_WS(' ',l.first_name,l.last_name),a.name) as acc_name,
-                                                    'Meeting' as type_schedule,
-                                                    (SELECT meetings.date_start FROM meetings
-                                                            WHERE meetings.id = m.cal2_meeting_id_c
-                                                    ) as date_start,
-                                                    (SELECT meetings.cal2_repeat_end_date_c FROM meetings
-                                                            WHERE meetings.id = m.cal2_meeting_id_c
-                                                    ) as date_end
-                                                FROM meetings m
-                                                    LEFT JOIN accounts a on a.id = m.parent_id
-                                                    LEFT JOIN leads l on l.id = m.parent_id
-                                                WHERE EXISTS (SELECT meetings.id FROM meetings
-                                                                    WHERE meetings.id = m.cal2_meeting_id_c)
-                                                    AND m.cal2_meeting_id_c is not NULL 
-                                                    AND m.parent_id is not NULL
-                                                    AND m.deleted = 0
-                                                    AND m.assigned_user_id = '".$current_user->id."'
-                                                    ".$like_q."
-                                                GROUP BY m.cal2_meeting_id_c, m.parent_id
-                                            UNION
-                                            SELECT 
-                                                    c.cal2_call_id_c as rec_id, 
-                                                    if(c.parent_type = 'Leads',l.id,a.id) as parent_id,
-                                                    if(c.parent_type = 'Leads',if(l.account_name is null,'', l.account_name),a.custno_c) as acc_number,
-                                                    if(c.parent_type = 'Leads',CONCAT_WS(' ',l.first_name,l.last_name),a.name) as acc_name,
-                                                    'Call' as type_schedule,
-                                                    (SELECT calls.date_start FROM calls
-                                                            WHERE calls.id = c.cal2_call_id_c
-                                                    ) as date_start,
-                                                    (SELECT calls.cal2_repeat_end_date_c FROM calls
-                                                            WHERE calls.id = c.cal2_call_id_c
-                                                    ) as date_end
-                                                FROM calls c
-                                                    LEFT JOIN accounts a on a.id = c.parent_id
-                                                    LEFT JOIN leads l on l.id = c.parent_id
-                                                WHERE EXISTS (SELECT calls.id FROM calls
-                                                                    WHERE calls.id = c.cal2_call_id_c)
-                                                    AND c.cal2_call_id_c is not NULL 
-                                                    AND c.parent_id is not NULL
-                                                    AND c.deleted = 0
-                                                    AND c.assigned_user_id = '".$current_user->id."'
-                                                    ".$like_q."
-                                                GROUP BY c.cal2_call_id_c, c.parent_id
-                                            ORDER BY " . $field . " " . $_REQUEST['sSortDir_0'] . " LIMIT " . $_GET['iDisplayStart'] . ", " . $_GET['iDisplayLength'];
-
+							m.cal2_meeting_id_c as rec_id, 
+							if(m.parent_type = 'Leads',l.id,a.id) as parent_id,
+							if(m.parent_type = 'Leads',if(l.account_name is null,'', l.account_name),a.custno_c) as acc_number,
+							if(m.parent_type = 'Leads',CONCAT_WS(' ',l.first_name,l.last_name),a.name) as acc_name,
+							'Meeting' as type_schedule,
+							(SELECT meetings.date_start FROM meetings
+									WHERE meetings.id = m.cal2_meeting_id_c
+							) as date_start,
+							(SELECT meetings.cal2_repeat_end_date_c FROM meetings
+									WHERE meetings.id = m.cal2_meeting_id_c
+							) as date_end
+						FROM meetings m
+							LEFT JOIN accounts a on a.id = m.parent_id
+							LEFT JOIN leads l on l.id = m.parent_id
+						WHERE EXISTS (SELECT meetings.id FROM meetings
+											WHERE meetings.id = m.cal2_meeting_id_c)
+							AND m.cal2_meeting_id_c is not NULL 
+							
+							AND m.deleted = 0
+							AND m.assigned_user_id = '".$current_user->id."'
+							".$like_q."
+						GROUP BY m.cal2_meeting_id_c, m.parent_id
+					UNION
+					SELECT 
+							c.cal2_call_id_c as rec_id, 
+							if(c.parent_type = 'Leads',l.id,a.id) as parent_id,
+							if(c.parent_type = 'Leads',if(l.account_name is null,'', l.account_name),a.custno_c) as acc_number,
+							if(c.parent_type = 'Leads',CONCAT_WS(' ',l.first_name,l.last_name),a.name) as acc_name,
+							'Call' as type_schedule,
+							(SELECT calls.date_start FROM calls
+									WHERE calls.id = c.cal2_call_id_c
+							) as date_start,
+							(SELECT calls.cal2_repeat_end_date_c FROM calls
+									WHERE calls.id = c.cal2_call_id_c
+							) as date_end
+						FROM calls c
+							LEFT JOIN accounts a on a.id = c.parent_id
+							LEFT JOIN leads l on l.id = c.parent_id
+						WHERE EXISTS (SELECT calls.id FROM calls
+											WHERE calls.id = c.cal2_call_id_c)
+							AND c.cal2_call_id_c is not NULL 
+							
+							AND c.deleted = 0
+							AND c.assigned_user_id = '".$current_user->id."'
+							".$like_q."
+						GROUP BY c.cal2_call_id_c, c.parent_id
+						".$other_rec_sql."
+					ORDER BY " . $field . " " . $_REQUEST['sSortDir_0'] . " LIMIT " . $_GET['iDisplayStart'] . ", " . $_GET['iDisplayLength'];
+					
         $meetings_sql_count = "SELECT count(counter) AS meetings_records  FROM (select 
                                                                 count(m.cal2_meeting_id_c) as counter
                                                                 from meetings m
@@ -175,7 +255,7 @@ l.first_name LIKE '%".$_REQUEST['sSearch']."%' OR l.last_name LIKE '%".$_REQUEST
                                                                 where EXISTS (SELECT meetings.id FROM meetings
                                                                     WHERE meetings.id = m.cal2_meeting_id_c)
                                                                 and m.cal2_meeting_id_c is not NULL 
-                                                                and m.parent_id is not NULL
+                                                                
                                                                 and m.deleted = 0
                                                                 and m.assigned_user_id = '".$current_user->id."'
                                                                 ".$like_q."
@@ -188,18 +268,19 @@ l.first_name LIKE '%".$_REQUEST['sSearch']."%' OR l.last_name LIKE '%".$_REQUEST
                                                                 where EXISTS (SELECT calls.id FROM calls
                                                                     WHERE calls.id = c.cal2_call_id_c)
                                                                 and c.cal2_call_id_c is not NULL 
-                                                                and c.parent_id is not NULL
+                                                                
                                                                 and c.deleted = 0
                                                                 and c.assigned_user_id = '".$current_user->id."'
                                                                 ".$like_q."
                                                                 GROUP BY c.cal2_call_id_c, c.parent_id) countCalls";
+                                                                                               
         $reccurence = $focus->db->query($reccurence_sql);
         $meetings_count = $focus->db->query($meetings_sql_count);
         $calls_count = $focus->db->query($calls_sql_count);
         
         $meet_count = $focus->db->fetchByAssoc($meetings_count);
         $call_count = $focus->db->fetchByAssoc($calls_count);
-        $totalRecords = $meet_count['meetings_records'] + $call_count['calls_records'];
+        $totalRecords = $meet_count['meetings_records'] + $call_count['calls_records'] + $other_count;
         $recc_ids = array();
         while ($recc = $focus->db->fetchByAssoc($reccurence)) {
             $recc_ids[] = array(
@@ -215,6 +296,7 @@ l.first_name LIKE '%".$_REQUEST['sSearch']."%' OR l.last_name LIKE '%".$_REQUEST
 
         print json_encode(array("sEcho" => $_GET["sEcho"], "iTotalRecords" => $totalRecords, "iTotalDisplayRecords" => $totalRecords, "aaData" => $recc_ids));
         exit;
+       
     }
 }
 ?>

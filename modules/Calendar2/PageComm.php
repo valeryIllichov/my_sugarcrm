@@ -557,7 +557,7 @@ if (isPro() && is551()) {
                 var startDate = new Date(startDateVal).valueOf();
                 var endDate = new Date(endDateVal).valueOf();
                 var endRec = new Date(inputVal).valueOf();
-                if(endRec > startDate && endRec < endDate){
+                if(endRec >= startDate && endRec <= endDate){
                     $(elem).val(inputVal);
                     $("#"+recID+"_extend_reccurence").datepicker('disable');
                     if(sessionStorage.getItem("endReccurence") != null){ 
@@ -621,219 +621,202 @@ if (isPro() && is551()) {
             }else{
                 alert("Invalid Date");
             }
-    } 
-        //quick customer input
-        $("#recurrence-list-button").click(function() {
-            $('#recurrence_dialog').dialog('open');
-            $('div.ui-dialog-titlebar:visible').append('<a style="-moz-user-select: none; right: 23px;" unselectable="on" role="button" class="ui-dialog-titlebar-close ui-corner-all recurrence-fullscreen-minimize" href="#"><span style="-moz-user-select: none; background-position: -34px -128px;" unselectable="on" class="ui-icon">close</span></a>');
-            $('.recurrence-fullscreen-minimize').toggle(
-                function() {
-                        $('#recurrence_dialog').parent().height(window.innerHeight - 10);
-                        $('#recurrence_dialog').parent().width(window.innerWidth - 20);
-                        $('#recurrence_dialog').height(window.innerHeight - 100);
-                        $('#recurrence_dialog').width(window.innerWidth - 45);
-                        $('#recurrence_dialog').parent().css({'top':'0','left':'0'});
-                        return false;
-                },
-                function() {
-                        $('#recurrence_dialog').parent().height(600);
-                        $('#recurrence_dialog').parent().width(950);
-                        $('#recurrence_dialog').height(500);
-                        $('#recurrence_dialog').width(925);
-                        $('#recurrence_dialog').parent().css('left',((window.innerWidth-950)/2)+'px');
-                        $('#recurrence_dialog').parent().css('top',((window.innerHeight-500)/2)+'px');
-                        return false;
-                }
-            );
-            if(sessionStorage.getItem("endReccurence") != null || sessionStorage.getItem("extendReccurence") != null) {
-                sessionStorage.removeItem("endReccurence");
-                sessionStorage.removeItem("extendReccurence");
-            }   
-             var url ="index.php?module=Calendar2&action=AjaxGetReccurence";
-             $("#recurrence_list").dataTable({
-                                "bJQueryUI": true,
-                                "bDestroy": true,
-                                "bProcessing": true,
-                                "bServerSide": true,
-                                "bAutoWidth": false,
-                                "aaSorting": [[ 4, "asc" ]],
-                               "sDom": '<"H"lfr<"#autofill_date">>t<"F"ip>',
-                                "aoColumns": [ 
-                                    { "bSearchable": true },
-                                    { "bSearchable": true },
-                                   { "bSearchable": true },
-                                    { "bSearchable": false },
-                                   { "bSearchable": false },
-                                   { "bSortable": false , "sWidth": "115px","bSearchable": false },
-                                   { "bSortable": false ,"sWidth": "115px","bSearchable": false  }
-                                    ],
-				"iDisplayLength": 100,
- 				"oLanguage": {
-		                            "sLengthMenu": 'Show <select>' +
-		                                                        '<option value="10">10</option>' +
-		                                                        '<option value="20">20</option>' +
-		                                                        '<option value="30">30</option>' +
-		                                                        '<option value="40">40</option>' +
-		                                                        '<option value="50">50</option>' +
-		                                                        '<option value="100">100</option>' +
-		                                                        '<option value="200">200</option>' +
-		                                                        '<option value="99999999">All</option>' +
-		                                                        '</select> entries'
-		                    },
-                                    "fnDrawCallback": function(oSettings, json) {
-                                                $(".end_reccurence").datepicker({
-                                                        dateFormat: "mm/dd/yy",
-                                                        showOn: "button",
-                                                        buttonImage: "themes/default/images/jscalendar.gif",
-                                                        buttonImageOnly: true,
-                                                        showButtonPanel: true,
-                                                        closeText: 'Clear',
-                                                         beforeShow: function( input, inst) {
-                                                                var recID = $(input).attr('rec_id');
-                                                                var startDateVal = $("#"+recID+"_start_date").html();
-                                                                var endDateVal = $("#"+recID+"_end_date").html();
-                                                                if(isDate(startDateVal)&&isDate(endDateVal)){
-                                                                    inst.settings.minDate = new Date(new Date(startDateVal).getTime() + (24 * 60 * 60 * 1000));
-                                                                    inst.settings.maxDate = new Date(new Date(endDateVal).getTime() - (24 * 60 * 60 * 1000));
-                                                                }
-                                                               setTimeout(function() {
-                                                                    $(".ui-datepicker-close").click(function(){
-                                                                        DP_jQuery.datepicker._clearDate(input);
-                                                                    });
-                                                                }, 10 );
-                                                         },
-                                                         onChangeMonthYear:function() {
-                                                                var input = this;
-                                                               setTimeout(function() {
-                                                                    $(".ui-datepicker-close").click(function(){
-                                                                       DP_jQuery.datepicker._clearDate(input);
-                                                                    });
-                                                                }, 10 );
-                                                         }
-                                                });
-                                                
-                                                $(".extend_reccurence").datepicker({
-                                                        dateFormat: "mm/dd/yy",
-                                                       // defaultDate: new Date(("#"+$(this).attr('rec_id')+"_end_date").html()),
-                                                        showOn: "button",
-                                                        buttonImage: "themes/default/images/jscalendar.gif",
-                                                        buttonImageOnly: true,
-                                                        showButtonPanel: true,
-                                                        closeText: 'Clear',
-                                                         beforeShow: function( input, inst ) {
-                                                                var recID = $(input).attr('rec_id');
-                                                                var endDateVal = $("#"+recID+"_end_date").html();
-                                                                if(isDate(endDateVal)){
-                                                                    inst.settings.defaultDate = new Date(endDateVal);
-                                                                    inst.settings.minDate = new Date(new Date(endDateVal).getTime() + (24 * 60 * 60 * 1000));
-                                                                }
-                                                                setTimeout(function() {
-                                                                        $(".ui-datepicker-close").click(function(){
-                                                                            DP_jQuery.datepicker._clearDate(input);
-                                                                        });
-                                                                    }, 10 );
-                                                         },
-                                                         onChangeMonthYear:function() {
-                                                                var input = this;
-                                                               setTimeout(function() {
-                                                                    $(".ui-datepicker-close").click(function(){
-                                                                       DP_jQuery.datepicker._clearDate(input);
-                                                                    });
-                                                                }, 10 );
-                                                         }
-                                                });
-                                                
-                                                $("#ui-datepicker-div").css('z-index', '999999');
-                                                $('img.ui-datepicker-trigger').css({'cursor':'pointer','padding-left': '2px'});
-                                                
-                                                $('.end_reccurence').change(function() {
-                                                   saveEndRecurrence(this,this.value);
-                                                });
-                                                 $('.extend_reccurence').change(function() {
-                                                    saveExtendRecurrence(this,this.value);
-                                                });
-                                                
-                                                if($('#autofill-end_reccurence').val() != '' || $('#autofill-extend_reccurence').val() != ''){
-                                                    if($('#autofill-end_reccurence').val() != ''){
-                                                        var inputVal = $('#autofill-end_reccurence').val();
-                                                        if(isDate(inputVal)){
-                                                            $("#autofill-extend_reccurence").datepicker('disable');
-                                                            $('.end_reccurence').each(function(){
-                                                                saveEndRecurrence(this,inputVal);
-                                                            });
-                                                        }
-                                                    }
-                                                    if($('#autofill-extend_reccurence').val() != ''){
-                                                        var inputVal = $('#autofill-extend_reccurence').val();
-                                                        if(isDate(inputVal)){
-                                                            $("#autofill-end_reccurence").datepicker('disable');
-                                                            $('.extend_reccurence').each(function(){
-                                                                saveExtendRecurrence(this,inputVal);
-                                                            });
-                                                        }
-                                                    }
-                                                }else if(sessionStorage.getItem("endReccurence") != null || sessionStorage.getItem("extendReccurence") != null) {
-                                                     if(sessionStorage.getItem("endReccurence") != null){
-                                                        loadSavedDate("endReccurence","end_reccurence");
-                                                     } 
-                                                      if(sessionStorage.removeItem("extendReccurence") != null){
-                                                        loadSavedDate("extendReccurence","extend_reccurence");
-                                                     } 
-                                                }
-                                    },
-                                     "sAjaxSource": url,
-                                    "sPaginationType": "full_numbers"
-                  });
-                  $("#autofill_date").css("float", "right");
-                  $("#recurrence_list_filter").css("width", "auto");
-                  $("#recurrence_list_filter").css("float", "left");
-                  $("#autofill_date").append('<span style="padding-right: 6px;font-size: 0.9em;"><input type="text" name="autofill-end_reccurence" class="autofill-date" id="autofill-end_reccurence" size="11" value=""></span>');
-                  $("#autofill_date").append('<span style="padding-right: 6px;font-size: 0.9em;"><input type="text" name="autofill-extend_reccurence" class="autofill-date" id="autofill-extend_reccurence" size="11" value=""></span>');           
-                  $("#recurrence_list").css('width','100%');
-                  
-                $(".autofill-date").datepicker({
-                    dateFormat: "mm/dd/yy",
-                    showOn: "button",
-                    buttonImage: "themes/default/images/jscalendar.gif",
-                    buttonImageOnly: true,
-                    showButtonPanel: true,
-                    closeText: 'Clear',
-                    beforeShow: function( input, inst ) {
-                        setTimeout(function() {
-                            $(".ui-datepicker-close").click(function(){
-                                if(input.id == "autofill-end_reccurence"){
-                                    $('.end_reccurence').val('');
-                                    $(".extend_reccurence").datepicker('enable');
-                                    sessionStorage.removeItem("endReccurence");
-                                }
-                                 if(input.id == "autofill-extend_reccurence"){
-                                    $('.extend_reccurence').val('');
-                                    $(".end_reccurence").datepicker('enable');
-                                    sessionStorage.removeItem("extendReccurence");
-                                }
-                                DP_jQuery.datepicker._clearDate(input);
-                            });
-                        }, 10 );
-                    },
-                    onChangeMonthYear:function() {
-                        var input = this;
-                        setTimeout(function() {
-                            $(".ui-datepicker-close").click(function(){
-                                if(input.id == "autofill-end_reccurence"){
-                                    $('.end_reccurence').val('');
-                                    $(".extend_reccurence").datepicker('enable');
-                                    sessionStorage.removeItem("endReccurence");
-                                }
-                                 if(input.id == "autofill-extend_reccurence"){
-                                    $('.extend_reccurence').val('');
-                                    $(".end_reccurence").datepicker('enable');
-                                    sessionStorage.removeItem("extendReccurence");
-                                }
-                                DP_jQuery.datepicker._clearDate(input);
-                            });
-                        }, 10 );
-                    }
-                });
+    }
+    
+    function loadRecurrenceList(loadOther,isChached){
+		var url ="index.php?module=Calendar2&action=AjaxGetReccurence";
+		 $("#recurrence_list").dataTable({
+							"bJQueryUI": true,
+							"bDestroy": true,
+							"bProcessing": true,
+							"bServerSide": true,
+							"bAutoWidth": false,
+							"aaSorting": [[ 4, "asc" ]],
+						   "sDom": '<"H"l<"#loadOther">fr<"#autofill_date">>t<"F"ip>',
+							"aoColumns": [ 
+								{ "bSearchable": true },
+								{ "bSearchable": true },
+							   { "bSearchable": true },
+								{ "bSearchable": false },
+							   { "bSearchable": false },
+							   { "bSortable": false , "sWidth": "115px","bSearchable": false },
+							   { "bSortable": false ,"sWidth": "115px","bSearchable": false  }
+								],
+			"iDisplayLength": 100,
+			"oLanguage": {
+							"sLengthMenu": 'Show <select>' +
+														'<option value="10">10</option>' +
+														'<option value="20">20</option>' +
+														'<option value="30">30</option>' +
+														'<option value="40">40</option>' +
+														'<option value="50">50</option>' +
+														'<option value="100">100</option>' +
+														'<option value="200">200</option>' +
+														'<option value="99999999">All</option>' +
+														'</select> entries'
+					},
+							"fnDrawCallback": function(oSettings, json) {
+										$(".end_reccurence").datepicker({
+												dateFormat: "mm/dd/yy",
+												showOn: "button",
+												buttonImage: "themes/default/images/jscalendar.gif",
+												buttonImageOnly: true,
+												showButtonPanel: true,
+												closeText: 'Clear',
+												 beforeShow: function( input, inst) {
+														var recID = $(input).attr('rec_id');
+														var startDateVal = $("#"+recID+"_start_date").html();
+														var endDateVal = $("#"+recID+"_end_date").html();
+														if(isDate(startDateVal)&&isDate(endDateVal)){
+															inst.settings.minDate = new Date(new Date(startDateVal).getTime() + (24 * 60 * 60 * 1000));
+															inst.settings.maxDate = new Date(new Date(endDateVal).getTime() - (24 * 60 * 60 * 1000));
+														}
+													   setTimeout(function() {
+															$(".ui-datepicker-close").click(function(){
+																DP_jQuery.datepicker._clearDate(input);
+															});
+														}, 10 );
+												 },
+												 onChangeMonthYear:function() {
+														var input = this;
+													   setTimeout(function() {
+															$(".ui-datepicker-close").click(function(){
+															   DP_jQuery.datepicker._clearDate(input);
+															});
+														}, 10 );
+												 }
+										});
+										
+										$(".extend_reccurence").datepicker({
+												dateFormat: "mm/dd/yy",
+											   // defaultDate: new Date(("#"+$(this).attr('rec_id')+"_end_date").html()),
+												showOn: "button",
+												buttonImage: "themes/default/images/jscalendar.gif",
+												buttonImageOnly: true,
+												showButtonPanel: true,
+												closeText: 'Clear',
+												 beforeShow: function( input, inst ) {
+														var recID = $(input).attr('rec_id');
+														var endDateVal = $("#"+recID+"_end_date").html();
+														if(isDate(endDateVal)){
+															inst.settings.defaultDate = new Date(endDateVal);
+															inst.settings.minDate = new Date(new Date(endDateVal).getTime() + (24 * 60 * 60 * 1000));
+														}
+														setTimeout(function() {
+																$(".ui-datepicker-close").click(function(){
+																	DP_jQuery.datepicker._clearDate(input);
+																});
+															}, 10 );
+												 },
+												 onChangeMonthYear:function() {
+														var input = this;
+													   setTimeout(function() {
+															$(".ui-datepicker-close").click(function(){
+															   DP_jQuery.datepicker._clearDate(input);
+															});
+														}, 10 );
+												 }
+										});
+										
+										$("#ui-datepicker-div").css('z-index', '999999');
+										$('img.ui-datepicker-trigger').css({'cursor':'pointer','padding-left': '2px'});
+										
+										$('.end_reccurence').change(function() {
+										   saveEndRecurrence(this,this.value);
+										});
+										 $('.extend_reccurence').change(function() {
+											saveExtendRecurrence(this,this.value);
+										});
+										
+										if($('#autofill-end_reccurence').val() != '' || $('#autofill-extend_reccurence').val() != ''){
+											if($('#autofill-end_reccurence').val() != ''){
+												var inputVal = $('#autofill-end_reccurence').val();
+												if(isDate(inputVal)){
+													$("#autofill-extend_reccurence").datepicker('disable');
+													$('.end_reccurence').each(function(){
+														saveEndRecurrence(this,inputVal);
+													});
+												}
+											}
+											if($('#autofill-extend_reccurence').val() != ''){
+												var inputVal = $('#autofill-extend_reccurence').val();
+												if(isDate(inputVal)){
+													$("#autofill-end_reccurence").datepicker('disable');
+													$('.extend_reccurence').each(function(){
+														saveExtendRecurrence(this,inputVal);
+													});
+												}
+											}
+										}else if(sessionStorage.getItem("endReccurence") != null || sessionStorage.getItem("extendReccurence") != null) {
+											 if(sessionStorage.getItem("endReccurence") != null){
+												loadSavedDate("endReccurence","end_reccurence");
+											 } 
+											  if(sessionStorage.removeItem("extendReccurence") != null){
+												loadSavedDate("extendReccurence","extend_reccurence");
+											 } 
+										}
+							},
+							 "sAjaxSource": url,
+							"sPaginationType": "full_numbers",
+							"fnServerData": function ( sSource, aoData, fnCallback ) {
+							aoData.push( { name: "otherLoad", value: loadOther } );
+							$.getJSON( sSource, aoData, function (json) { 
+								fnCallback(json)
+							} );
+						}
+		  });
+		   $("#autofill_date").css("float", "right");
+			  $("#recurrence_list_filter").css({"width":"auto","float":"left"});
+			  $("#recurrence_list_length").css("width","20%");
+			  $("#loadOther").css({"padding-right":"10%","float":"left"});
+			  $("#loadOther").append('All:<input type="checkbox" id="load-other-checkbox" name="load-other-checkbox" '+isChached+'>');
+			  $("#autofill_date").append('<span style="padding-right: 6px;font-size: 0.9em;"><input type="text" name="autofill-end_reccurence" class="autofill-date" id="autofill-end_reccurence" size="11" value=""></span>');
+			  $("#autofill_date").append('<span style="padding-right: 6px;font-size: 0.9em;"><input type="text" name="autofill-extend_reccurence" class="autofill-date" id="autofill-extend_reccurence" size="11" value=""></span>');           
+			  $("#recurrence_list").css('width','100%');
+			  
+				$(".autofill-date").datepicker({
+					dateFormat: "mm/dd/yy",
+					showOn: "button",
+					buttonImage: "themes/default/images/jscalendar.gif",
+					buttonImageOnly: true,
+					showButtonPanel: true,
+					closeText: 'Clear',
+					beforeShow: function( input, inst ) {
+						setTimeout(function() {
+							$(".ui-datepicker-close").click(function(){
+								if(input.id == "autofill-end_reccurence"){
+									$('.end_reccurence').val('');
+									$(".extend_reccurence").datepicker('enable');
+									sessionStorage.removeItem("endReccurence");
+								}
+								 if(input.id == "autofill-extend_reccurence"){
+									$('.extend_reccurence').val('');
+									$(".end_reccurence").datepicker('enable');
+									sessionStorage.removeItem("extendReccurence");
+								}
+								DP_jQuery.datepicker._clearDate(input);
+							});
+						}, 10 );
+					},
+					onChangeMonthYear:function() {
+						var input = this;
+						setTimeout(function() {
+							$(".ui-datepicker-close").click(function(){
+								if(input.id == "autofill-end_reccurence"){
+									$('.end_reccurence').val('');
+									$(".extend_reccurence").datepicker('enable');
+									sessionStorage.removeItem("endReccurence");
+								}
+								 if(input.id == "autofill-extend_reccurence"){
+									$('.extend_reccurence').val('');
+									$(".end_reccurence").datepicker('enable');
+									sessionStorage.removeItem("extendReccurence");
+								}
+								DP_jQuery.datepicker._clearDate(input);
+							});
+						}, 10 );
+					}
+				});
                $('#autofill-end_reccurence').change(function() { 
                     var inputVal = this.value;
                     if(isDate(inputVal)){
@@ -861,7 +844,46 @@ if (isPro() && is551()) {
                          sessionStorage.removeItem("extendReccurence");
                         $("#autofill-end_reccurence").datepicker('enable');
                     }
-                }); 
+                });
+                 
+                 $("#load-other-checkbox").click(function () {
+					var checkboxelem = $(this);
+					if (checkboxelem.is(":checked")) {
+						loadRecurrenceList("true","checked");
+					}else {
+						loadRecurrenceList("false","");
+					 }
+				}); 
+	} 
+        //quick customer input
+        $("#recurrence-list-button").click(function() {
+            $('#recurrence_dialog').dialog('open');
+            $('div.ui-dialog-titlebar:visible').append('<a style="-moz-user-select: none; right: 23px;" unselectable="on" role="button" class="ui-dialog-titlebar-close ui-corner-all recurrence-fullscreen-minimize" href="#"><span style="-moz-user-select: none; background-position: -34px -128px;" unselectable="on" class="ui-icon">close</span></a>');
+            $('.recurrence-fullscreen-minimize').toggle(
+                function() {
+                        $('#recurrence_dialog').parent().height(window.innerHeight - 10);
+                        $('#recurrence_dialog').parent().width(window.innerWidth - 20);
+                        $('#recurrence_dialog').height(window.innerHeight - 100);
+                        $('#recurrence_dialog').width(window.innerWidth - 45);
+                        $('#recurrence_dialog').parent().css({'top':'0','left':'0'});
+                        return false;
+                },
+                function() {
+                        $('#recurrence_dialog').parent().height(600);
+                        $('#recurrence_dialog').parent().width(950);
+                        $('#recurrence_dialog').height(500);
+                        $('#recurrence_dialog').width(925);
+                        $('#recurrence_dialog').parent().css('left',((window.innerWidth-950)/2)+'px');
+                        $('#recurrence_dialog').parent().css('top',((window.innerHeight-500)/2)+'px');
+                        return false;
+                }
+            );
+            if(sessionStorage.getItem("endReccurence") != null || sessionStorage.getItem("extendReccurence") != null) {
+                sessionStorage.removeItem("endReccurence");
+                sessionStorage.removeItem("extendReccurence");
+            }   
+			loadRecurrenceList("false","");
+			
         });
         
         $("#current-customer-call-list, #leads-call-list").click(function() {
