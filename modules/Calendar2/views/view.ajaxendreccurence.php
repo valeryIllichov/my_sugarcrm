@@ -43,7 +43,7 @@ class Calendar2ViewAjaxEndReccurence extends SugarView {
                     $deleteUpdate = "UPDATE ".$call_bean->table_name." c
                                              SET c.deleted = 1, c.date_modified = '".gmdate($GLOBALS['timedate']->get_db_date_time_format())."'
                                              WHERE c.cal2_call_id_c = '".addslashes($rec_id)."' AND c.deleted = 0
-                                             AND c.date_end >= STR_TO_DATE('".$end_date."', '%m/%d/%Y')";
+                                             AND c.date_start >= STR_TO_DATE('".$end_date."', '%m/%d/%Y')";
 	$call_bean->db->query($deleteUpdate);
                   $dateUpdate = "UPDATE ".$call_bean->table_name." c
                                              SET c.cal2_repeat_end_date_c = STR_TO_DATE('".date("m/d/Y",to_timestamp_from_uf($end_date) - 60*60*24)."', '%m/%d/%Y'), 
@@ -60,7 +60,7 @@ class Calendar2ViewAjaxEndReccurence extends SugarView {
                    $deleteUpdate = "UPDATE ".$meeting_bean->table_name." m
                                              SET m.deleted = 1, m.date_modified = '".gmdate($GLOBALS['timedate']->get_db_date_time_format())."'
                                              WHERE m.cal2_meeting_id_c = '".addslashes($rec_id)."' AND m.deleted = 0
-                                             AND m.date_end >= STR_TO_DATE('".$end_date."', '%m/%d/%Y')";
+                                             AND m.date_start >= STR_TO_DATE('".$end_date."', '%m/%d/%Y')";
 	$meeting_bean->db->query($deleteUpdate);
                   $dateUpdate = "UPDATE ".$meeting_bean->table_name." m
                                              SET m.cal2_repeat_end_date_c = STR_TO_DATE('".date("m/d/Y",to_timestamp_from_uf($end_date) - 60*60*24)."', '%m/%d/%Y'),
@@ -110,7 +110,7 @@ class Calendar2ViewAjaxEndReccurence extends SugarView {
             $rec_sql = "SELECT t.id as record_id
                 FROM ".$bean->table_name." t
                 WHERE t.".$jn." = '".addslashes($rec_id)."' AND t.deleted = 0
-                AND t.date_end >= STR_TO_DATE('".$end_date."', '%m/%d/%Y')";
+                AND t.date_start >= STR_TO_DATE('".$end_date."', '%m/%d/%Y')";
             $result = $bean->db->query($rec_sql);
             while ($rec = $bean->db->fetchByAssoc($result)) {
                 $ret_arr[] =  $rec['record_id'];
