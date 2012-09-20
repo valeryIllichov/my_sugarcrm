@@ -124,7 +124,11 @@ l.first_name LIKE '%".$_REQUEST['sSearch']."%' OR l.last_name LIKE '%".$_REQUEST
         }
         $other_rec_sql = "";
         $other_count = 0;
-         if(isset($_REQUEST['otherLoad']) && $_REQUEST['otherLoad'] == 'true'){                                                       
+        $parent_nullMeeting = " AND m.parent_id is not NULL "; 
+        $parent_nullCall = " AND c.parent_id is not NULL ";
+         if(isset($_REQUEST['otherLoad']) && $_REQUEST['otherLoad'] == 'true'){ 
+			$parent_nullMeeting = ""; 
+			$parent_nullCall = "";                                                     
 			$other_rec_sql = " UNION
 					SELECT 
 						m.cal2_meeting_id_c as rec_id, 
@@ -215,6 +219,7 @@ l.first_name LIKE '%".$_REQUEST['sSearch']."%' OR l.last_name LIKE '%".$_REQUEST
 						WHERE EXISTS (SELECT meetings.id FROM meetings
 											WHERE meetings.id = m.cal2_meeting_id_c)
 							AND m.cal2_meeting_id_c is not NULL 
+							".$parent_nullMeeting."
 							AND (m.parent_type = 'Accounts' OR m.parent_type = 'Leads')
 							AND m.deleted = 0
 							AND m.assigned_user_id = '".$current_user->id."'
@@ -239,6 +244,7 @@ l.first_name LIKE '%".$_REQUEST['sSearch']."%' OR l.last_name LIKE '%".$_REQUEST
 						WHERE EXISTS (SELECT calls.id FROM calls
 											WHERE calls.id = c.cal2_call_id_c)
 							AND c.cal2_call_id_c is not NULL 
+							".$parent_nullCall."
 							AND (c.parent_type = 'Accounts' OR c.parent_type = 'Leads')
 							AND c.deleted = 0
 							AND c.assigned_user_id = '".$current_user->id."'
@@ -255,7 +261,7 @@ l.first_name LIKE '%".$_REQUEST['sSearch']."%' OR l.last_name LIKE '%".$_REQUEST
                                                                 where EXISTS (SELECT meetings.id FROM meetings
                                                                     WHERE meetings.id = m.cal2_meeting_id_c)
                                                                 and m.cal2_meeting_id_c is not NULL 
-                                                                
+                                                                ".$parent_nullMeeting."
                                                                 and m.deleted = 0
                                                                 and m.assigned_user_id = '".$current_user->id."'
                                                                 ".$like_q."
@@ -268,7 +274,7 @@ l.first_name LIKE '%".$_REQUEST['sSearch']."%' OR l.last_name LIKE '%".$_REQUEST
                                                                 where EXISTS (SELECT calls.id FROM calls
                                                                     WHERE calls.id = c.cal2_call_id_c)
                                                                 and c.cal2_call_id_c is not NULL 
-                                                                
+                                                                ".$parent_nullCall."
                                                                 and c.deleted = 0
                                                                 and c.assigned_user_id = '".$current_user->id."'
                                                                 ".$like_q."
