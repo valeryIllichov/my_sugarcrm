@@ -861,20 +861,20 @@ if (isPro() && is551()) {
             $('div.ui-dialog-titlebar:visible').append('<a style="-moz-user-select: none; right: 23px;" unselectable="on" role="button" class="ui-dialog-titlebar-close ui-corner-all recurrence-fullscreen-minimize" href="#"><span style="-moz-user-select: none; background-position: -34px -128px;" unselectable="on" class="ui-icon">close</span></a>');
             $('.recurrence-fullscreen-minimize').toggle(
                 function() {
-                        $('#recurrence_dialog').parent().height(window.innerHeight - 10);
-                        $('#recurrence_dialog').parent().width(window.innerWidth - 20);
-                        $('#recurrence_dialog').height(window.innerHeight - 100);
-                        $('#recurrence_dialog').width(window.innerWidth - 45);
-                        $('#recurrence_dialog').parent().css({'top':'0','left':'0'});
-                        return false;
-                },
-                function() {
-                        $('#recurrence_dialog').parent().height(600);
+                       $('#recurrence_dialog').parent().height(600);
                         $('#recurrence_dialog').parent().width(950);
                         $('#recurrence_dialog').height(500);
                         $('#recurrence_dialog').width(925);
                         $('#recurrence_dialog').parent().css('left',((window.innerWidth-950)/2)+'px');
                         $('#recurrence_dialog').parent().css('top',((window.innerHeight-500)/2)+'px');
+                        return false;
+                },
+                function() {
+                        $('#recurrence_dialog').parent().height(window.innerHeight - 10);
+                        $('#recurrence_dialog').parent().width(window.innerWidth - 20);
+                        $('#recurrence_dialog').height(window.innerHeight - 100);
+                        $('#recurrence_dialog').width(window.innerWidth - 45);
+                        $('#recurrence_dialog').parent().css({'top':'0','left':'0'});
                         return false;
                 }
             );
@@ -2349,8 +2349,8 @@ foreach ($ActRecords as $act) {
             dialogClass: 'recurrence_dialog_class',
             bgiframe: false,
             autoOpen: false,
-            height: 600,
-            width: 950,
+            height: window.innerHeight- 10,
+            width: window.innerWidth- 20,
             modal: true,
 					
             buttons: {
