@@ -582,6 +582,15 @@ if (isPro() && is551()) {
                 }
             }else if(inputVal == ""){
                 $("#"+recID+"_extend_reccurence").datepicker('enable');
+                if(sessionStorage.getItem("endReccurence") != null){ 
+					var end_reccurence_obj= eval('(' + sessionStorage.getItem("endReccurence") + ')');
+					var end_reccurence_arr=end_reccurence_obj.jsonObject[typeSchedule];
+					if(typeof end_reccurence_arr[recID] != 'undefined'){
+						delete end_reccurence_arr[recID];
+						end_reccurence_obj.jsonObject[typeSchedule] = end_reccurence_arr; 
+						sessionStorage.setItem("endReccurence", JSON.stringify(end_reccurence_obj.jsonObject));
+					} 
+				} 
             }else{
                 alert("Invalid Date");
             }
@@ -618,6 +627,15 @@ if (isPro() && is551()) {
                 }
             }else if(inputVal == ""){
                 $("#"+recID+"_end_reccurence").datepicker('enable');
+                if(sessionStorage.getItem("extendReccurence") != null){ 
+					var extend_reccurence_obj= eval('(' + sessionStorage.getItem("extendReccurence") + ')');
+					var extend_reccurence_arr=extend_reccurence_obj.jsonObject[typeSchedule];
+					if(typeof extend_reccurence_arr[recID] != 'undefined'){
+						delete extend_reccurence_arr[recID];
+						extend_reccurence_obj.jsonObject[typeSchedule] = extend_reccurence_arr; 
+						sessionStorage.setItem("extendReccurence", JSON.stringify(extend_reccurence_obj.jsonObject));
+					} 
+				} 
             }else{
                 alert("Invalid Date");
             }
