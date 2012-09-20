@@ -215,7 +215,7 @@ l.first_name LIKE '%".$_REQUEST['sSearch']."%' OR l.last_name LIKE '%".$_REQUEST
 						WHERE EXISTS (SELECT meetings.id FROM meetings
 											WHERE meetings.id = m.cal2_meeting_id_c)
 							AND m.cal2_meeting_id_c is not NULL 
-							
+							AND (m.parent_type = 'Accounts' OR m.parent_type = 'Leads')
 							AND m.deleted = 0
 							AND m.assigned_user_id = '".$current_user->id."'
 							".$like_q."
@@ -239,7 +239,7 @@ l.first_name LIKE '%".$_REQUEST['sSearch']."%' OR l.last_name LIKE '%".$_REQUEST
 						WHERE EXISTS (SELECT calls.id FROM calls
 											WHERE calls.id = c.cal2_call_id_c)
 							AND c.cal2_call_id_c is not NULL 
-							
+							AND (c.parent_type = 'Accounts' OR c.parent_type = 'Leads')
 							AND c.deleted = 0
 							AND c.assigned_user_id = '".$current_user->id."'
 							".$like_q."
