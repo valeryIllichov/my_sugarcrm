@@ -113,6 +113,22 @@ class Calendar2Controller extends SugarController {
                 $field = "date_end";
                 break;
         }
+        $startDateM = "";
+        $startDateC = "";
+        $endDateM = "";
+        $endDateC = "";
+        if(!empty($_REQUEST['startDate'])){
+        	$startDateM = " AND (SELECT meetings.date_start FROM meetings
+			WHERE meetings.id = m.cal2_meeting_id_c) >= STR_TO_DATE('".$_REQUEST['startDate']."', '%m/%d/%Y') ";
+			$startDateC = " AND (SELECT calls.date_start FROM calls
+			WHERE calls.id = c.cal2_call_id_c) >= STR_TO_DATE('".$_REQUEST['startDate']."', '%m/%d/%Y') ";
+        }
+        if(!empty($_REQUEST['endDate'])){
+        	$endDateM = " AND (SELECT meetings.cal2_repeat_end_date_c FROM meetings
+			WHERE meetings.id = m.cal2_meeting_id_c) <= STR_TO_DATE('".$_REQUEST['endDate']."', '%m/%d/%Y') ";
+			$endDateC = " AND (SELECT calls.cal2_repeat_end_date_c FROM calls
+			WHERE calls.id = c.cal2_call_id_c) <= STR_TO_DATE('".$_REQUEST['endDate']."', '%m/%d/%Y') ";
+        }
         $like_q = "";
         $like_otMeeting = "";
         $like_otCall = "";
@@ -149,6 +165,7 @@ l.first_name LIKE '%".$_REQUEST['sSearch']."%' OR l.last_name LIKE '%".$_REQUEST
 						AND m.deleted = 0
 						AND m.parent_type != 'Accounts' AND m.parent_type != 'Leads'
 						AND m.assigned_user_id = '".$current_user->id."'
+						".$startDateM.$endDateM."
 						".$like_otMeeting."
 					 GROUP BY m.cal2_meeting_id_c   
 					 UNION
@@ -171,6 +188,7 @@ l.first_name LIKE '%".$_REQUEST['sSearch']."%' OR l.last_name LIKE '%".$_REQUEST
 						AND c.deleted = 0
 						AND c.parent_type != 'Accounts' AND c.parent_type != 'Leads'
 						AND c.assigned_user_id = '".$current_user->id."'
+						".$startDateC.$endDateC."
 						".$like_otCall."
 					 GROUP BY c.cal2_call_id_c ";
 		$other_sql_count = "SELECT count(counter) AS other_records  FROM(SELECT 
@@ -182,6 +200,7 @@ l.first_name LIKE '%".$_REQUEST['sSearch']."%' OR l.last_name LIKE '%".$_REQUEST
 							AND c.deleted = 0
 							AND c.parent_type != 'Accounts' AND c.parent_type != 'Leads'
 							and c.assigned_user_id = '".$current_user->id."'
+							".$startDateC.$endDateC."
 							".$like_otCall."
 						 GROUP BY c.cal2_call_id_c
 						 UNION
@@ -194,6 +213,7 @@ l.first_name LIKE '%".$_REQUEST['sSearch']."%' OR l.last_name LIKE '%".$_REQUEST
 							AND m.deleted = 0
 							AND m.parent_type != 'Accounts' AND m.parent_type != 'Leads'
 							and m.assigned_user_id = '".$current_user->id."'
+							".$startDateM.$endDateM."
 							".$like_otMeeting."
 						 GROUP BY m.cal2_meeting_id_c) countOther";
 			$other_count_result = $focus->db->query($other_sql_count);
@@ -223,8 +243,9 @@ l.first_name LIKE '%".$_REQUEST['sSearch']."%' OR l.last_name LIKE '%".$_REQUEST
 							AND (m.parent_type = 'Accounts' OR m.parent_type = 'Leads')
 							AND m.deleted = 0
 							AND m.assigned_user_id = '".$current_user->id."'
+							".$startDateM.$endDateM."
 							".$like_q."
-						GROUP BY m.cal2_meeting_id_c, m.parent_id
+						GROUP BY m.cal2_meeting_id_c
 					UNION
 					SELECT 
 							c.cal2_call_id_c as rec_id, 
@@ -248,8 +269,9 @@ l.first_name LIKE '%".$_REQUEST['sSearch']."%' OR l.last_name LIKE '%".$_REQUEST
 							AND (c.parent_type = 'Accounts' OR c.parent_type = 'Leads')
 							AND c.deleted = 0
 							AND c.assigned_user_id = '".$current_user->id."'
+							".$startDateC.$endDateC."
 							".$like_q."
-						GROUP BY c.cal2_call_id_c, c.parent_id
+						GROUP BY c.cal2_call_id_c
 						".$other_rec_sql."
 					ORDER BY " . $field . " " . $_REQUEST['sSortDir_0'] . " LIMIT " . $_GET['iDisplayStart'] . ", " . $_GET['iDisplayLength'];
 					
@@ -264,8 +286,9 @@ l.first_name LIKE '%".$_REQUEST['sSearch']."%' OR l.last_name LIKE '%".$_REQUEST
                                                                 ".$parent_nullMeeting."
                                                                 and m.deleted = 0
                                                                 and m.assigned_user_id = '".$current_user->id."'
+                                                                ".$startDateM.$endDateM."
                                                                 ".$like_q."
-                                                                GROUP BY m.cal2_meeting_id_c, m.parent_id) countMeetings";
+                                                                GROUP BY m.cal2_meeting_id_c) countMeetings";
         $calls_sql_count = "SELECT count(counter) AS calls_records  FROM (select  
                                                                 count(c.cal2_call_id_c) as counter
                                                                 from calls c
@@ -277,8 +300,9 @@ l.first_name LIKE '%".$_REQUEST['sSearch']."%' OR l.last_name LIKE '%".$_REQUEST
                                                                 ".$parent_nullCall."
                                                                 and c.deleted = 0
                                                                 and c.assigned_user_id = '".$current_user->id."'
+                                                                ".$startDateC.$endDateC."
                                                                 ".$like_q."
-                                                                GROUP BY c.cal2_call_id_c, c.parent_id) countCalls";
+                                                                GROUP BY c.cal2_call_id_c) countCalls";
                                                                                                
         $reccurence = $focus->db->query($reccurence_sql);
         $meetings_count = $focus->db->query($meetings_sql_count);

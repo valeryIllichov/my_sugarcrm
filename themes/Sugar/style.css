@@ -1636,7 +1636,7 @@ My Daily Sales FMP Table style
     display: block;
 }
 
-.yui-skin-sam-fmp-sales .yui-split-button-fmp-sales button {
+.yui-skin-sam-fmp-sales .yui-split-button-fmp-sales button, .yui-skin-custom .yui-split-button-fmp-sales button{
     background-image: url("http://yui.yahooapis.com/2.8.2r1/build/assets/skins/sam/split-button-arrow.png");
 }
 

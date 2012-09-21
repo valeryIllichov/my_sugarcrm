@@ -641,7 +641,11 @@ if (isPro() && is551()) {
             }
     }
     
-    function loadRecurrenceList(loadOther,isChached){
+    function loadRecurrenceList(loadOther,showAll,startDateF,endDateF){
+    if(sessionStorage.getItem("endReccurence") != null || sessionStorage.getItem("extendReccurence") != null) {
+      sessionStorage.removeItem("endReccurence");
+      sessionStorage.removeItem("extendReccurence");
+    }  
 		var url ="index.php?module=Calendar2&action=AjaxGetReccurence";
 		 $("#recurrence_list").dataTable({
 							"bJQueryUI": true,
@@ -650,7 +654,7 @@ if (isPro() && is551()) {
 							"bServerSide": true,
 							"bAutoWidth": false,
 							"aaSorting": [[ 4, "asc" ]],
-						   "sDom": '<"H"l<"#loadOther">fr<"#autofill_date">>t<"F"ip>',
+						   "sDom": '<"H"l<"#loadOther"><"#range_date">fr<"#autofill_date">>t<"F"ip>',
 							"aoColumns": [ 
 								{ "bSearchable": true },
 								{ "bSearchable": true },
@@ -777,21 +781,122 @@ if (isPro() && is551()) {
 							 "sAjaxSource": url,
 							"sPaginationType": "full_numbers",
 							"fnServerData": function ( sSource, aoData, fnCallback ) {
-							aoData.push( { name: "otherLoad", value: loadOther } );
-							$.getJSON( sSource, aoData, function (json) { 
-								fnCallback(json)
-							} );
+                var stD = startDateF != '' ? $.datepicker.formatDate("mm/dd/yy", startDateF) : '';
+                var enD = endDateF != '' ? $.datepicker.formatDate("mm/dd/yy", endDateF) : '';  
+  							aoData.push( { name: "otherLoad", value: loadOther } );
+                aoData.push( { name: "startDate", value: stD } );
+                aoData.push( { name: "endDate", value: enD } );
+  							$.getJSON( sSource, aoData, function (json) { 
+  								fnCallback(json)
+  							} );
 						}
 		  });
+      var stD = startDateF != '' ? $.datepicker.formatDate("mm/dd/yy", startDateF) : '';
+      var enD = endDateF != '' ? $.datepicker.formatDate("mm/dd/yy", endDateF) : '';
 		   $("#autofill_date").css("float", "right");
 			  $("#recurrence_list_filter").css({"width":"auto","float":"left"});
 			  $("#recurrence_list_length").css("width","20%");
-			  $("#loadOther").css({"padding-right":"10%","float":"left"});
-			  $("#loadOther").append('All:<input type="checkbox" id="load-other-checkbox" name="load-other-checkbox" '+isChached+'>');
+			  $("#loadOther").css({"padding-right":"5%","float":"left"});
+			  $("#loadOther").append('All:<input type="checkbox" id="load-other-checkbox" name="load-other-checkbox" '+showAll+'>');
 			  $("#autofill_date").append('<span style="padding-right: 6px;font-size: 0.9em;"><input type="text" name="autofill-end_reccurence" class="autofill-date" id="autofill-end_reccurence" size="11" value=""></span>');
 			  $("#autofill_date").append('<span style="padding-right: 6px;font-size: 0.9em;"><input type="text" name="autofill-extend_reccurence" class="autofill-date" id="autofill-extend_reccurence" size="11" value=""></span>');           
-			  $("#recurrence_list").css('width','100%');
-			  
+        $("#range_date").css({"padding-right":"5%","float":"left"});
+        $("#range_date").addClass('yui-skin-custom');
+        $("#range_date").append('<span class="yui-button-fmp-sales yui-split-button-fmp-sales" id="meet_date_range_show" style="border-width: 1px 1px;"><span class="first-child-fmp-sales">'+
+              '<button type="button">Date Range</button>'+   
+                '<div id="meet_date_range" style="display: none; padding: 3px; position: absolute; background-color: #FFFFFF; border: 1px solid #94C1E8;">'+
+                  '<label for="meet_date_start">Start date</label>'+
+                  '<div id="date_from">'+
+                      '<input class="text range-date-inp" name="meet_date_start" size="12" maxlength="10" id="meet_date_start" value="'+stD+'">'+
+                  '</div>'+
+                  '<label for="meet_date_end">End date</label>'+
+                  '<div id="date_end">'+
+                      '<input class="text range-date-inp" name="meet_date_end" size="12" maxlength="10" id="meet_date_end" value="'+enD+'">'+
+                  '</div>'+
+              '</div>');
+        $("#meet_date_range_show").hover(
+          function(){
+              $("#meet_date_range_show").find("#meet_date_range").stop(true, true);
+              $("#meet_date_range_show").find("#meet_date_range").slideDown("slow");      
+          },
+          function() {
+            if ( $("#ui-datepicker-div").css("display") == "none" || $("#ui-datepicker-div").html() == "")
+              $("#meet_date_range_show").find("#meet_date_range").slideUp("slow");  
+        });
+        $("#recurrence_list").css('width','100%');
+			   $( "#meet_date_start" ).datepicker({
+          dateFormat: "mm/dd/yy",
+          defaultDate: startDateF,
+          maxDate: endDateF,
+          numberOfMonths: 3,
+          showOn: "button",
+          buttonImage: "themes/default/images/jscalendar.gif",
+          buttonImageOnly: true,
+          showButtonPanel: true,
+          closeText: 'Clear',
+          beforeShow: function( input, inst ) {
+            setTimeout(function() {
+              $(".ui-datepicker-close").click(function(){
+                loadRecurrenceList(loadOther,showAll,"",endDateF);
+              });
+            }, 10 );
+          },
+          onChangeMonthYear:function() {
+            var input = this;
+            setTimeout(function() {
+              $(".ui-datepicker-close").click(function(){
+                loadRecurrenceList(loadOther,showAll,"",endDateF);
+              });
+            }, 10 );
+          },
+          onSelect: function( selectedDate ) {
+            loadRecurrenceList(loadOther,showAll,new Date(selectedDate),endDateF);
+          }
+        });
+        $( "#meet_date_end" ).datepicker({
+          dateFormat: "mm/dd/yy",
+          defaultDate: endDateF,
+          minDate: startDateF,
+          numberOfMonths: 3,
+          showOn: "button",
+          buttonImage: "themes/default/images/jscalendar.gif",
+          buttonImageOnly: true,
+          showButtonPanel: true,
+          closeText: 'Clear',
+          beforeShow: function( input, inst ) {
+            setTimeout(function() {
+              $(".ui-datepicker-close").click(function(){
+                loadRecurrenceList(loadOther,showAll,startDateF,"");
+              });
+            }, 10 );
+          },
+          onChangeMonthYear:function() {
+            var input = this;
+            setTimeout(function() {
+              $(".ui-datepicker-close").click(function(){
+                loadRecurrenceList(loadOther,showAll,startDateF,"");
+                //DP_jQuery.datepicker._clearDate(input);
+              });
+            }, 10 );
+          },
+          onSelect: function( selectedDate ) {
+            loadRecurrenceList(loadOther,showAll,startDateF,new Date(selectedDate));
+          }
+        });
+        $('#autofill-end_reccurence').change(function() { 
+              var inputVal = this.value;
+              if(isDate(inputVal)){
+                  $("#autofill-extend_reccurence").datepicker('disable');
+                  $('.end_reccurence').each(function(){
+                      saveEndRecurrence(this,inputVal);
+                  });
+              }else{
+                  $('.end_reccurence').val('');
+                  $(".extend_reccurence").datepicker('enable');
+                  sessionStorage.removeItem("endReccurence");
+                  $("#autofill-extend_reccurence").datepicker('enable');
+              }
+          }); 
 				$(".autofill-date").datepicker({
 					dateFormat: "mm/dd/yy",
 					showOn: "button",
@@ -835,43 +940,44 @@ if (isPro() && is551()) {
 						}, 10 );
 					}
 				});
-               $('#autofill-end_reccurence').change(function() { 
-                    var inputVal = this.value;
-                    if(isDate(inputVal)){
-                        $("#autofill-extend_reccurence").datepicker('disable');
-                        $('.end_reccurence').each(function(){
-                            saveEndRecurrence(this,inputVal);
-                        });
-                    }else{
-                        $('.end_reccurence').val('');
-                        $(".extend_reccurence").datepicker('enable');
-                        sessionStorage.removeItem("endReccurence");
-                        $("#autofill-extend_reccurence").datepicker('enable');
-                    }
-                }); 
-                $('#autofill-extend_reccurence').change(function() { 
-                    var inputVal = this.value;
-                    if(isDate(inputVal)){
-                        $("#autofill-end_reccurence").datepicker('disable');
-                        $('.extend_reccurence').each(function(){
-                            saveExtendRecurrence(this,inputVal);
-                        });
-                     }else{
-                         $('.extend_reccurence').val('');
-                         $(".end_reccurence").datepicker('enable');
-                         sessionStorage.removeItem("extendReccurence");
-                        $("#autofill-end_reccurence").datepicker('enable');
-                    }
-                });
+           $('#autofill-end_reccurence').change(function() { 
+                var inputVal = this.value;
+                if(isDate(inputVal)){
+                    $("#autofill-extend_reccurence").datepicker('disable');
+                    $('.end_reccurence').each(function(){
+                        saveEndRecurrence(this,inputVal);
+                    });
+                }else{
+                    $('.end_reccurence').val('');
+                    $(".extend_reccurence").datepicker('enable');
+                    sessionStorage.removeItem("endReccurence");
+                    $("#autofill-extend_reccurence").datepicker('enable');
+                }
+            }); 
+            $('#autofill-extend_reccurence').change(function() { 
+                var inputVal = this.value;
+                if(isDate(inputVal)){
+                    $("#autofill-end_reccurence").datepicker('disable');
+                    $('.extend_reccurence').each(function(){
+                        saveExtendRecurrence(this,inputVal);
+                    });
+                 }else{
+                     $('.extend_reccurence').val('');
+                     $(".end_reccurence").datepicker('enable');
+                     sessionStorage.removeItem("extendReccurence");
+                    $("#autofill-end_reccurence").datepicker('enable');
+                }
+            });
                  
-                 $("#load-other-checkbox").click(function () {
-					var checkboxelem = $(this);
-					if (checkboxelem.is(":checked")) {
-						loadRecurrenceList("true","checked");
-					}else {
-						loadRecurrenceList("false","");
-					 }
+          $("#load-other-checkbox").click(function () {
+  					var checkboxelem = $(this);
+  					if (checkboxelem.is(":checked")) {
+  						loadRecurrenceList("true","checked",startDateF,endDateF);
+  					}else {
+						  loadRecurrenceList("false","",startDateF,endDateF);
+            }
 				}); 
+
 	} 
         //quick customer input
         $("#recurrence-list-button").click(function() {
@@ -896,12 +1002,9 @@ if (isPro() && is551()) {
                         return false;
                 }
             );
-            if(sessionStorage.getItem("endReccurence") != null || sessionStorage.getItem("extendReccurence") != null) {
-                sessionStorage.removeItem("endReccurence");
-                sessionStorage.removeItem("extendReccurence");
-            }   
-			loadRecurrenceList("false","");
-			
+ 
+            var now = new Date();
+            loadRecurrenceList("false","",new Date(now.getFullYear(), 0, 1),new Date(now.getFullYear(), 11, 31));
         });
         
         $("#current-customer-call-list, #leads-call-list").click(function() {
