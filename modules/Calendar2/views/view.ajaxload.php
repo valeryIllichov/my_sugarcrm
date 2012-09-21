@@ -234,7 +234,7 @@ class Calendar2ViewAjaxLoad extends SugarView {
 			    $bn->retrieve($bean->parent_id);
 			    if(isset($bn->custno_c)) $custno_c = $bn->custno_c;
 			}
-			
+			$protocol = ($_SERVER['HTTPS'] && $_SERVER['HTTPS'] != "off") ? "https" : "http";
 			$json_arr = array(
 				'succuss' => 'yes',
 				'record_name' => $bean->name,
@@ -276,6 +276,7 @@ class Calendar2ViewAjaxLoad extends SugarView {
                                 'next_date' => $next_date,
                                 'opportunities_arr' => $opportunities_arr,
                                 'lead_account_name' => $lead_account_name,
+                                'baseurl' => $protocol . "://" . $_SERVER['HTTP_HOST'],
 			);
 
 		} else {

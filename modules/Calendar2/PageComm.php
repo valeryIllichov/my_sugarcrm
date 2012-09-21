@@ -458,7 +458,7 @@ if (isPro() && is551()) {
                 // add new record for shared functionality
                 $("#cal2_assigned_user_name").val($(this).attr("shared_user_name"));
                 $("#cal2_assigned_user_id").val($(this).attr("shared_user_id"));
-
+                $("#more-details").html("");
 
                 $(".record_dialog_class .ui-dialog-buttonpane button:nth-child(1)").removeAttr("disabled");
                 $(".record_dialog_class .ui-dialog-buttonpane button:nth-child(6)").attr("disabled","disabled");

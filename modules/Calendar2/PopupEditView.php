@@ -179,7 +179,8 @@ $reminderHTML .= '</select>';
                 <input name="btn_parent_name" id="btn_parent_name" title="<?php echo $app_strings['LBL_SELECT_BUTTON_TITLE'];?>" accesskey="T" class="button" value="<?php echo "Search";//$app_strings['LBL_SELECT_BUTTON_LABEL'];?>" onclick='open_popup(document.EditView.parent_type.value, 800, 600, "", true, false, {"call_back_function":"set_return","form_name":"EditView","field_to_name_array":{"id":"parent_id","name":"parent_name","custno_c":"parent_name_custno_c", "account_name":"lead_account_name"}}, "single", true);' type="button">
 
                 <input name="btn_clr_parent_name" id="btn_clr_parent_name" title="<?php echo $app_strings['LBL_CLEAR_BUTTON_TITLE'];?>" accesskey="C" class="button" onclick="this.form.parent_name.value = ''; this.form.parent_id.value = ''; this.form.parent_name_custno_c.value = ''; document.EditView.lead_account_name.value='';" value="<?php echo $app_strings['LBL_CLEAR_BUTTON_LABEL'];?>" type="button">
-        </td>   
+        </td>
+        <td><div id="more-details" style="font-size: 14px;"></div></td>   
     </tr>   
     
 	<tr>

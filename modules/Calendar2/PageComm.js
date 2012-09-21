@@ -685,7 +685,11 @@ function FormLoad(type,record,run_one_time){
                             $(".weeks_checks[value='" + v + "']").attr("checked","checked");	
                         }
                         );
-													
+                    if(res.parent_id != ''){
+					   $("#more-details").html("<a href=\"" + res.baseurl +"/index.php?module="+res.parent_type+"&action=DetailView&record=" + res.parent_id + "\" target=\"_blank\">More Details</a>");								
+                    }else{
+                        $("#more-details").html("<a href='javascript:void(0);' style='cursor: default;color: #CCC;'>More Details</a>");
+                    }
                     if(!run_one_time)
                         if(res.cal2_recur_id_c != '' || res.cal2_repeat_type_c != '' ){  
                             $("#question1").remove();
