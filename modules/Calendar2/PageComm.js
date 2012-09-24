@@ -787,8 +787,11 @@ function FormLoad(type,record,run_one_time){
                         }
 													
                     $(".record_dialog_class .ui-dialog-buttonpane button:nth-child(1)").removeAttr("disabled");
-                    $(".record_dialog_class .ui-dialog-buttonpane button:nth-child(6)").removeAttr("disabled");
+                    
                     $(".record_dialog_class .ui-dialog-buttonpane button:nth-child(5)").removeAttr("disabled");
+                     if(res.cal2_recur_id_c != ''){
+                         $(".record_dialog_class .ui-dialog-buttonpane button:nth-child(6)").removeAttr("disabled");
+                                        }
 													
                     check_whole_day();
 	  var formValues = new Object();
