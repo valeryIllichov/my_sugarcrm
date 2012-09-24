@@ -36,6 +36,7 @@ class Calendar2ViewAjaxEndReccurence extends SugarView {
                 $post_obj->Meeting[$_REQUEST['record']] = $clicked_bean->date_start;
             }
         }
+        $i = 1;
         if(isset($post_obj->Call)){
             $call_bean = new Call();
             foreach ($post_obj->Call as $rec_id=>$end_date){
@@ -51,6 +52,10 @@ class Calendar2ViewAjaxEndReccurence extends SugarView {
                                              WHERE c.id = '".addslashes($rec_id)."'";
 	$call_bean->db->query($dateUpdate);
                 $this->returnJson($call_bean, 'call',$deleted_ids);
+                session_start();
+                $_SESSION['curr_count'] =$i++;
+                session_write_close();
+               // sleep(2);
             }
         }
         if(isset($post_obj->Meeting)){
@@ -68,9 +73,13 @@ class Calendar2ViewAjaxEndReccurence extends SugarView {
                                              WHERE m.id = '".addslashes($rec_id)."'";
 	$meeting_bean->db->query($dateUpdate);
                   $this->returnJson($meeting_bean, 'meeting',$deleted_ids);
+                  session_start();
+                $_SESSION['curr_count'] =$i++;
+                session_write_close();
+                //sleep(2);
             }
         }    
-
+        unset($_SESSION["curr_count"]);
     }
     
     function returnJson(&$bean, $type,$deleted_ids) {   

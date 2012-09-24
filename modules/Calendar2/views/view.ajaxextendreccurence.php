@@ -31,6 +31,7 @@ class Calendar2ViewAjaxExtendReccurence extends SugarView {
                 $post_obj->Meeting[$_REQUEST['record']] = $_REQUEST['cal2_repeat_end_date_c'];
             }
         }
+        $i = 1;
         if (isset($post_obj->Call)) {
             $jn = "cal2_call_id_c";
             $type = 'call';
@@ -39,12 +40,16 @@ class Calendar2ViewAjaxExtendReccurence extends SugarView {
                 $call_bean->retrieve($rec_id);
                 $start_date = $this->getStartDate($call_bean, $jn, $rec_id,$call_bean->cal2_repeat_end_date_c);
                 $start_date = $start_date." ".date('h:ia',strtotime($call_bean->date_start));
-                $call_bean->cal2_repeat_end_date_c = $end_date;
+                $call_bean->cal2_repeat_end_date_c = $end_date;      
                 $call_bean->save();
                 $this->extendRecurrence($call_bean, $jn, $type, $start_date);
+                 session_start();
+                $_SESSION['curr_count'] =$i++;
+                session_write_close();
+               // sleep(3);
             }
         }
-        if (isset($post_obj->Meeting)) {
+        if (isset($post_obj->Meeting)) {   
             $jn = "cal2_meeting_id_c";
             $type = 'meeting';
             foreach ($post_obj->Meeting as $rec_id => $end_date) {
@@ -52,11 +57,16 @@ class Calendar2ViewAjaxExtendReccurence extends SugarView {
                 $meeting_bean->retrieve($rec_id);
                 $start_date = $this->getStartDate($meeting_bean, $jn, $rec_id,$meeting_bean->cal2_repeat_end_date_c);
                 $start_date = $start_date." ".date('h:ia',strtotime($meeting_bean->date_start));
-                $meeting_bean->cal2_repeat_end_date_c = $end_date;
+                $meeting_bean->cal2_repeat_end_date_c = $end_date;        
                 $meeting_bean->save();
                 $this->extendRecurrence($meeting_bean, $jn, $type, $start_date);
+                session_start();
+                $_SESSION['curr_count'] =$i++;
+                session_write_close();
+                //sleep(3); 
             }
         }
+        unset($_SESSION["curr_count"]);
     }
 
     function extendRecurrence(&$bean, $jn, $type, $start_date) {

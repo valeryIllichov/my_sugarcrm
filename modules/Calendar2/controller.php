@@ -86,6 +86,15 @@ class Calendar2Controller extends SugarController {
     {
 		$this->view = 'ajaxextendreccurence';
     }
+    function action_AjaxStatusRec(){
+        session_start();
+        $count = $_SESSION['curr_count'];
+//        if($_REQUEST['count'] == $count){
+//            unset($_SESSION["curr_count"]);
+//        }
+        print json_encode(array("currCount" => $count));
+        exit;
+    }
     function action_AjaxGetReccurence() {
          global $current_user;
          require_once("modules/Calls/Call.php");

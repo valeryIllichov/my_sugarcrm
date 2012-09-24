@@ -202,7 +202,22 @@ if (isPro()) {
 		margin: 20px 0 0 10px;
                                     font-size: 14px;
 	}
-	
+            .pbar .ui-progressbar-value {display:block !important}
+            .pbar {overflow: hidden}
+            .percent {position:relative;text-align: right;font-size: 14px;}
+            .elapsed {position:relative;text-align: right;font-size: 14px;color: blue;}
+            #progressBarExtend, #progressBarEnd{
+                    background:#FFF;
+                    width:650px;
+                    font-size:80%;
+                    border:1px #000 solid;
+                    margin:20px auto;
+                    padding:15px;
+                    position:fixed;
+                    -moz-border-radius: 3px;
+                    -webkit-border-radius: 3px;
+                    z-index: 99999;
+            }
             </style>
 <script type="text/javascript">
     var pview = "";
@@ -2473,32 +2488,47 @@ foreach ($ActRecords as $act) {
             height: window.innerHeight- 10,
             width: window.innerWidth- 20,
             modal: true,
-					
+            resizable: false,
+            draggable: false,
             buttons: {
                 'Save': 	function(){
                     if(sessionStorage.length != 0) {
-                        if(sessionStorage.getItem("endReccurence") != null ) {
+                         
+                        if(sessionStorage.getItem("endReccurence") != null) {
+                            $("#recurrence_dialog").append('<div id="progressBarEnd">End Reccurence Process<div class="percent"></div> <div class="pbar"></div><div class="elapsed"></div></div>');             
+                            $("#progressBarEnd").css({"top":(window.innerHeight - 40)/2,"left":(window.innerWidth - 650)/2});
+                            //$("#progressBarEnd").css('height',$("#recurrence_list").outerHeight()+80);
+                            $("#recurrence_dialog").css({'position':'relative'})
+                            var Length=0;
                             $('#ui-dialog-title-recurrence_dialog').html(lbl_wait_please);
                             $(".recurrence_dialog .ui-dialog-buttonpane button").attr("disabled","disabled");
                             var end_reccurence_obj = eval('(' + sessionStorage.getItem("endReccurence") + ')');
                             $.post("index.php?module=Calendar2&action=AjaxEndReccurence&sugar_body_only=true",
                                         {"jsonObj" : jsObj2phpObj(end_reccurence_obj.jsonObject)}, 
                                         function(data){
-                                           // $('#ui-dialog-title-recurrence_dialog').html("Recurrence List");
-                                            if(sessionStorage.getItem("extendReccurence") == null) document.location.reload(true);
+                                          //if(sessionStorage.getItem("extendReccurence") == null) document.location.reload(true);
+                                          if(sessionStorage.getItem("extendReccurence") == null) {
+                                              document.location.reload(true);
+                                          }else{
+                                              extendReccurenceSave();
+                                          }
                                         });
+                            if(typeof(end_reccurence_obj.jsonObject['Meeting']) != 'undefined'){
+                                $.each(end_reccurence_obj.jsonObject['Meeting'], function(i, elem) {
+                                    Length++;
+                                });
+                            }
+                            if(typeof(end_reccurence_obj.jsonObject['Call']) != 'undefined'){
+                              $.each(end_reccurence_obj.jsonObject['Call'], function(i, elem) {
+                                  Length++;
+                              });
+                            }
+                            $('#progressBarEnd').anim_progressbar({count:Length});
                         }
-                        if(sessionStorage.getItem("extendReccurence") != null) {
-                            $('#ui-dialog-title-recurrence_dialog').html(lbl_wait_please);
-                            $(".recurrence_dialog .ui-dialog-buttonpane button").attr("disabled","disabled");
-                            var extend_reccurence_obj  = eval('(' + sessionStorage.getItem("extendReccurence") + ')');
-                           $.post("index.php?module=Calendar2&action=AjaxExtendReccurence&sugar_body_only=true",
-                                        {"jsonObj" : jsObj2phpObj(extend_reccurence_obj.jsonObject)}, 
-                                        function(data){
-                                           // $('#ui-dialog-title-recurrence_dialog').html("Recurrence List");
-                                           document.location.reload(true);
-                                        });
+                        if(sessionStorage.getItem("extendReccurence") != null && sessionStorage.getItem("endReccurence") == null) {
+                                extendReccurenceSave();
                         }
+                        
                     }					
                 },
                 Cancel: function(){
@@ -2510,7 +2540,88 @@ foreach ($ActRecords as $act) {
             } 
         });
     });
-    
+    function extendReccurenceSave(){
+             $("#progressBarEnd").remove();
+        $("#recurrence_dialog").append('<div id="progressBarExtend">Extend Reccurence Process<div class="percent"></div> <div class="pbar"></div><div class="elapsed"></div></div>');             
+         $("#progressBarExtend").css({"top":(window.innerHeight - 40)/2,"left":(window.innerWidth - 650)/2});
+         //$("#progressBarExtend").css('height',$("#recurrence_list").outerHeight()+80);
+         $("#recurrence_dialog").css({'position':'relative'})
+         var Length=0;
+         $('#ui-dialog-title-recurrence_dialog').html(lbl_wait_please);
+         $(".recurrence_dialog .ui-dialog-buttonpane button").attr("disabled","disabled");
+         var extend_reccurence_obj  = eval('(' + sessionStorage.getItem("extendReccurence") + ')');
+        $.post("index.php?module=Calendar2&action=AjaxExtendReccurence&sugar_body_only=true",
+                     {"jsonObj" : jsObj2phpObj(extend_reccurence_obj.jsonObject)}, 
+                     function(data){
+                        //$('#ui-dialog-title-recurrence_dialog').append("||Done");
+
+                        document.location.reload(true);
+                     });
+        if(typeof(extend_reccurence_obj.jsonObject['Meeting']) != 'undefined'){
+             $.each(extend_reccurence_obj.jsonObject['Meeting'], function(i, elem) {
+                 Length++;
+             });
+         }
+         if(typeof(extend_reccurence_obj.jsonObject['Call']) != 'undefined'){
+             $.each(extend_reccurence_obj.jsonObject['Call'], function(i, elem) {
+                 Length++;
+             });  
+         }
+         $('#progressBarExtend').anim_progressbar({count:Length});
+    }
+     jQuery.fn.anim_progressbar = function (aOptions) {
+        var iCms = 1000;
+        var iMms = 60 * iCms;
+        var iHms = 3600 * iCms;
+        var iDms = 24 * 3600 * iCms;
+
+        var aDefOpts = {
+            start: new Date(), 
+            interval: 3000
+        }
+        var aOpts = jQuery.extend(aDefOpts, aOptions);
+        var vPb = this;
+      
+        return this.each(
+            function() {
+                $(vPb).children('.pbar').progressbar();
+
+                var vInterval = setInterval(
+                    function(){
+                              $.ajax({
+                                              url: "index.php?module=Calendar2&action=AjaxStatusRec",
+                                              dataType: "json",
+//                                              type: "POST",
+//                                              data: ({count : aOpts.count}),
+                                              success: function(data){
+                                              //$('#ui-dialog-title-recurrence_dialog').append("||"+data.currCount);
+                                              var timeLeft = (aOpts.count - data.currCount)*((new Date() - aOpts.start)/data.currCount);
+                                              aOpts.finish = new Date().setTime(new Date().getTime() + timeLeft);
+                                                var iDuration = aOpts.finish - aOpts.start;
+                                                   var iLeftMs = aOpts.finish - new Date(); 
+                                                    var iElapsedMs = new Date() - aOpts.start, 
+                                                    iDays = parseInt(iLeftMs / iDms), 
+                                                    iHours = parseInt((iLeftMs - (iDays * iDms)) / iHms),
+                                                    iMin = parseInt((iLeftMs - (iDays * iDms) - (iHours * iHms)) / iMms), 
+                                                    iSec = parseInt((iLeftMs - (iDays * iDms) - (iMin * iMms) - (iHours * iHms)) / iCms), 
+                                                    iPerc = (iElapsedMs > 0) ? iElapsedMs / iDuration * 100 : 0; 
+                                                var minText =  iMin > 0 ? iMin+' minutes ' :'';
+                                                $(vPb).children('.percent').html('<b>'+iPerc.toFixed(1)+'%</b>');
+                                                $(vPb).children('.elapsed').html('<b style="color: #000;">Estimated time left: </b>'+minText+iSec+' seconds</b>');
+                                                $(vPb).children('.pbar').children('.ui-progressbar-value').css('width', iPerc+'%');
+                                                  if (aOpts.count == data.currCount) {
+                                                    clearInterval(vInterval);
+                                                    $(vPb).children('.percent').html('<b>100%</b>');
+                                                    $(vPb).children('.elapsed').html('Completed');
+                                                }
+                                              }
+                                       });
+
+                    } ,aOpts.interval
+                );
+            }
+        );
+    }
     function jsObj2phpObj(obj){
         var json = "{";
         for(property in obj){
