@@ -169,8 +169,11 @@
                 <td width='12.5%' class='tabEditViewDF' NOWRAP>
                     &nbsp;
                 </td>
-                <td width='12.5%' class='tabEditViewDF' NOWRAP>
-                    &nbsp;
+                <td valign="top" id='amount_label' width='12.5%' class="dataLabel">
+                    {capture name="label" assign="label}
+                    {sugar_translate label='LBL_AMOUNT' module='Opportunities'}
+                    {/capture}
+                    {$label|strip_semicolon}:
                 </td>
                 <td valign="top"  style="padding-left: 0;padding-top: 0px; font-size: 12px;" colspan="2">
 
@@ -276,8 +279,11 @@
                 <td width='12.5%' class='tabEditViewDF' NOWRAP>
                     &nbsp;
                 </td>
-                <td width='12.5%' class='tabEditViewDF' NOWRAP>
-                    &nbsp;
+                <td valign="top" id='gp_dollar_label' width='12.5%' class="dataLabel">
+                    {capture name="label" assign="label}
+                    {sugar_translate label='LBL_GP_DOLLAR' module='Opportunities'}
+                    {/capture}
+                    {$label|strip_semicolon}:
                 </td>
                 <td valign="top"   style="padding-left: 0;padding-top: 0px; font-size: 12px;" colspan="2">
 
@@ -397,8 +403,11 @@
                 <td  width='12.5%' class='tabEditViewDF' NOWRAP>
                     &nbsp;
                 </td>
-                <td  width='12.5%' class='tabEditViewDF' NOWRAP>
-                    &nbsp;
+              <td valign="top" id='gp_perc_label' width='12.5%' class="dataLabel">
+                    {capture name="label" assign="label}
+                    {sugar_translate label='LBL_GP_PERC' module='Opportunities'}
+                    {/capture}
+                    {$label|strip_semicolon}:
                 </td>
                 <td valign="top"  style="padding-left: 0;padding-top: 0px; font-size: 12px;" colspan="2">
 
@@ -495,7 +504,35 @@
                         snapx=10 snapy=10 trigger='onClick'}>[?]</a>
                 </td>
             </tr>
-
+            <tr>
+                  <td valign="top" id='description_label' width='12.5%' class="dataLabel">
+                    {capture name="label" assign="label}
+                    {sugar_translate label='LBL_DATE_START' module='Opportunities'}
+                    {/capture}
+                    {$label|strip_semicolon}:
+                </td>
+                <td valign="top" width='37.5%' class='tabEditViewDF' NOWRAP colspan="3">
+                    {counter name="panelFieldCount"}
+                    {if strlen($fields.date_start_c.value) <= 0}
+                    {assign var=date_value value=$date_start_c_default }
+                    {else}
+                    {assign var=date_value value=$fields.date_start_c.value }
+                    {/if}
+                    <input autocomplete="off" type="text" name="{$fields.date_start_c.name}" id="{if $smarty.request.masscreate != true}{$fields.date_start_c.name}{else}date_start_c_popup{/if}" value="{$date_value}" title=''  tabindex='1' size="11" maxlength="10">
+                    <img border="0" src="themes/default/images/jscalendar.gif" alt="{$APP.LBL_ENTER_DATE}" id="{if $smarty.request.masscreate != true}{$fields.date_start_c.name}_trigger{else}date_start_c_popup_trigger{/if}" align="absmiddle" />
+                    <script type="text/javascript">
+                        Calendar.setup ({ldelim}
+                        inputField : "{$fields.date_start_c.name}",
+                        daFormat : "{$CALENDAR_FORMAT}",
+                        button : "{$fields.date_start_c.name}_trigger",
+                        singleClick : true,
+                        dateStr : "{$date_value}",
+                        step : 1
+                        {rdelim}
+                    );
+                    </script>
+                </td>
+            </tr>
             <tr>
                 <td valign="top" id='description_label' width='12.5%' class="dataLabel">
                     {capture name="label" assign="label}
