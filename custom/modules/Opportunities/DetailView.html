@@ -82,7 +82,7 @@
     <td width='25%' class='tabDetailViewDL' colspan="2" style="text-align: center;">
         Estimated Annualized &nbsp; or &nbsp; Estimated Monthly &nbsp;
     </td>
-    <td width='12.5%' class='tabDetailViewDF'>&nbsp;</td>
+    <td width='12.5%' class='tabDetailViewDL'>&nbsp;</td>
     <td width='14%' class='tabDetailViewDL' style="text-align: center;">
         Prev 12-mo avg
     </td>
@@ -127,7 +127,12 @@
      {$fields.month_sales.value}
      &nbsp;
  </td>
- <td width='12.5%' class='tabDetailViewDF'>&nbsp; </td>
+ <td width='12.5%' class='tabDetailViewDL'>
+        {capture name="label" assign="label"}
+        {$MOD.LBL_AMOUNT} ({$CURRENCY})
+        {/capture}
+        {$label|strip_semicolon}:
+    </td>
     
     <td width='14%' class='tabDetailViewDF' style="text-align: center;">
         {counter name="panelFieldCount"}
@@ -179,7 +184,12 @@
      {$fields.month_gp_dollar.value}
      &nbsp;
  </td>
- <td width='12.5%' class='tabDetailViewDF'>&nbsp;</td>
+ <td width='12.5%' class='tabDetailViewDL'>
+        {capture name="label" assign="label"}
+        {sugar_translate label='LBL_GP_DOLLAR' module='Opportunities'}
+        {/capture}
+        {$label|strip_semicolon}:
+    </td>
     <td width='14%' class='tabDetailViewDF' style="text-align: center;">
         {counter name="panelFieldCount"}
         {$fields.previousavg_gp_c.value}
@@ -229,7 +239,12 @@
      {counter name="panelFieldCount"}
      {$fields.gp_perc.value}
      &nbsp;</td>
-  <td width='12.5%' class='tabDetailViewDF'>&nbsp;</td>
+   <td width='12.5%' class='tabDetailViewDL'>
+        {capture name="label" assign="label"}
+        {sugar_translate label='LBL_GP_PERC' module='Opportunities'}
+        {/capture}
+        {$label|strip_semicolon}:
+    </td>
     <td width='14%' class='tabDetailViewDF' style="text-align: center;">
         {counter name="panelFieldCount"}
         {$fields.previousavg_gp_percent_c.value}
