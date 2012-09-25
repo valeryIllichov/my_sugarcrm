@@ -149,7 +149,19 @@ $(document).ready(function() {
 			var curr_year = dateObj.getFullYear();
 			$("form#EditView #date_closed").val(curr_month + "/" + curr_date + "/" + curr_year);
 			$("form#EditView #probability").val(0);
-		}	
+		}
+                                    if(stage == "Closed Promotion Ended" || stage == "Active Promotion") {
+                                        var dateObj = new Date();
+                                        var curr_date = dateObj.getDate();
+                                        var curr_month = dateObj.getMonth();
+                                        curr_month++;
+                                        var curr_year = dateObj.getFullYear();
+                                        $("form#EditView #date_start_c").val(curr_month + "/" + curr_date + "/" + curr_year);
+                                        $("#start_date_row").show();
+                                    }else{
+                                        $("#start_date_row").hide();
+                                        $("form#EditView #date_start_c").val("");
+                                    }	
 	});
 
 });
