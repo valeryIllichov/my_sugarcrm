@@ -130,7 +130,14 @@ $(document).ready(function() {
 								});
       				});*/
 
-                       
+$("form#EditView #date_closed").focus(function() {
+    if($("form#EditView #sales_stage").val() == "Active Promotion"){
+        $("form#EditView #sales_stage").val("Closed Promotion Ended");
+    }
+});
+$("form#EditView #date_closed_trigger").click(function(){
+    $("form#EditView #date_closed").focus();
+});
 	$("form#EditView #sales_stage").change(function() {
 		var stage = $(this).val();
 		if(stage == "Closed Won" ) {
@@ -151,20 +158,24 @@ $(document).ready(function() {
 			$("form#EditView #probability").val(0);
 		}
                                     if(stage == "Closed Promotion Ended" || stage == "Active Promotion") {
-                                        var dateObj = new Date();
-                                        var curr_date = dateObj.getDate();
-                                        var curr_month = dateObj.getMonth();
-                                        curr_month++;
-                                        var curr_year = dateObj.getFullYear();
-                                        $("form#EditView #date_start_c").val(curr_month + "/" + curr_date + "/" + curr_year);
-                                        $("#start_date_row").show();
+                                         $("form#EditView #start_date_row").show();
+                                        if($(this).attr("oldValue") != "Closed Promotion Ended" && $(this).attr("oldValue") != "Active Promotion"){
+                                            var dateObj = new Date();
+                                            var curr_date = dateObj.getDate();
+                                            var curr_month = dateObj.getMonth();
+                                            curr_month++;
+                                            var curr_year = dateObj.getFullYear();
+                                            $("form#EditView #date_start_c").val(curr_month + "/" + curr_date + "/" + curr_year);
+                                            $("form#EditView #date_start_c").attr("oldValue",curr_month + "/" + curr_date + "/" + curr_year);
+                                        }
                                     }else{
-                                        $("#start_date_row").hide();
+                                        $("form#EditView #start_date_row").hide();
                                         $("form#EditView #date_start_c").val("");
-                                    }	
+                                    }
+                                    $(this).attr("oldValue",$(this).val());
 	});
 
-});
+});                        
 </script>';
 
         

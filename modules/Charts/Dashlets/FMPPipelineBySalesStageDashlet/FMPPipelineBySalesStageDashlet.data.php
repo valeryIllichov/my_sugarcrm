@@ -84,6 +84,11 @@ $dashletData['FMPPipelineBySalesStageDashlet']['searchFields'] = array(
                 'vname' => 'Company',
                 'type'  => 'enum',
         ),
+        'pbss_opp_type' => array(
+            'name'   => 'opp_type',
+            'vname'   => 'LBL_TYPE',
+            'type'  => 'enum',
+        )
 //        'pbss_account' => array(
 //                'name'  => 'parent_name_custno_c',
 //                'vname' => 'Account',

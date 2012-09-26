@@ -48,6 +48,8 @@ require_once('include/database/PearDatabase.php');
 class FMPOpportunitiesDashlet extends DashletGeneric {
     var $fmpo_date_start =  '01/01/2011';
     var $fmpo_date_end = '12/31/2011';
+    var $fmpo_date_start_S =  '01/01/2011';
+    var $fmpo_date_end_S = '12/31/2011';
     var $probabilities_array = array();
     var $company_array = array();
     var $buttons;
@@ -68,10 +70,13 @@ class FMPOpportunitiesDashlet extends DashletGeneric {
         $this->displayTpl = "modules/Opportunities/Dashlets/FMPOpportunitiesDashlet/FMPDashletGenericDisplay.tpl";
         $this->fmpo_date_start =  date('01/01/Y');
         $this->fmpo_date_end =  date('12/31/Y');
-
+        $this->fmpo_date_start_S =  date('01/01/Y');
+        $this->fmpo_date_end_S =  date('12/31/Y');
         if(isset($def)) {
             if(!empty($def['fmpo_date_start'])) $this->fmpo_date_start = $def['fmpo_date_start'];
             if(!empty($def['fmpo_date_end'])) $this->fmpo_date_end = $def['fmpo_date_end'];
+            if(!empty($def['fmpo_date_start_S'])) $this->fmpo_date_start_S = $def['fmpo_date_start_S'];
+            if(!empty($def['fmpo_date_end_S'])) $this->fmpo_date_end_S = $def['fmpo_date_end_S'];
             if(!empty($def['probabilities_array'])) $this->probabilities_array = $def['probabilities_array'];
             if(!empty($def['company_array'])) $this->company_array = $def['company_array'];
         }
@@ -246,6 +251,8 @@ class FMPOpportunitiesDashlet extends DashletGeneric {
         $this->configureSS->assign('cal_dateformat', $cal_dateformat);
         $this->configureSS->assign('fmpo_date_start', $this->fmpo_date_start);
         $this->configureSS->assign('fmpo_date_end', $this->fmpo_date_end);
+        $this->configureSS->assign('fmpo_date_start_S', $this->fmpo_date_start_S);
+        $this->configureSS->assign('fmpo_date_end_S', $this->fmpo_date_end_S);
         $this->configureSS->assign('probability', $this->probabilities_array);
         $this->configureSS->assign('company', $this->company_array);
     }
@@ -515,11 +522,17 @@ class FMPOpportunitiesDashlet extends DashletGeneric {
         if(!empty($req['fmpo_date_start'])) {
             $options['fmpo_date_start'] = $req['fmpo_date_start'];
         }
-
+        
         if(!empty($req['fmpo_date_end'])) {
             $options['fmpo_date_end'] = $req['fmpo_date_end'];
         }
-
+        if(!empty($req['fmpo_date_start_S'])) {
+            $options['fmpo_date_start_S'] = $req['fmpo_date_start_S'];
+        }
+        
+        if(!empty($req['fmpo_date_end_S'])) {
+            $options['fmpo_date_end_S'] = $req['fmpo_date_end_S'];
+        }
         return $options;
     }
 
@@ -582,14 +595,20 @@ class FMPOpportunitiesDashlet extends DashletGeneric {
             array_push($returnArray, $this->seedBean->table_name . '.' . "assigned_user_id = '" . $current_user->id . "'");
             array_push($returnArray, "users.id = '" . $current_user->id . "'");
         }
-        if($this->fmpo_date_start && $this->fmpo_date_start) {
+        if($this->fmpo_date_start && $this->fmpo_date_end) {
             $date_start_unix = strtotime($this->fmpo_date_start);
             $date_end_unix = strtotime($this->fmpo_date_end);
             $rqs_closed_date = ' UNIX_TIMESTAMP(opportunities.date_closed) >=  \''.$date_start_unix.'\'';
             $rqs_closed_date .=  ' AND UNIX_TIMESTAMP(opportunities.date_closed) <=  \''.$date_end_unix.'\' ';
             array_push($returnArray, $rqs_closed_date);
         }
-
+//        if($this->fmpo_date_start_S && $this->fmpo_date_end_S) {
+//            $date_start_unix = strtotime($this->fmpo_date_start_S);
+//            $date_end_unix = strtotime($this->fmpo_date_end_S);
+//            $rqs_start_date = ' UNIX_TIMESTAMP(opportunities_cstm.date_start_c) >=  \''.$date_start_unix.'\'';
+//            $rqs_start_date .=  ' AND UNIX_TIMESTAMP(opportunities_cstm.date_start_c) <=  \''.$date_end_unix.'\' ';
+//            array_push($returnArray, $rqs_start_date);
+//        }
         $OPP_reg = '';
         $OPP_loc = '';
         $slsmqry = '';

@@ -55,7 +55,8 @@ class FMPPipelineBySalesStageDashlet extends DashletGenericChart {
     public $pbss_estimated_monthly_sales = array();
     public $pbss_estimated_annualized_sales = array();
     public $pbss_chart_view = array();
-
+    public $pbss_opp_type = array();
+     
     protected $_seedName = 'Opportunities';
 
     /**
@@ -126,7 +127,22 @@ class FMPPipelineBySalesStageDashlet extends DashletGenericChart {
         $this->_searchFields['pbss_sales_stages']['options'] = $app_list_strings['sales_stage_dom'];
         $this->_searchFields['pbss_sales_stages']['input_name0'] = $selected_sales_stages_datax;
         /*======end Sales Stages========*/
+     /*======Opp Type========*/
+        if (!empty($this->pbss_opp_type) && count($this->pbss_opp_type) > 0) {
+            foreach ($this->pbss_opp_type as $key) {
+                $selected_opp_type_datax[] = $key;
+            }
+        }
+        else {
+            $selected_opp_type = array_diff(array_keys($app_list_strings['opportunity_type_dom']), array(''));
+            foreach($selected_opp_type as $value){
+                $selected_opp_type_datax[] = $value;
+            }
+        }
 
+        $this->_searchFields['pbss_opp_type']['options'] = array_diff($app_list_strings['opportunity_type_dom'],array(''));
+        $this->_searchFields['pbss_opp_type']['input_name0'] = $selected_opp_type_datax;
+        /*======end Opp Type========*/
         /*=====Estimated Monthly Sales====*/
         $pbss_estimated_monthly_sales = array('$499 and under', '$500-$1000', '$1001-$1999', '$2000 and above');
         if (!empty($this->pbss_estimated_monthly_sales) && count($this->pbss_estimated_monthly_sales) > 0) {
@@ -241,7 +257,10 @@ class FMPPipelineBySalesStageDashlet extends DashletGenericChart {
 
         if (!empty($req['chart_type']))
             $options['pbss_chart_type'] = $req['chart_type'];
-
+        
+        if (!empty($req['opp_type']))
+             $options['pbss_opp_type'] = $req['opp_type'];
+        
         return $options;
     }
 
@@ -979,6 +998,10 @@ $date_end_unix = strtotime($this->pbss_date_end);
                 $rqs_company = " AND d_c.company = 'Splash' ";
                  $query .= $rqs_company;
             }
+        }
+        
+         if(is_array($this->pbss_opp_type) && !empty($this->pbss_opp_type)&& count($this->pbss_opp_type) > 0) {
+                $query .= " AND opportunities.opportunity_type IN(\"".implode('", "', $this->pbss_opp_type)."\") ";
         }
         
         if ( count($this->pbss_estimated_monthly_sales) > 0 ) {

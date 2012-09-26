@@ -90,6 +90,18 @@
         	<h2>{$strings.filters}</h2>
         </td>
     </tr>
+     <tr>
+        <td valign='top' class='dataLabel'>Start Date From</td>
+        <td  valign='top' class='dataField'>
+                <input onblur="parseDate(this, '{$cal_dateformat}');" class="text" name="fmpo_date_start_S" size='12' maxlength='10' id='fmpo_date_start_S' value='{$fmpo_date_start_S}'>
+                <img src="themes/default/images/jscalendar.gif" alt="{$LBL_ENTER_DATE}" id="fmpo_date_start_S_trigger" align="absmiddle">
+        </td>
+        <td valign='top' class='dataLabel'>Start Date To  </td>
+        <td valign='top' class='dataField'>
+            <input onblur="parseDate(this, '{$cal_dateformat}');" class="text" name="fmpo_date_end_S" size='12' maxlength='10' id='fmpo_date_end_S' value='{$fmpo_date_end_S}'>
+            <img src="themes/default/images/jscalendar.gif" alt="{$LBL_ENTER_DATE}" id="fmpo_date_end_S_trigger" align="absmiddle">
+        </td>
+    </tr>
     <tr>
         <td valign='top' class='dataLabel'>Cls Date From</td>
         <td  valign='top' class='dataField'>
@@ -147,6 +159,12 @@ Calendar.setup ({
 });
 Calendar.setup ({
     inputField : "fmpo_date_end", ifFormat : "{/literal}{$cal_dateformat}{literal}", showsTime : false, button : "fmpo_date_end_trigger", singleClick : true, step : 1
+});
+    Calendar.setup ({
+    inputField : "fmpo_date_start_S", ifFormat : "{/literal}{$cal_dateformat}{literal}", showsTime : false, button : "fmpo_date_start_S_trigger", singleClick : true, step : 1
+});
+Calendar.setup ({
+    inputField : "fmpo_date_end_S", ifFormat : "{/literal}{$cal_dateformat}{literal}", showsTime : false, button : "fmpo_date_end_S_trigger", singleClick : true, step : 1
 });
 {/literal}
 </script>
