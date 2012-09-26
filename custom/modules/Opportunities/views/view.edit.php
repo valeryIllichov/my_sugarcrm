@@ -130,22 +130,6 @@ $(document).ready(function() {
 								});
       				});*/
 
-$("form#EditView #date_closed").focus(function() {
-    if($("form#EditView #sales_stage").val() == "Active Promotion"){
-        $("form#EditView #sales_stage").val("Closed Promotion Ended");
-    }
-});
-$("form#EditView #date_closed_trigger").click(function(){
-    $("form#EditView #date_closed").focus();
-});
-$("form#EditView #date_closed_popup").focus(function() {
-    if($("form#EditView #sales_stage").val() == "Active Promotion"){
-        $("form#EditView #sales_stage").val("Closed Promotion Ended");
-    }
-});
-$("form#EditView #date_closed_popup_trigger").click(function(){
-    $("form#EditView #date_closed_popup").focus();
-});
 	$("form#EditView #sales_stage").change(function() {
 		var stage = $(this).val();
 		if(stage == "Closed Won" ) {
@@ -167,23 +151,43 @@ $("form#EditView #date_closed_popup_trigger").click(function(){
 		}
                                     if(stage == "Closed Promotion Ended" || stage == "Active Promotion") {
                                          $("form#EditView #start_date_row").show();
-                                        if($(this).attr("oldValue") != "Closed Promotion Ended" && $(this).attr("oldValue") != "Active Promotion"){
-                                            var dateObj = new Date();
-                                            var curr_date = dateObj.getDate();
-                                            var curr_month = dateObj.getMonth();
-                                            curr_month++;
-                                            var curr_year = dateObj.getFullYear();
-                                            $("form#EditView #date_start_c").val(curr_month + "/" + curr_date + "/" + curr_year);
-                                            $("form#EditView #date_start_c").attr("oldValue",curr_month + "/" + curr_date + "/" + curr_year);
-                                            $("form#EditView #date_start_c_popup").val(curr_month + "/" + curr_date + "/" + curr_year);
-                                            $("form#EditView #date_start_c_popup").attr("oldValue",curr_month + "/" + curr_date + "/" + curr_year);
+                                        if($("form#EditView #date_start_c").val() == ""){
+                                            if($("form#EditView #date_start_c").attr("oldValue") == ""){
+                                                var dateObj = new Date();
+                                                var curr_date = dateObj.getDate();
+                                                var curr_month = dateObj.getMonth();
+                                                curr_month++;
+                                                var curr_year = dateObj.getFullYear();
+                                                $("form#EditView #date_start_c").val(curr_month + "/" + curr_date + "/" + curr_year);
+                                                $("form#EditView #date_start_c").attr("oldValue",curr_month + "/" + curr_date + "/" + curr_year);
+                                            }else{
+                                                $("form#EditView #date_start_c").val($("form#EditView #date_start_c").attr("oldValue"));
+                                            }
+                                        }
+                                        if($("form#EditView #date_start_c_popup").val() == ""){
+                                            if($("form#EditView #date_start_c_popup").attr("oldValue") == ""){
+                                                var dateObj = new Date();
+                                                var curr_date = dateObj.getDate();
+                                                var curr_month = dateObj.getMonth();
+                                                curr_month++;
+                                                var curr_year = dateObj.getFullYear();
+                                                $("form#EditView #date_start_c_popup").val(curr_month + "/" + curr_date + "/" + curr_year);
+                                                $("form#EditView #date_start_c_popup").attr("oldValue",curr_month + "/" + curr_date + "/" + curr_year);
+                                            }else{
+                                                $("form#EditView #date_start_c_popup").val($("form#EditView #date_start_c_popup").attr("oldValue"));
+                                            }
                                         }
                                     }else{
+                                        if($("form#EditView #date_start_c").val() != ""){
+                                            $("form#EditView #date_start_c").attr("oldValue",$("form#EditView #date_start_c").val());
+                                        }
+                                         if($("form#EditView #date_start_c_popup").val() != ""){
+                                            $("form#EditView #date_start_c_popup").attr("oldValue",$("form#EditView #date_start_c_popup").val());
+                                        }
                                         $("form#EditView #start_date_row").hide();
                                         $("form#EditView #date_start_c").val("");
                                         $("form#EditView #date_start_c_popup").val("");
                                     }
-                                    $(this).attr("oldValue",$(this).val());
 	});
 
 });                        

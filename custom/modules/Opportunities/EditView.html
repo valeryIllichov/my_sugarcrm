@@ -528,7 +528,7 @@
                     {else}
                             {assign var=date_value value="" }
                     {/if}
-                    <input autocomplete="off" type="text" name="{$fields.date_start_c.name}" id="{if $smarty.request.masscreate != true}{$fields.date_start_c.name}{else}date_start_c_popup{/if}" value="{$date_value}" title=''  tabindex='1' size="11" maxlength="10">
+                    <input oldvalue="" autocomplete="off" type="text" name="{$fields.date_start_c.name}" id="{if $smarty.request.masscreate != true}{$fields.date_start_c.name}{else}date_start_c_popup{/if}" value="{$date_value}" title=''  tabindex='1' size="11" maxlength="10">
                     <img border="0" src="themes/default/images/jscalendar.gif" alt="{$APP.LBL_ENTER_DATE}" id="{if $smarty.request.masscreate != true}{$fields.date_start_c.name}_trigger{else}date_start_c_popup_trigger{/if}" align="absmiddle" />
                     <script type="text/javascript">
                         Calendar.setup ({ldelim}
