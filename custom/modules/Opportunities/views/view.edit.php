@@ -138,6 +138,14 @@ $("form#EditView #date_closed").focus(function() {
 $("form#EditView #date_closed_trigger").click(function(){
     $("form#EditView #date_closed").focus();
 });
+$("form#EditView #date_closed_popup").focus(function() {
+    if($("form#EditView #sales_stage").val() == "Active Promotion"){
+        $("form#EditView #sales_stage").val("Closed Promotion Ended");
+    }
+});
+$("form#EditView #date_closed_popup_trigger").click(function(){
+    $("form#EditView #date_closed_popup").focus();
+});
 	$("form#EditView #sales_stage").change(function() {
 		var stage = $(this).val();
 		if(stage == "Closed Won" ) {
@@ -167,10 +175,13 @@ $("form#EditView #date_closed_trigger").click(function(){
                                             var curr_year = dateObj.getFullYear();
                                             $("form#EditView #date_start_c").val(curr_month + "/" + curr_date + "/" + curr_year);
                                             $("form#EditView #date_start_c").attr("oldValue",curr_month + "/" + curr_date + "/" + curr_year);
+                                            $("form#EditView #date_start_c_popup").val(curr_month + "/" + curr_date + "/" + curr_year);
+                                            $("form#EditView #date_start_c_popup").attr("oldValue",curr_month + "/" + curr_date + "/" + curr_year);
                                         }
                                     }else{
                                         $("form#EditView #start_date_row").hide();
                                         $("form#EditView #date_start_c").val("");
+                                        $("form#EditView #date_start_c_popup").val("");
                                     }
                                     $(this).attr("oldValue",$(this).val());
 	});

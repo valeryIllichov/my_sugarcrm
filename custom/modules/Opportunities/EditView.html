@@ -541,6 +541,17 @@
                         {rdelim}
                     );
                     </script>
+                     <script type="text/javascript">
+                        Calendar.setup ({ldelim}
+                        inputField : "{$fields.date_start_c.name}_popup",
+                        daFormat : "{$CALENDAR_FORMAT}",
+                        button : "{$fields.date_start_c.name}_popup_trigger",
+                        singleClick : true,
+                        dateStr : "{$date_value}",
+                        step : 1
+                        {rdelim}
+                    );
+                    </script>
                 </td>
             </tr>
             <tr>
