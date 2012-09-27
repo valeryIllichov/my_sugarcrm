@@ -2,20 +2,20 @@
 /* Sales reporting logic for 5-21 screen */
 class FMPSales {
 	
-	const sessionSavePath = '/var/lib/php5';
+	/*const sessionSavePath = '/var/lib/php5';
 	const crmurl='http://sugarcrm.loc/';
 	const dbhost='localhost';
 	const dbname='sugarcrm1604';
 	const dbuser='root';
 	const dbpass='123';
-	const tblPrefix = 'dsls';
-	/*const sessionSavePath = '/var/SugarCRM/session';
+	const tblPrefix = 'dsls';*/
+	const sessionSavePath = '/var/SugarCRM/session';
 	const crmurl='https://crm.fmpco.com/';
 	const dbhost='sugardb';
 	const dbname='sugarcrm520f';
 	const dbuser='sugaradmin';
 	const dbpass='crmpass123';
-	const tblPrefix = 'dsls';*/
+	const tblPrefix = 'dsls';
 	
 	static function sugarDBConnect() {
 		$dbcon = mysql_connect ( self::dbhost, self::dbuser, self::dbpass );
