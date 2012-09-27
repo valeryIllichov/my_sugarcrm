@@ -993,8 +993,8 @@ $date_end_unix = strtotime($this->pbss_date_end);
       $date_start_S_unix = strtotime($this->pbss_date_start_S);
        $date_end_S_unix = strtotime($this->pbss_date_end_S);
 
-      $query .= " AND UNIX_TIMESTAMP(opportunities_cstm.date_start) >=  '".$date_start_S_unix."' ".
-                    " AND UNIX_TIMESTAMP(opportunities_cstm.date_start) <=  '".$date_end_S_unix."' ";
+      $query .= " AND UNIX_TIMESTAMP(opportunities_cstm.date_start_c) >=  '".$date_start_S_unix."' ".
+                    " AND UNIX_TIMESTAMP(opportunities_cstm.date_start_c) <=  '".$date_end_S_unix."' ";
     }
 
         if ( count($this->pbss_sales_stages) > 0 ) {
