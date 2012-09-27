@@ -230,7 +230,8 @@ function buildTermsCodeList(){
 <link rel="stylesheet" type="text/css" href="style/style_521.css">
 <link rel="stylesheet" type="text/css" href="../themes/default/ext/resources/css/ext-all.css">
 <link rel="stylesheet" type="text/css" href="../themes/Sugar/colors.sugar.css">
-<link rel="stylesheet" type="text/css" href="custom/modules/Accounts/datatables.css" />
+<link rel="stylesheet" type="text/css" href="../custom/modules/Accounts/datatables.css" />
+<link type="text/css" href="../modules/Calendar2/css/themes/base/ui.all.css" rel="stylesheet" />
 
 <script type="text/javascript" src="javascript/yui/yahoo-dom-event.js"></script>
 <script type="text/javascript" src="javascript/yui/connection-min.js"></script>
@@ -253,9 +254,11 @@ function buildTermsCodeList(){
 <script type="text/javascript" src="../include/javascript/ext-2.0/ext-all.js"></script>
 <script type="text/javascript" src="../include/javascript/ext-2.0/ext-quicksearch.js"></script>
 <script type="text/javascript" src="javascript/521.js"></script>
-<script src="custom/modules/Accounts/jquery.datatables.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="modules/Calendar2/js/jquery-ui-1.7.2.custom.min.js">
+<script type="text/javascript" src="../modules/Calendar2/js/jquery-ui-1.7.2.custom.min.js">
 <script type="text/javascript" src="javascript/drag_menu2.js"></script>
+<script type="text/javascript" src="javascript/datatables/FixedColumns.min.js"></script>
+<script type="text/javascript" src="javascript/datatables/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="javascript/datatables/ColVis.min.js"></script>
 </head>
 
 <body class="yui-skin-sam">
@@ -414,18 +417,49 @@ function buildTermsCodeList(){
 <div id="crm521" class="yui-navset">
 	<ul class="yui-nav">
 		<li class="selected"><a href="#salessummary"><em>Sales Totals</em></a></li>
+                                    <li><a href="#customerar2"><em>A/R(test)</em></a></li>
 		<li><a href="#customerar"><em>A/R</em></a></li>
 		<li><a href="#customersalestabs"><em>Customer Sales</em></a></li>
                                     <li><a href="#customertransactions"><em>Transactions</em></a></li>
                                     <li><a href="#customerreturns"><em>Returns</em></a></li>
                                     <li><a href="#customerbudget"><em>Budget</em></a></li>
 		<li><a href="#customersalescomparison"><em>Sales Comparison</em></a></li>
-		<li><a href="#customerbudgetcomparison"><em>Budget Comparison</em></a></li>
+		<li><a href="#customerbudgetcomparison"><em>Budget Comparison</em></a></li>                                  
 	</ul>
 	<div class="yui-content">
-		<center>
-			<div id="salessummary"></div>
-		</center>
+                                    <center>
+                                        <div id="salessummary"></div>
+                                    </center>
+                                    <center>
+                                        <div id="customerar2">
+                                            <table id="customerar_list" style="width: 100%">
+                                                <thead>
+                                                <th>CustNo</th>
+                                                <th>Name</th>
+                                                <th>Avg Days</th>
+                                                <th>Terms Code</th>
+                                                <th>Credit Code</th>
+                                                <th>Credit Limit</th>
+                                                <th>City</th>
+                                                <th>State</th>
+                                                <th>Zip</th>
+                                                <th>Address</th>
+                                                <th>Contact</th>
+                                                <th>Future</th>
+                                                <th>Current</th>
+                                                <th>30 - 60</th>
+                                                <th>60 - 90</th>
+                                                <th>90+</th>
+                                                <th>Balance</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="21" class="dataTables_empty">Loading data from server</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </center>
 		<center>
                                                     <div id="customerar-swhd" class="swhd-option"><a id="customerar-swhd-link" href="showhidecol">Show / hide columns</a></div>
 
@@ -713,8 +747,7 @@ YAHOO.util.Event.onContentReady("selectionbuttons", function () {
 			locationList=currentLocation;
                                                       account_id=currentCustomerId;
 			YAHOO.FMP.SalesSummary = createSalesSummaryDataTable('salessummary', selectMethod, slsmList,  regionList, locationList,currentDealerType,account_id)();
-			
-                                                       /*YAHOO.FMP.CustomerAR = createCustomerARDataTable('customerar', selectMethod, slsmList, regionList, locationList, currentDealerType,account_id)();
+			/*YAHOO.FMP.CustomerAR = createCustomerARDataTable('customerar', selectMethod, slsmList, regionList, locationList, currentDealerType,account_id)();
 			YAHOO.FMP.CustomerSales = createCustomerSalesDataTable('customersales', selectMethod, slsmList, regionList, locationList,currentDealerType,'',account_id)();
 			YAHOO.FMP.CustomerSalesNonOE = createCustomerSalesNonoeDataTable('customersalesnonoe', selectMethod, slsmList, regionList, locationList,currentDealerType,'nonoe',account_id)();
 			YAHOO.FMP.CustomerSalesUnderCar = createCustomerSalesUndercarDataTable('customersalesundercar', selectMethod, slsmList, regionList, locationList,currentDealerType,'undercar',account_id)();
@@ -723,7 +756,7 @@ YAHOO.util.Event.onContentReady("selectionbuttons", function () {
             YAHOO.FMP.CustomerReturns = createCustomerReturnsDataTable('customerreturns', selectMethod, slsmList, regionList, locationList, currentDealerType,account_id)();
             YAHOO.FMP.CustomerTransactions = createCustomerTransactionsDataTable('customertransactions', selectMethod, slsmList, regionList, locationList, currentDealerType,account_id)();
             YAHOO.FMP.CustomerBudget = createCustomerBudgetDataTable('customerbudget', selectMethod, slsmList, regionList, locationList, currentDealerType,account_id)();*/
-
+createCustomerARDataTable2('customerar2', selectMethod, slsmList, regionList, locationList, currentDealerType,account_id);
 		};
    	
 });
@@ -4784,7 +4817,44 @@ function createCustomerBudgetDataTable(divNameParm, selectMethodParm, slsmParm, 
 }
 </script>
 <script>
-</script>>        
+    function createCustomerARDataTable2(divNameParm, selectMethodParm, slsmParm, regionParm, locationParm, dealerTypeParm,account_id) {
+        if(divNameParm == 'customerar2'){
+                            var url ="json_proxy_customer_ar_test.php";
+                            var oTable = $("#customerar_list").dataTable({
+                                "bJQueryUI": true,
+                                "bDestroy": true,
+                                "bProcessing": true,
+                                "bServerSide": true,
+                                "bAutoWidth": false,
+                                "iDisplayLength": 100,
+                                 "sDom": '<"H"lfr>t<"F"ip>',
+                             //    "sDom": 'C<"clear"><"H"lr>t<"F"ip>',
+                                "oLanguage": {
+                                    "sLengthMenu": 'Show <select>' +
+                                        '<option value="10">10</option>' +
+                                        '<option value="20">20</option>' +
+                                        '<option value="30">30</option>' +
+                                        '<option value="40">40</option>' +
+                                        '<option value="50">50</option>' +
+                                        '<option value="100">100</option>' +
+                                        '<option value="200">200</option>' +
+                                        '<option value="99999999">All</option>' +
+                                        '</select> entries'
+                                },
+                                "sScrollY": "500px",
+                                "sScrollX": "100%",
+                                "sScrollXInner": "150%",
+                                "bScrollCollapse": true,
+                                "sAjaxSource": url,
+                                "sPaginationType": "full_numbers"
+                            });
+                            new FixedColumns( oTable, {
+ 		"iLeftColumns": 2,
+		"iLeftWidth": 320
+                            } );
+                        }
+    }  
+</script>        
 </body>
 </html>
 

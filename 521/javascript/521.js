@@ -310,6 +310,7 @@ $(document).ready(function(){
                
            });
        }
+       if(current_tab != 'customerar2'){
            var frameWidth = document.getElementById("crm521").offsetWidth;
             var tableWidth = $("#"+current_tab).find("table").width();
             if(tableWidth > frameWidth){
@@ -317,8 +318,9 @@ $(document).ready(function(){
                 initScroll(current_tab);
             }else{
                 $("#menu-scrolling-"+current_tab).css("display","none");
-                destroyScroll(current_tab);
+                    destroyScroll(current_tab);
             }
+       }
     });
     $("#current_user_filter").change(function(){
         var checkboxelem = $(this);   
@@ -463,7 +465,7 @@ function get_date_for_i521(current_tab){
     regionList=select_reg;
     locationList=select_loc;
     YAHOO.FMP.SalesSummary = createSalesSummaryDataTable(current_tab, selectMethod, slsmList,  regionList, locationList,select_dealer,account_id)();
-   // YAHOO.FMP.CustomerAR = createCustomerARDataTable(current_tab, selectMethod, slsmList, regionList, locationList, select_dealer,account_id)();
+    YAHOO.FMP.CustomerAR = createCustomerARDataTable(current_tab, selectMethod, slsmList, regionList, locationList, select_dealer,account_id)();
     YAHOO.FMP.CustomerSales = createCustomerSalesDataTable(current_tab, selectMethod, slsmList, regionList, locationList,select_dealer,'',account_id)();
     YAHOO.FMP.CustomerSalesNonOE = createCustomerSalesNonoeDataTable(current_tab, selectMethod, slsmList, regionList, locationList,select_dealer,'nonoe',account_id)();
     YAHOO.FMP.CustomerSalesUnderCar = createCustomerSalesUndercarDataTable(current_tab, selectMethod, slsmList, regionList, locationList,select_dealer,'undercar',account_id)();
@@ -472,7 +474,6 @@ function get_date_for_i521(current_tab){
     YAHOO.FMP.CustomerReturns = createCustomerReturnsDataTable(current_tab, selectMethod, slsmList, regionList, locationList, select_dealer,account_id)();
     YAHOO.FMP.CustomerTransactions = createCustomerTransactionsDataTable(current_tab, selectMethod, slsmList, regionList, locationList, select_dealer,account_id)();
     YAHOO.FMP.CustomerBudget = createCustomerBudgetDataTable(current_tab, selectMethod, slsmList, regionList, locationList, select_dealer,account_id)();
-
 }
 function get_date_for_i521_dashletFilter(current_tab){
     if(current_tab == ''){

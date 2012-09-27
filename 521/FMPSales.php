@@ -836,7 +836,7 @@ class FMPSales {
 	* totalRecords => total rows available
 	*  data => array of selected rows: custno, custname, mtd_sales, mtd_gp, ytd_sales, ytd_gp, ly_sales, ly_gp from startIndex for maxRecords
 	*/
-	function getCustomerAR($startIndex, $maxRecords, $sort, $sort_dir, $selectMethod, $location, $region, $slsm, $dealerType,$accountIDs = array(), $export = false, $fields = array()) {
+                 function getCustomerAR($startIndex, $maxRecords, $sort, $sort_dir, $selectMethod, $location, $region, $slsm, $dealerType,$accountIDs = array(), $export = false, $fields = array()) {
 		session_save_path(self::sessionSavePath);
 		session_start();
 		
@@ -926,6 +926,104 @@ class FMPSales {
 		$returnData ['data'] = array ();
 		while ( $row = mysql_fetch_assoc ( $result ) ) {
 			$returnData ['data'] [] = $row;
+		}
+		
+		return $returnData;
+	}
+        
+	function getCustomerAR2($startIndex, $maxRecords, $sort, $sort_dir, $selectMethod, $location, $region, $slsm, $dealerType,$accountIDs = array(), $export = false, $fields = array()) {
+		session_save_path(self::sessionSavePath);
+		session_start();
+		
+		self::sugarDBConnect ();
+		
+		$primaryOp = "AND"; /* for $selectMethod = 'i', intersect */
+		if ($selectMethod == 'u') { /* union */
+			$primaryOp = "OR";
+		}
+		
+		/* form 2 sql statements:  one to count total number of possible records, one to select subset we want */
+		$sql = "SELECT
+			max(a.id) as id,
+			a.slsm_c as slsm,
+			a.employees AS contact,
+				a.shipping_address_street,
+				a.shipping_address_city,
+				a.shipping_address_state,
+				a.shipping_address_postalcode, 
+				a.phone_office AS phone,
+                                a.avg_days_c AS avg_days,
+                                a.termscode_c AS termscode,
+                                a.creditcode_c AS creditcode,
+                                a.creditlimit_c AS creditlimit,
+                                if(coalesce(a.aarbal_c,0) = 0, 0, round(100*a.aarbal_c / a.creditlimit_c,2)) as aarbal_to_creditlimit,
+			concat(slsm.firstname, ' ', slsm.lastname) as slsmname,
+			a.custno_c as custno,
+			(select name from accounts sa
+				where sa.custno_c = a.custno_c
+				order by sa.custid_c limit 1) as custname,   
+			a.arfuture_c as future,
+			a.arcurrent_c as current,
+			a.ar30_60_c as ar30_60,
+			a.ar60_90_c as ar60_90,
+			a.over_90_c as over_90,
+			a.aarbal_c as aarbal 
+			from accounts a
+                                                      left join dsls_dailysales ds on a.custid_c = ds.custid 
+			left join dsls_slsm slsm on a.slsm_c = slsm.slsm %s group by a.slsm_c, slsmname, custno, custname ";
+		
+		$sqlcount = "SELECT count(distinct a.custno_c) 
+			from accounts a 
+                                                      left join dsls_dailysales ds on a.custid_c = ds.custid 
+			left join dsls_slsm slsm on a.slsm_c = slsm.slsm %s";
+		
+		$sqlWhere = self::acl_where($slsm,$region,$location,$dealerType,$accountIDs,$selectMethod);
+                
+		$sql = sprintf ( $sql, $sqlWhere );
+		
+		$sqlcount = sprintf($sqlcount, $sqlWhere);
+		
+		/* only order for subset query -- hopefully that means mysql query cache will be hit more often for $sqlcount */
+		if (! is_null ( $sort )) {
+			$sql .= " order by $sort";
+			if (! is_null ( $sort_dir )) {
+				$sql .= " $sort_dir";
+			}
+		}
+		
+		if (! is_null ( $maxRecords )) {
+			if (is_null ( $startIndex )) {
+				$sql .= " limit $maxRecords";
+			} else {
+				$sql .= " limit $startIndex,$maxRecords;";
+			}
+		}
+                
+                                    // export utils
+                                    if($export){
+                                        return self::buildExportContent($sql,$fields);
+                                    }
+                                        
+		$returnData = array ();
+		
+		$returnData ['totalRecords'] = 0;
+		
+		if (! ($result = mysql_query ( $sqlcount ))) {
+			die ( "Error in mysql query: " . mysql_error () );
+		}
+		while ( $row = mysql_fetch_array ( $result ) ) { /* only 1 really */
+			$returnData ['totalRecords'] = $row [0];
+		}
+
+		if (! ($result = mysql_query ( $sql ))) {
+			die ( "Error in mysql query: " . mysql_error () );
+		}
+		$returnData ['data'] = array ();
+		while ( $row = mysql_fetch_assoc ( $result ) ) {
+			$returnData ['data'] [] = array($row['custno'],$row['slsmname'],$row['avg_days'],
+                            $row['termscode'],$row['creditcode'],$row['creditlimit'],$row['shipping_address_city'],$row['shipping_address_state'],
+                            $row['shipping_address_postalcode'],$row['shipping_address_street'],$row['contact'],$row['future'],$row['current'],
+                            $row['ar30_60'],$row['ar60_90'],$row['over_90'],$row['aarbal']);
 		}
 		
 		return $returnData;

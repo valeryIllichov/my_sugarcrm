@@ -11,7 +11,7 @@ header('Content-type: application/json');
 
 
 strlen($_GET['startIndex']) > 0 ? $startIndex=$_GET['startIndex'] : $startIndex=0;
-strlen($_GET['results']) > 0 ? $results=$_GET['results'] : $results=0;
+strlen($_GET['results']) > 0 ? $results=$_GET['results'] : $results=100;
 strlen($_GET['sort']) > 0 ? $sort=$_GET['sort'] : $sort='custno';
 strlen($_GET['dir']) > 0 ? $sort_dir=$_GET['dir'] : $sort_dir='asc';
 strlen($_GET['select']) > 0 ? $selectMethod=$_GET['select'] : $selectMethod=null;
@@ -22,22 +22,22 @@ strlen($_GET['dealertype']) > 0 ? $dealertype=explode(';',$_GET['dealertype']) :
 strlen($_GET['account']) > 0 ? $account=explode(';',$_GET['account']) : $account=null;
 
 /* function getCustomerAR($startIndex, $maxRecords, $sort, $sort_dir, $location, $region, $slsm, $dealerType) { */
-$returnArray=FMPSales::getCustomerAR($startIndex, $results, $sort, $sort_dir, $selectMethod, $location, $region, $slsm, $dealertype,$account,false,array());
-
-$returnValue = array('recordsReturned'=>count($returnArray['data']),
-        'totalRecords'=>$returnArray['totalRecords'],
-        'startIndex'=>$startIndex,
-        'sort'=>$sort,
-        'dir'=>$sort_dir,
-        'pageSize'=>$results,
-		'records'=>$returnArray['data']
-		);
+$returnArray=FMPSales::getCustomerAR2($startIndex, $results, $sort, $sort_dir, $selectMethod, $location, $region, $slsm, $dealertype,$account,false,array());
+//$test = count($returnArray['data'][0]);
+//$returnValue = array('recordsReturned'=>count($returnArray['data']),
+//        'totalRecords'=>$returnArray['totalRecords'],
+//        'startIndex'=>$startIndex,
+//        'sort'=>$sort,
+//        'dir'=>$sort_dir,
+//        'pageSize'=>$results,
+//		'records'=>$returnArray['data']
+//		);
 $json = new Services_JSON();
-echo $json->encode($returnValue);
+//echo $json->encode($returnValue);
 
-
+echo $json->encode(array("sEcho" => $_GET["sEcho"], "iTotalRecords" => $returnArray['totalRecords'], "iTotalDisplayRecords" => $returnArray['totalRecords'], "aaData" => $returnArray['data']));
 // Return the data
-
+exit;
 function returnData($results, $startIndex, $sort, $dir, $sort_dir) {
 
     // Create return value
