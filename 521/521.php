@@ -4843,14 +4843,14 @@ function createCustomerBudgetDataTable(divNameParm, selectMethodParm, slsmParm, 
                                 },
                                 "sScrollY": "500px",
                                 "sScrollX": "100%",
-                                "sScrollXInner": "100%",
+                                "sScrollXInner": "150%",
                                 "bScrollCollapse": true,
                                 "sAjaxSource": url,
                                 "sPaginationType": "full_numbers"
                             });
                             new FixedColumns( oTable, {
  		"iLeftColumns": 2,
-		"iLeftWidth": 320
+		"iLeftWidth": 300
                             } );
                         }
     }  
