@@ -66,8 +66,8 @@ class FMPPipelineBySalesStageDashlet extends DashletGenericChart {
      */
     public function __construct($id, array $options = null) {
         global $timedate;
-        $this->pbss_date_start_S =  date('Y-01-01');
-        $this->pbss_date_end_S =  date('Y-12-31');
+        //$this->pbss_date_start_S =  date('Y-01-01');
+        //$this->pbss_date_end_S =  date('Y-12-31');
         if(empty($options['pbss_date_start']))
             $options['pbss_date_start'] = date('Y-01-01');
 //            $options['pbss_date_start'] = date($timedate->get_db_date_time_format(), strtotime('2010-01-01'));
@@ -76,11 +76,17 @@ class FMPPipelineBySalesStageDashlet extends DashletGenericChart {
             $options['pbss_date_end'] = date('Y-12-31');
 //            $options['pbss_date_end'] = date($timedate->get_db_date_time_format(), time());
         
-        if(!empty($options['pbss_date_start_S']))
+        if(!empty($options['pbss_date_start_S'])){
+             if($options['pbss_date_start_S'] == '2000-01-01')
+                 $options['pbss_date_start_S'] = date('Y-01-01');
             $this->pbss_date_start_S = $options['pbss_date_start_S'];
+        }
 
-        if(!empty($options['pbss_date_end_S']))
+        if(!empty($options['pbss_date_end_S'])){
+            if($options['pbss_date_end_S'] == '2000-01-01')
+                 $options['pbss_date_end_S'] = date('Y-12-31');
              $this->pbss_date_end_S = $options['pbss_date_end_S'];
+        }
 
         if(empty($options['pbss_chart_type']))
             $options['pbss_chart_type'] = 'sales_stage';
@@ -91,8 +97,11 @@ class FMPPipelineBySalesStageDashlet extends DashletGenericChart {
        if (!empty($options['pbss_sales_stages']) && is_array($options['pbss_sales_stages'])) {
             if (array_search('Closed Promotion Ended', $options['pbss_sales_stages'])) {
                 $this->promo_opp = true;
-            }
-            if (array_search('Active Promotion', $options['pbss_sales_stages'])) {
+            }elseif (array_search('Active Promotion', $options['pbss_sales_stages'])) {
+                $this->promo_opp = true;
+            }elseif ($options['pbss_sales_stages'][0]=='Active Promotion') {
+                $this->promo_opp = true;
+            }elseif ($options['pbss_sales_stages'][0]=='Closed Promotion Ended') {
                 $this->promo_opp = true;
             }
         }

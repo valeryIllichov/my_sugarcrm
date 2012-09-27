@@ -82,8 +82,11 @@ class FMPOpportunitiesDashlet extends DashletGeneric {
             if(!empty($def['filters']['sales_stage'])&&is_array($def['filters']['sales_stage'])){
                 if(array_search('Closed Promotion Ended', $def['filters']['sales_stage'])){
                     $this->promo_opp = true;
-                }
-                if(array_search('Active Promotion', $def['filters']['sales_stage'])){
+                }elseif(array_search('Active Promotion', $def['filters']['sales_stage'])){
+                    $this->promo_opp = true;
+                }elseif ($def['filters']['sales_stage'][0]=='Active Promotion') {
+                    $this->promo_opp = true;
+                }elseif ($def['filters']['sales_stage'][0]=='Closed Promotion Ended') {
                     $this->promo_opp = true;
                 }
             }

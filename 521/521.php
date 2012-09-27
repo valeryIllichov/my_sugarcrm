@@ -230,6 +230,7 @@ function buildTermsCodeList(){
 <link rel="stylesheet" type="text/css" href="style/style_521.css">
 <link rel="stylesheet" type="text/css" href="../themes/default/ext/resources/css/ext-all.css">
 <link rel="stylesheet" type="text/css" href="../themes/Sugar/colors.sugar.css">
+<link rel="stylesheet" type="text/css" href="custom/modules/Accounts/datatables.css" />
 
 <script type="text/javascript" src="javascript/yui/yahoo-dom-event.js"></script>
 <script type="text/javascript" src="javascript/yui/connection-min.js"></script>
@@ -252,7 +253,8 @@ function buildTermsCodeList(){
 <script type="text/javascript" src="../include/javascript/ext-2.0/ext-all.js"></script>
 <script type="text/javascript" src="../include/javascript/ext-2.0/ext-quicksearch.js"></script>
 <script type="text/javascript" src="javascript/521.js"></script>
-
+<script src="custom/modules/Accounts/jquery.datatables.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="modules/Calendar2/js/jquery-ui-1.7.2.custom.min.js">
 <script type="text/javascript" src="javascript/drag_menu2.js"></script>
 </head>
 
@@ -711,7 +713,8 @@ YAHOO.util.Event.onContentReady("selectionbuttons", function () {
 			locationList=currentLocation;
                                                       account_id=currentCustomerId;
 			YAHOO.FMP.SalesSummary = createSalesSummaryDataTable('salessummary', selectMethod, slsmList,  regionList, locationList,currentDealerType,account_id)();
-			/*YAHOO.FMP.CustomerAR = createCustomerARDataTable('customerar', selectMethod, slsmList, regionList, locationList, currentDealerType,account_id)();
+			
+                                                       /*YAHOO.FMP.CustomerAR = createCustomerARDataTable('customerar', selectMethod, slsmList, regionList, locationList, currentDealerType,account_id)();
 			YAHOO.FMP.CustomerSales = createCustomerSalesDataTable('customersales', selectMethod, slsmList, regionList, locationList,currentDealerType,'',account_id)();
 			YAHOO.FMP.CustomerSalesNonOE = createCustomerSalesNonoeDataTable('customersalesnonoe', selectMethod, slsmList, regionList, locationList,currentDealerType,'nonoe',account_id)();
 			YAHOO.FMP.CustomerSalesUnderCar = createCustomerSalesUndercarDataTable('customersalesundercar', selectMethod, slsmList, regionList, locationList,currentDealerType,'undercar',account_id)();
@@ -4780,6 +4783,8 @@ function createCustomerBudgetDataTable(divNameParm, selectMethodParm, slsmParm, 
         }
 }
 </script>
+<script>
+</script>>        
 </body>
 </html>
 

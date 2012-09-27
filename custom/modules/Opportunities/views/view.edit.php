@@ -151,6 +151,7 @@ $(document).ready(function() {
 		}
                                     if(stage == "Closed Promotion Ended" || stage == "Active Promotion") {
                                          $("form#EditView #start_date_row").show();
+                                         $("form#EditView #opportunity_type").val("Marketing Promotion");
                                         if($("form#EditView #date_start_c").val() == ""){
                                             if($("form#EditView #date_start_c").attr("oldValue") == ""){
                                                 var dateObj = new Date();
@@ -178,6 +179,7 @@ $(document).ready(function() {
                                             }
                                         }
                                     }else{
+                                        $("form#EditView #opportunity_type").val("Existing Business");
                                         if($("form#EditView #date_start_c").val() != ""){
                                             $("form#EditView #date_start_c").attr("oldValue",$("form#EditView #date_start_c").val());
                                         }

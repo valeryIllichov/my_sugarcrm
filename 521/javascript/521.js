@@ -463,7 +463,7 @@ function get_date_for_i521(current_tab){
     regionList=select_reg;
     locationList=select_loc;
     YAHOO.FMP.SalesSummary = createSalesSummaryDataTable(current_tab, selectMethod, slsmList,  regionList, locationList,select_dealer,account_id)();
-    YAHOO.FMP.CustomerAR = createCustomerARDataTable(current_tab, selectMethod, slsmList, regionList, locationList, select_dealer,account_id)();
+   // YAHOO.FMP.CustomerAR = createCustomerARDataTable(current_tab, selectMethod, slsmList, regionList, locationList, select_dealer,account_id)();
     YAHOO.FMP.CustomerSales = createCustomerSalesDataTable(current_tab, selectMethod, slsmList, regionList, locationList,select_dealer,'',account_id)();
     YAHOO.FMP.CustomerSalesNonOE = createCustomerSalesNonoeDataTable(current_tab, selectMethod, slsmList, regionList, locationList,select_dealer,'nonoe',account_id)();
     YAHOO.FMP.CustomerSalesUnderCar = createCustomerSalesUndercarDataTable(current_tab, selectMethod, slsmList, regionList, locationList,select_dealer,'undercar',account_id)();
