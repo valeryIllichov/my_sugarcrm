@@ -4843,7 +4843,7 @@ function createCustomerBudgetDataTable(divNameParm, selectMethodParm, slsmParm, 
                                 },
                                 "sScrollY": "500px",
                                 "sScrollX": "100%",
-                                "sScrollXInner": "150%",
+                                "sScrollXInner": "100%",
                                 "bScrollCollapse": true,
                                 "sAjaxSource": url,
                                 "sPaginationType": "full_numbers"
