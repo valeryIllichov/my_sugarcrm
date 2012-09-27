@@ -90,6 +90,7 @@
         	<h2>{$strings.filters}</h2>
         </td>
     </tr>
+     {if $promoOpp}
      <tr>
         <td valign='top' class='dataLabel'>Start Date From</td>
         <td  valign='top' class='dataField'>
@@ -102,6 +103,7 @@
             <img src="themes/default/images/jscalendar.gif" alt="{$LBL_ENTER_DATE}" id="fmpo_date_end_S_trigger" align="absmiddle">
         </td>
     </tr>
+    {/if}
     <tr>
         <td valign='top' class='dataLabel'>Cls Date From</td>
         <td  valign='top' class='dataField'>

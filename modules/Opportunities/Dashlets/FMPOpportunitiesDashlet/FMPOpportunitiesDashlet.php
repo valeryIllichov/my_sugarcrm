@@ -54,7 +54,7 @@ class FMPOpportunitiesDashlet extends DashletGeneric {
     var $company_array = array();
     var $buttons;
     var $where_query_for_total_row = '';
-
+    var $promo_opp = false;
     function FMPOpportunitiesDashlet($id, $def = null) {
         global $current_user, $app_strings, $dashletData;
         require('modules/Opportunities/Dashlets/FMPOpportunitiesDashlet/FMPOpportunitiesDashlet.data.php');
@@ -79,6 +79,14 @@ class FMPOpportunitiesDashlet extends DashletGeneric {
             if(!empty($def['fmpo_date_end_S'])) $this->fmpo_date_end_S = $def['fmpo_date_end_S'];
             if(!empty($def['probabilities_array'])) $this->probabilities_array = $def['probabilities_array'];
             if(!empty($def['company_array'])) $this->company_array = $def['company_array'];
+            if(!empty($def['filters']['sales_stage'])&&is_array($def['filters']['sales_stage'])){
+                if(array_search('Closed Promotion Ended', $def['filters']['sales_stage'])){
+                    $this->promo_opp = true;
+                }
+                if(array_search('Active Promotion', $def['filters']['sales_stage'])){
+                    $this->promo_opp = true;
+                }
+            }
         }
 
         if(empty($def['title'])) $this->title = translate('LBL_FMP_OPPORTUNITIES', 'Opportunities');
@@ -232,6 +240,7 @@ class FMPOpportunitiesDashlet extends DashletGeneric {
                 'title' => $GLOBALS['mod_strings']['LBL_DASHLET_CONFIGURE_TITLE'],
                 'save' => $GLOBALS['app_strings']['LBL_SAVE_BUTTON_LABEL']));
         $this->configureSS->assign('id', $this->id);
+        $this->configureSS->assign('promoOpp', $this->promo_opp);
         $this->configureSS->assign('showMyItemsOnly', $this->showMyItemsOnly);
         $this->configureSS->assign('myItemsOnly', $this->myItemsOnly);
         $this->configureSS->assign('searchFields', $this->currentSearchFields);
@@ -255,6 +264,7 @@ class FMPOpportunitiesDashlet extends DashletGeneric {
         $this->configureSS->assign('fmpo_date_end_S', $this->fmpo_date_end_S);
         $this->configureSS->assign('probability', $this->probabilities_array);
         $this->configureSS->assign('company', $this->company_array);
+        $this->configureSS->assign('fmpo_date_start', $this->fmpo_date_start);
     }
 
 
@@ -602,13 +612,13 @@ class FMPOpportunitiesDashlet extends DashletGeneric {
             $rqs_closed_date .=  ' AND UNIX_TIMESTAMP(opportunities.date_closed) <=  \''.$date_end_unix.'\' ';
             array_push($returnArray, $rqs_closed_date);
         }
-//        if($this->fmpo_date_start_S && $this->fmpo_date_end_S) {
-//            $date_start_unix = strtotime($this->fmpo_date_start_S);
-//            $date_end_unix = strtotime($this->fmpo_date_end_S);
-//            $rqs_start_date = ' UNIX_TIMESTAMP(opportunities_cstm.date_start_c) >=  \''.$date_start_unix.'\'';
-//            $rqs_start_date .=  ' AND UNIX_TIMESTAMP(opportunities_cstm.date_start_c) <=  \''.$date_end_unix.'\' ';
-//            array_push($returnArray, $rqs_start_date);
-//        }
+        if(($this->fmpo_date_start_S && $this->fmpo_date_end_S)&&$this->promo_opp) {
+            $date_start_unix = strtotime($this->fmpo_date_start_S);
+            $date_end_unix = strtotime($this->fmpo_date_end_S);
+            $rqs_start_date = ' UNIX_TIMESTAMP(opportunities_cstm.date_start_c) >=  \''.$date_start_unix.'\'';
+            $rqs_start_date .=  ' AND UNIX_TIMESTAMP(opportunities_cstm.date_start_c) <=  \''.$date_end_unix.'\' ';
+            array_push($returnArray, $rqs_start_date);
+        }
         $OPP_reg = '';
         $OPP_loc = '';
         $slsmqry = '';

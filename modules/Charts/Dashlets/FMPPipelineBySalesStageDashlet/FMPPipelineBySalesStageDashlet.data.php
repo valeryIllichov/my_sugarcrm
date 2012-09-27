@@ -39,14 +39,26 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 $dashletData['FMPPipelineBySalesStageDashlet']['searchFields'] = array(
 
+      'pbss_date_start_S' => array(
+                'name'  => 'pbss_date_start_S',
+                'vname' => 'Start Date From',
+                'type'  => 'datepicker',
+               'input_name0' => "",
+        ),
+        'pbss_date_end_S' => array(
+                'name'  => 'pbss_date_end_S',
+                'vname' => 'Start Date To',
+                'type'  => 'datepicker',
+                'input_name0' => "",
+        ),
         'pbss_date_start' => array(
                 'name'  => 'pbss_date_start',
-                'vname' => 'LBL_DATE_START',
+                'vname' => 'Cls Date From',
                 'type'  => 'datepicker',
         ),
         'pbss_date_end' => array(
                 'name'  => 'pbss_date_end',
-                'vname' => 'LBL_DATE_END',
+                'vname' => 'Cls Date To',
                 'type'  => 'datepicker',
         ),
         'pbss_chart_view' => array(
@@ -63,6 +75,7 @@ $dashletData['FMPPipelineBySalesStageDashlet']['searchFields'] = array(
                 'name'  => 'pbss_sales_stages',
                 'vname' => 'LBL_SALES_STAGES',
                 'type'  => 'enum',
+                'default' => array('Stage1', 'Stage 2', 'Stage 3', 'Stage 4 ', 'Stage 5', 'Closed Won', 'Closed Lost'),
         ),
         'pbss_estimated_annualized_sales' => array(
                 'name'  => 'estimated_annualized_sales',

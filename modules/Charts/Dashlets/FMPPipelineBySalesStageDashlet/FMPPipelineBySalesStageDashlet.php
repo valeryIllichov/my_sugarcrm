@@ -48,6 +48,8 @@ class FMPPipelineBySalesStageDashlet extends DashletGenericChart {
     protected $ss;
     public $pbss_date_start;
     public $pbss_date_end;
+    public $pbss_date_start_S;
+    public $pbss_date_end_S;
     public $pbss_sales_stages = array();
     public $pbss_probability = array();
     public $pbss_company = array();
@@ -56,7 +58,7 @@ class FMPPipelineBySalesStageDashlet extends DashletGenericChart {
     public $pbss_estimated_annualized_sales = array();
     public $pbss_chart_view = array();
     public $pbss_opp_type = array();
-     
+    public $promo_opp = false; 
     protected $_seedName = 'Opportunities';
 
     /**
@@ -64,7 +66,8 @@ class FMPPipelineBySalesStageDashlet extends DashletGenericChart {
      */
     public function __construct($id, array $options = null) {
         global $timedate;
-
+        $this->pbss_date_start_S =  date('Y-01-01');
+        $this->pbss_date_end_S =  date('Y-12-31');
         if(empty($options['pbss_date_start']))
             $options['pbss_date_start'] = date('Y-01-01');
 //            $options['pbss_date_start'] = date($timedate->get_db_date_time_format(), strtotime('2010-01-01'));
@@ -72,6 +75,12 @@ class FMPPipelineBySalesStageDashlet extends DashletGenericChart {
         if(empty($options['pbss_date_end']))
             $options['pbss_date_end'] = date('Y-12-31');
 //            $options['pbss_date_end'] = date($timedate->get_db_date_time_format(), time());
+        
+        if(!empty($options['pbss_date_start_S']))
+            $this->pbss_date_start_S = $options['pbss_date_start_S'];
+
+        if(!empty($options['pbss_date_end_S']))
+             $this->pbss_date_end_S = $options['pbss_date_end_S'];
 
         if(empty($options['pbss_chart_type']))
             $options['pbss_chart_type'] = 'sales_stage';
@@ -79,7 +88,14 @@ class FMPPipelineBySalesStageDashlet extends DashletGenericChart {
         if(empty($options['pbss_chart_view']))
             $options['pbss_chart_view'] = 'bar';
 
-
+       if (!empty($options['pbss_sales_stages']) && is_array($options['pbss_sales_stages'])) {
+            if (array_search('Closed Promotion Ended', $options['pbss_sales_stages'])) {
+                $this->promo_opp = true;
+            }
+            if (array_search('Active Promotion', $options['pbss_sales_stages'])) {
+                $this->promo_opp = true;
+            }
+        }
         if(empty($options['title']))
 //            $options['title'] = translate('LBL_PIPELINE_FORM_TITLE', 'Home');
             $options['title'] = 'FMP Top Opportunities Chart';
@@ -121,7 +137,7 @@ class FMPPipelineBySalesStageDashlet extends DashletGenericChart {
             }
         }
         else {
-            $selected_sales_stages_datax = array_keys($app_list_strings['sales_stage_dom']);
+            $selected_sales_stages_datax = array('Stage1', 'Stage 2', 'Stage 3', 'Stage 4 ', 'Stage 5', 'Closed Won', 'Closed Lost');
         }
 
         $this->_searchFields['pbss_sales_stages']['options'] = $app_list_strings['sales_stage_dom'];
@@ -209,7 +225,13 @@ class FMPPipelineBySalesStageDashlet extends DashletGenericChart {
         $pbss_chart_view = array('bar'=>'Bar', 'pie'=>'Pie');
         $this->_searchFields['pbss_chart_view']['options'] = $pbss_chart_view;
         /*=====end Chart View====*/
-
+        $this->_searchFields['pbss_date_start_S']['input_name0'] = date('Y-m-d',strtotime($this->pbss_date_start_S));
+        $this->_searchFields['pbss_date_end_S']['input_name0'] = date('Y-m-d',strtotime($this->pbss_date_end_S));
+        if(!$this->promo_opp){
+            unset($this->_searchFields['pbss_date_start_S']);
+            unset($this->_searchFields['pbss_date_end_S']);
+        }
+      
         return parent::displayOptions();
     }
 
@@ -260,6 +282,12 @@ class FMPPipelineBySalesStageDashlet extends DashletGenericChart {
         
         if (!empty($req['opp_type']))
              $options['pbss_opp_type'] = $req['opp_type'];
+
+        if (!empty($req['pbss_date_start_S']))
+             $options['pbss_date_start_S'] = $req['pbss_date_start_S'];
+        
+        if (!empty($req['pbss_date_end_S']))
+             $options['pbss_date_end_S'] = $req['pbss_date_end_S'];
         
         return $options;
     }
@@ -952,8 +980,13 @@ $date_end_unix = strtotime($this->pbss_date_end);
 
   $query .= " WHERE UNIX_TIMESTAMP(opportunities.date_closed) >=  '".$date_start_unix."' ".
                 " AND UNIX_TIMESTAMP(opportunities.date_closed) <=  '".$date_end_unix."' ";
+    if($this->promo_opp){
+      $date_start_S_unix = strtotime($this->pbss_date_start_S);
+       $date_end_S_unix = strtotime($this->pbss_date_end_S);
 
-  
+      $query .= " AND UNIX_TIMESTAMP(opportunities_cstm.date_start) >=  '".$date_start_S_unix."' ".
+                    " AND UNIX_TIMESTAMP(opportunities_cstm.date_start) <=  '".$date_end_S_unix."' ";
+    }
 
         if ( count($this->pbss_sales_stages) > 0 ) {
             $query .= " AND opportunities.sales_stage IN ('" . implode("','",$this->pbss_sales_stages) . "') ";
