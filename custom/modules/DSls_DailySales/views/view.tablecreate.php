@@ -664,7 +664,7 @@ foreach($_SESSION as $key=>$valye) {
                                     <td style='font-size: 14px;'>" . ($dashlet_display_col == array() || in_array('current_day_sales', $dashlet_display_col) ? ($today_sales_summ["sales"] != "N/A" ? $this->red_color_text($today_sales_summ["sales"]) : $today_sales_summ["sales"]) : '&nbsp;') . "</td>
                                 </tr>
                                 <tr class='yui-dt-odd'>
-                                    <td width='70%'  style='font-size: 14px;'>" . ($dashlet_display_col == array() || in_array('current_day_credits',  $dashlet_display_col) ? 'Current Day Credits' : '&nbsp;') . "</td>
+                                    <td width='70%'  style='font-size: 14px;cursor: pointer;' id='current-day-credits'>" . ($dashlet_display_col == array() || in_array('current_day_credits',  $dashlet_display_col) ? 'Current Day Credits' : '&nbsp;') . "</td>
                                     <td style='font-size: 14px;'>" . ($dashlet_display_col == array() || in_array('current_day_credits',  $dashlet_display_col) ? ($today_sales_summ["credits"] != "N/A" ? $this->red_color_text($today_sales_summ["credits"]) : $today_sales_summ["credits"]) : '&nbsp;') . "</td>
                                 </tr>
                                 <tr class='yui-dt-even'>
@@ -682,7 +682,7 @@ foreach($_SESSION as $key=>$valye) {
                                     <td style='font-size: 14px;'>" . ($dashlet_display_col == array() || in_array('previous_day_sales',  $dashlet_display_col) ? ($previous_sales_summ["sales"] != "N/A" ? $this->red_color_text($previous_sales_summ["sales"]) : $previous_sales_summ["sales"]) : '&nbsp;') . "</td>
                                 </tr>
                                 <tr class='yui-dt-odd'>
-                                    <td width='70%'  style='font-size: 14px;'>" . ($dashlet_display_col == array() || in_array('previous_day_credits',  $dashlet_display_col) ? 'Previous Day\'s Credits' : '&nbsp;') . "</td>
+                                    <td width='70%'  style='font-size: 14px;cursor: pointer;' id='previous-day-credits'>" . ($dashlet_display_col == array() || in_array('previous_day_credits',  $dashlet_display_col) ? 'Previous Day\'s Credits' : '&nbsp;') . "</td>
                                     <td style='font-size: 14px;'>".($dashlet_display_col == array() || in_array('previous_day_credits',  $dashlet_display_col) ? ($previous_sales_summ["credits"] != "N/A" ? $this->red_color_text($previous_sales_summ["credits"]) : $previous_sales_summ["credits"]) : '&nbsp;')."</td>
                                 </tr>
                                 <tr class='yui-dt-even'>

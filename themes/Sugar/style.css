@@ -1765,3 +1765,7 @@ div#dlg_c div#dlg {
 .sub-head-info .leftColumn{
     text-align: center;
 }
+
+#current_day_credits_list, #current_day_credits_list td{
+    font-size: 16px;
+}

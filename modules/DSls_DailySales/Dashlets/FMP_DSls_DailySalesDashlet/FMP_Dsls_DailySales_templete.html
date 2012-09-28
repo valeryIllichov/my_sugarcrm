@@ -37,7 +37,7 @@
                                     <td style="font-size: 14px;">{$current_day_sales}</td>
                                 </tr>
                                 <tr class="yui-dt-odd">
-                                    <td width="70%"  style="font-size: 14px;">{if $current_day_credits}Current Day Credits{else}&nbsp;{/if}</td>
+                                    <td width="70%"  style="font-size: 14px;cursor: pointer;" id="current-day-credits">{if $current_day_credits}Current Day Credits{else}&nbsp;{/if}</td>
                                     <td style="font-size: 14px;">{$current_day_credits}</td>
                                 </tr>
                                 <tr class="yui-dt-even">
@@ -55,7 +55,7 @@
                                     <td style="font-size: 14px;">{$previous_day_sales}</td>
                                 </tr>
                                 <tr class="yui-dt-odd">
-                                    <td width="70%"  style="font-size: 14px;">{if $previous_day_credits}Previous Day's Credits{else}&nbsp;{/if}</td>
+                                    <td width="70%"  style="font-size: 14px;cursor: pointer;" id="previous-day-credits">{if $previous_day_credits}Previous Day's Credits{else}&nbsp;{/if}</td>
                                     <td style="font-size: 14px;">{$previous_day_credits}</td>
                                 </tr>
                                 <tr class="yui-dt-even">
@@ -671,5 +671,19 @@
         </table>
     </div>
 </div>
-
+<div id="current_day_credits_dialog" title="Current Day Credits" style='display: none; font-size: 16px;'>
+        <table id="current_day_credits_list" style="width: 100%;">
+            <thead>
+                <th>Inv or Pick ticket#</th>
+                <th>Credit Amount</th>
+                <th>SLSM ID</th>
+                 <th>Date</th>
+            </thead>
+            <tbody style="font-size: 16px;">
+                <tr>
+                    <td colspan="6" class="dataTables_empty">Loading data from server</td>
+                </tr>
+            </tbody>
+        </table>
+</div>
 

@@ -670,7 +670,11 @@ class FMP_DSls_DailySalesDashlet extends DashletGeneric {
     }
 
     function display() {
+        echo '<link type="text/css" href="modules/Calendar2/css/themes/base/ui.all.css" rel="stylesheet" />';
+        echo '<link rel="stylesheet" type="text/css" href="custom/modules/Accounts/datatables.css" />';
         echo '<script src="/modules/Calendar2/js/jquery-1.3.2.min.js"></script>';
+        echo '<script type="text/javascript" src="modules/Calendar2/js/jquery-ui-1.7.2.custom.min.js"></script>';
+        echo '<script src="custom/modules/Accounts/jquery.datatables.min.js" type="text/javascript"></script>';
         echo $this->scripts_for_display();
         return $this->getTitle('') . $this->process_data() . '<br />';
     }
@@ -1533,6 +1537,75 @@ class FMP_DSls_DailySalesDashlet extends DashletGeneric {
                                     $("#dealer_list_show").find("#dealer_panel").slideUp("slow");
                                 }
                             );
+                             $("#current-day-credits, #previous-day-credits").live("dblclick",function(){
+                                $("#current_day_credits_dialog").dialog("open");
+                                 var url = "index.php?module=DSls_DailySales&action=getSalesSummaryCredits";
+                                 var dayCredits = "";
+                                 if(typeof(this.id) != "undefined"){
+                                    if(this.id == "current-day-credits"){
+                                        dayCredits = "current";
+                                        $("#ui-dialog-title-current_day_credits_dialog").html("Current Day Credits");
+                                    }
+                                     if(this.id == "previous-day-credits"){
+                                        dayCredits = "previous";
+                                        $("#ui-dialog-title-current_day_credits_dialog").html("Previous Day\'s Sales");
+                                    }  
+                                 }
+                                var input_value = $("#fmp_slsm_input").val();
+                                if(input_value.length == 0){
+                                    var select_slsm = $("#fmprep_slsm_tree option:selected").val();
+                                    var selected_slsm_array = Array();
+                                    $("#fmprep_slsm_tree option:selected").each(function (i, k) {
+                                        selected_slsm_array[i] = $(this).val();
+                                    });
+                                    select_slsm = selected_slsm_array.join(";");
+                                    }else{
+                                    var select_slsm = $("#fmprep_slsm_tree_search option:selected").val();
+
+                                    var selected_slsm_array = Array();
+                                    $("#fmprep_slsm_tree_search option:selected").each(function (i, k) {
+                                        selected_slsm_array[i] = $(this).val();
+                                    });
+                                    select_slsm = selected_slsm_array.join(";");
+                                    }
+                                 $("#current_day_credits_list").dataTable({
+                                                "bJQueryUI": true,
+                                                "bDestroy": true,
+                                                "bProcessing": true,
+                                                "bServerSide": true,
+                                                "bAutoWidth": false, 
+                                                "sAjaxSource": url,
+                                                "iDisplayLength": 99999999,
+                                                              "oLanguage": {
+                                                "sLengthMenu": \'Show <select>\' +
+                                                                            \'<option value="10">10</option>\' +
+                                                                            \'<option value="20">20</option>\' +
+                                                                            \'<option value="30">30</option>\' +
+                                                                            \'<option value="40">40</option>\' +
+                                                                            \'<option value="50">50</option>\' +
+                                                                            \'<option value="100">100</option>\' +
+                                                                            \'<option value="200">200</option>\' +
+                                                                            \'<option value="99999999">All</option>\' +
+                                                                            \'</select> entries\'
+                                                },
+                                                "sPaginationType": "full_numbers",
+                                                "fnServerData": function ( sSource, aoData, fnCallback ) {  
+                                                                                    aoData.push( { name: "dayCredits", value: dayCredits } );
+                                                                                     aoData.push( { name: "slsm_num", value: select_slsm } );
+                                                                                    $.getJSON( sSource, aoData, function (json) { 
+                                                                                            fnCallback(json)
+                                                                                    } );
+                                                                            }
+                                  });
+                            });
+                            $("#current_day_credits_dialog").dialog({
+                                dialogClass: "current_day_credits_dialog_class",
+                                bgiframe: false,
+                                autoOpen: false,
+                                height: 600,
+                                width: 950,
+                                modal: true,
+                            });
                     })
                 </script>';
     }
