@@ -1601,7 +1601,8 @@ class FMP_DSls_DailySalesDashlet extends DashletGeneric {
                                 if ( $("#ui-datepicker-div").css("display") == "none" || $("#ui-datepicker-div").html() == "")
                                   $("#cred_date_range_show").find("#cred_date_range").slideUp("slow");  
                         });
-                      
+                     startDateF = startDateF != "" ? startDateF : currDateR;
+                     endDateF = endDateF != "" ? endDateF :  currDateR;
                         $( "#cred_date_start" ).datepicker({
                           dateFormat: "mm/dd/yy",
                           defaultDate: startDateF,
