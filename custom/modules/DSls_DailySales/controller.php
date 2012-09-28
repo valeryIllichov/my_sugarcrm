@@ -40,11 +40,18 @@ class DSls_DailySalesController extends SugarController {
             $like_q = " AND (dssc.record_reference LIKE '%".$_REQUEST['sSearch']."%' OR dssc.slsm LIKE '%".$_REQUEST['sSearch']."%') ";
         }
         $day_Credits = "CURRENT_DATE() ";
+        $getParam = "";
         if(!empty($_REQUEST['dayCredits'])){
-            if($_REQUEST['dayCredits'] == "current")
+            if($_REQUEST['dayCredits'] == "current" &&empty($_REQUEST['startDate'])&&empty($_REQUEST['endDate'])){
                 $day_Credits = "CURRENT_DATE() ";
-            if($_REQUEST['dayCredits'] == "previous")
+                $getParam = "current=1";
+            }elseif($_REQUEST['dayCredits'] == "previous" &&empty($_REQUEST['startDate'])&&empty($_REQUEST['endDate'])){
                 $day_Credits = "DATE_SUB(NOW(), INTERVAL 2 DAY) and dssc.record_date < CURRENT_DATE() ";
+                $getParam = "previous=1";
+            }if(!empty($_REQUEST['startDate'])&&!empty($_REQUEST['endDate'])){
+                $day_Credits = "STR_TO_DATE('".$_REQUEST['startDate']."', '%m/%d/%Y') and dssc.record_date <= STR_TO_DATE('".$_REQUEST['endDate']."', '%m/%d/%Y') ";
+                $getParam = "dateFrom=".$_REQUEST['startDate']."&dateTo=".$_REQUEST['endDate'];
+            }
         }
         if(!empty($_REQUEST['slsm_num'])&&$_REQUEST['slsm_num'] != ""){
             $slsm = $_REQUEST['slsm_num'] != 'all' ? $_REQUEST['slsm_num'] : '';
@@ -102,7 +109,7 @@ class DSls_DailySalesController extends SugarController {
         $result_records = array();
         while ($res = $focus->db->fetchByAssoc($current_day_credits_result)) {
             $result_records[] = array(
-                    '<a href="http://fmpco.info/python/invLookup.py/main?recordReference='.$res['ref'].'&'.$_REQUEST['dayCredits'] .'=1" target="_blank">'.$res['ref'].'</a>',
+                    '<a href="http://fmpco.info/python/invLookup.py/main?recordReference='.$res['ref'].'&'.$getParam.'" target="_blank">'.$res['ref'].'</a>',
                     $res['credit'],
                     $res['slsm'],
                     $res['rdate'],

@@ -675,6 +675,9 @@ class FMP_DSls_DailySalesDashlet extends DashletGeneric {
         echo '<script src="/modules/Calendar2/js/jquery-1.3.2.min.js"></script>';
         echo '<script type="text/javascript" src="modules/Calendar2/js/jquery-ui-1.7.2.custom.min.js"></script>';
         echo '<script src="custom/modules/Accounts/jquery.datatables.min.js" type="text/javascript"></script>';
+        echo '<script type="text/javascript" src="modules/Calendar2/js/ui.core.js"></script>';
+        echo '<script type="text/javascript" src="modules/Calendar2/js/ui.datepicker.js"></script>';
+
         echo $this->scripts_for_display();
         return $this->getTitle('') . $this->process_data() . '<br />';
     }
@@ -1507,7 +1510,158 @@ class FMP_DSls_DailySalesDashlet extends DashletGeneric {
                                $("#box_for_slsm_first").show();
                            }
                     }
+                    function loadCreditsListTable(day,startDateF,endDateF){
+                          var url = "index.php?module=DSls_DailySales&action=getSalesSummaryCredits";
+                                 var dayCredits = "";
+                                 if(typeof(day) != "undefined"){
+                                    if(day == "current-day-credits"){
+                                        dayCredits = "current";
+                                        var currDateR = new Date();
+                                        $("#ui-dialog-title-current_day_credits_dialog").html("Current Day Credits");
+                                    }
+                                     if(day == "previous-day-credits"){
+                                        dayCredits = "previous";
+                                        var currDateR = new Date(new Date().getTime() - 1000*60*60*24);
+                                        $("#ui-dialog-title-current_day_credits_dialog").html("Previous Day\'s Sales");
+                                    }  
+                                 }
+                                var input_value = $("#fmp_slsm_input").val();
+                                if(input_value.length == 0){
+                                    var select_slsm = $("#fmprep_slsm_tree option:selected").val();
+                                    var selected_slsm_array = Array();
+                                    $("#fmprep_slsm_tree option:selected").each(function (i, k) {
+                                        selected_slsm_array[i] = $(this).val();
+                                    });
+                                    select_slsm = selected_slsm_array.join(";");
+                                    }else{
+                                    var select_slsm = $("#fmprep_slsm_tree_search option:selected").val();
 
+                                    var selected_slsm_array = Array();
+                                    $("#fmprep_slsm_tree_search option:selected").each(function (i, k) {
+                                        selected_slsm_array[i] = $(this).val();
+                                    });
+                                    select_slsm = selected_slsm_array.join(";");
+                                    }
+                                 $("#current_day_credits_list").dataTable({
+                                                "bJQueryUI": true,
+                                                "bDestroy": true,
+                                                "bProcessing": true,
+                                                "bServerSide": true,
+                                                "bAutoWidth": false, 
+                                                "sAjaxSource": url,
+                                                "sDom": \'<"H"l<"#range_date">fr>t<"F"ip>\',
+                                                "iDisplayLength": 99999999,
+                                                              "oLanguage": {
+                                                "sLengthMenu": \'Show <select>\' +
+                                                                            \'<option value="10">10</option>\' +
+                                                                            \'<option value="20">20</option>\' +
+                                                                            \'<option value="30">30</option>\' +
+                                                                            \'<option value="40">40</option>\' +
+                                                                            \'<option value="50">50</option>\' +
+                                                                            \'<option value="100">100</option>\' +
+                                                                            \'<option value="200">200</option>\' +
+                                                                            \'<option value="99999999">All</option>\' +
+                                                                            \'</select> entries\'
+                                                },
+                                                "sPaginationType": "full_numbers",
+                                                "fnServerData": function ( sSource, aoData, fnCallback ) {  
+                                                                                    var stD = startDateF != "" ? $.datepicker.formatDate("mm/dd/yy", startDateF) : "";
+                                                                                    var enD = endDateF != "" ? $.datepicker.formatDate("mm/dd/yy", endDateF) : "";
+                                                                                    aoData.push( { name: "startDate", value: stD } );
+                                                                                    aoData.push( { name: "endDate", value: enD } );
+                                                                                    aoData.push( { name: "dayCredits", value: dayCredits } );
+                                                                                     aoData.push( { name: "slsm_num", value: select_slsm } );
+                                                                                    $.getJSON( sSource, aoData, function (json) { 
+                                                                                            fnCallback(json)
+                                                                                    } );
+                                                                            }
+                                  });
+                                    var stD = startDateF != "" ? $.datepicker.formatDate("mm/dd/yy", startDateF) : $.datepicker.formatDate("mm/dd/yy", currDateR);
+                                    var enD = endDateF != "" ? $.datepicker.formatDate("mm/dd/yy",  endDateF) :  $.datepicker.formatDate("mm/dd/yy", currDateR);
+                                  $("#range_date").css({"padding-right":"5%","float":"left"});
+                        $("#range_date").addClass("yui-skin-custom");
+                      $("#range_date").append("<span class=\'yui-button-fmp-sales yui-split-button-fmp-sales\' id=\'cred_date_range_show\' style=\'border-width: 1px 1px;\'><span class=\'first-child-fmp-sales\'>"+
+	  "<button type=\'button\'>Date Range</button>"+   
+		"<div id=\'cred_date_range\' style=\'display: none; padding: 3px; position: absolute; background-color: #FFFFFF; border: 1px solid #94C1E8;\'>"+
+		  "<label for=\'cred_date_start\'>From</label>"+
+		  "<div id=\'date_from\'>"+
+			  "<input class=\'text range-date-inp\' name=\'cred_date_start\' size=\'12\' maxlength=\'10\' id=\'cred_date_start\' value=\'"+stD+"\'>"+
+		  "</div>"+
+		  "<label for=\'cred_date_end\'>To</label>"+
+		  "<div id=\'date_end\'>"+
+			  "<input class=\'text range-date-inp\' name=\'cred_date_end\' size=\'12\' maxlength=\'10\' id=\'cred_date_end\' value=\'"+enD+"\'>"+
+		  "</div>"+
+	  "</div>");
+                        $("#cred_date_range_show").hover(
+                          function(){
+                                  $("#cred_date_range_show").find("#cred_date_range").stop(true, true);
+                                  $("#cred_date_range_show").find("#cred_date_range").slideDown("slow");      
+                          },
+                          function() {
+                                if ( $("#ui-datepicker-div").css("display") == "none" || $("#ui-datepicker-div").html() == "")
+                                  $("#cred_date_range_show").find("#cred_date_range").slideUp("slow");  
+                        });
+                      
+                        $( "#cred_date_start" ).datepicker({
+                          dateFormat: "mm/dd/yy",
+                          defaultDate: startDateF,
+                          maxDate: endDateF,
+                          numberOfMonths: 3,
+                          showOn: "button",
+                          buttonImage: "themes/default/images/jscalendar.gif",
+                          buttonImageOnly: true,
+                          showButtonPanel: true,
+                          closeText: "Clear",
+                          beforeShow: function( input, inst ) {
+                                setTimeout(function() {
+                                  $(".ui-datepicker-close").click(function(){
+                                        DP_jQuery.datepicker._clearDate(input);
+                                  });
+                                }, 10 );
+                          },
+                          onChangeMonthYear:function() {
+                                var input = this;
+                                setTimeout(function() {
+                                  $(".ui-datepicker-close").click(function(){
+                                        DP_jQuery.datepicker._clearDate(input);
+                                  });
+                                }, 10 );
+                          },
+                          onSelect: function( selectedDate ) {
+                               loadCreditsListTable(day,new Date(selectedDate),endDateF);
+                          }
+                        });
+                        $( "#cred_date_end" ).datepicker({
+                          dateFormat: "mm/dd/yy",
+                          defaultDate: endDateF,
+                          minDate: startDateF,
+                          numberOfMonths: 3,
+                          showOn: "button",
+                          buttonImage: "themes/default/images/jscalendar.gif",
+                          buttonImageOnly: true,
+                          showButtonPanel: true,
+                          closeText: "Clear",
+                          beforeShow: function( input, inst ) {
+                                setTimeout(function() {
+                                  $(".ui-datepicker-close").click(function(){
+                                        DP_jQuery.datepicker._clearDate(input);
+                                  });
+                                }, 10 );
+                          },
+                          onChangeMonthYear:function() {
+                                var input = this;
+                                setTimeout(function() {
+                                  $(".ui-datepicker-close").click(function(){
+                                        DP_jQuery.datepicker._clearDate(input);
+                                  });
+                                }, 10 );
+                          },
+                          onSelect: function( selectedDate ) {
+                               loadCreditsListTable(day,startDateF,new Date(selectedDate));
+                          }
+                        });
+                        $("#ui-datepicker-div").css("z-index", "999999");
+                    }
                     $(document).ready(function(){
 
                         $("#slsm_list_show").hover(
@@ -1537,66 +1691,10 @@ class FMP_DSls_DailySalesDashlet extends DashletGeneric {
                                     $("#dealer_list_show").find("#dealer_panel").slideUp("slow");
                                 }
                             );
+
                              $("#current-day-credits, #previous-day-credits").live("dblclick",function(){
                                 $("#current_day_credits_dialog").dialog("open");
-                                 var url = "index.php?module=DSls_DailySales&action=getSalesSummaryCredits";
-                                 var dayCredits = "";
-                                 if(typeof(this.id) != "undefined"){
-                                    if(this.id == "current-day-credits"){
-                                        dayCredits = "current";
-                                        $("#ui-dialog-title-current_day_credits_dialog").html("Current Day Credits");
-                                    }
-                                     if(this.id == "previous-day-credits"){
-                                        dayCredits = "previous";
-                                        $("#ui-dialog-title-current_day_credits_dialog").html("Previous Day\'s Sales");
-                                    }  
-                                 }
-                                var input_value = $("#fmp_slsm_input").val();
-                                if(input_value.length == 0){
-                                    var select_slsm = $("#fmprep_slsm_tree option:selected").val();
-                                    var selected_slsm_array = Array();
-                                    $("#fmprep_slsm_tree option:selected").each(function (i, k) {
-                                        selected_slsm_array[i] = $(this).val();
-                                    });
-                                    select_slsm = selected_slsm_array.join(";");
-                                    }else{
-                                    var select_slsm = $("#fmprep_slsm_tree_search option:selected").val();
-
-                                    var selected_slsm_array = Array();
-                                    $("#fmprep_slsm_tree_search option:selected").each(function (i, k) {
-                                        selected_slsm_array[i] = $(this).val();
-                                    });
-                                    select_slsm = selected_slsm_array.join(";");
-                                    }
-                                 $("#current_day_credits_list").dataTable({
-                                                "bJQueryUI": true,
-                                                "bDestroy": true,
-                                                "bProcessing": true,
-                                                "bServerSide": true,
-                                                "bAutoWidth": false, 
-                                                "sAjaxSource": url,
-                                                "iDisplayLength": 99999999,
-                                                              "oLanguage": {
-                                                "sLengthMenu": \'Show <select>\' +
-                                                                            \'<option value="10">10</option>\' +
-                                                                            \'<option value="20">20</option>\' +
-                                                                            \'<option value="30">30</option>\' +
-                                                                            \'<option value="40">40</option>\' +
-                                                                            \'<option value="50">50</option>\' +
-                                                                            \'<option value="100">100</option>\' +
-                                                                            \'<option value="200">200</option>\' +
-                                                                            \'<option value="99999999">All</option>\' +
-                                                                            \'</select> entries\'
-                                                },
-                                                "sPaginationType": "full_numbers",
-                                                "fnServerData": function ( sSource, aoData, fnCallback ) {  
-                                                                                    aoData.push( { name: "dayCredits", value: dayCredits } );
-                                                                                     aoData.push( { name: "slsm_num", value: select_slsm } );
-                                                                                    $.getJSON( sSource, aoData, function (json) { 
-                                                                                            fnCallback(json)
-                                                                                    } );
-                                                                            }
-                                  });
+                               loadCreditsListTable(this.id,"","");
                             });
                             $("#current_day_credits_dialog").dialog({
                                 dialogClass: "current_day_credits_dialog_class",
