@@ -102,7 +102,7 @@ class DSls_DailySalesController extends SugarController {
         $result_records = array();
         while ($res = $focus->db->fetchByAssoc($current_day_credits_result)) {
             $result_records[] = array(
-                    '<a href="http://fmpco.info/python/invLookup.py/main" target="_blank">'.$res['ref'].'</a>',
+                    '<a href="http://fmpco.info/python/invLookup.py/main?recordReference='.$res['ref'].'&'.$_REQUEST['dayCredits'] .'=1" target="_blank">'.$res['ref'].'</a>',
                     $res['credit'],
                     $res['slsm'],
                     $res['rdate'],
